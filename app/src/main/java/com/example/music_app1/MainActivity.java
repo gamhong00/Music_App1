@@ -1,7 +1,7 @@
 package com.example.music_app1;
 
 import static com.example.music_app1.R.id.menu_explore;
-
+import static com.example.music_app1.R.id.menu_user;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle());
         mViewPager2.setAdapter(adapter);
+        mViewPager2.setOffscreenPageLimit(3); //load trước 3 viewPager
 
         mViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -64,7 +66,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        mBottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.menu_library) {
+                    mViewPager2.setCurrentItem(0);
+                    return true;
+                } else if (id == R.id.menu_explore) {
+                    mViewPager2.setCurrentItem(1);
+                    return true;
+                } else if (id == R.id.menu_zingchat) {
+                    mViewPager2.setCurrentItem(2);
+                    return true;
+                } else if (id == R.id.menu_user) {
+                    mViewPager2.setCurrentItem(3);
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 }
