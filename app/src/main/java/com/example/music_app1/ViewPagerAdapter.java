@@ -20,7 +20,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         switch (position){
             case 0:
                 return new Library_Fragment();
-
             case 1:
                 return new Explore_Fragment();
 
@@ -29,7 +28,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
             case 3:
                 return new User_Fragment();
-
             default:
                 return new Library_Fragment();
         }

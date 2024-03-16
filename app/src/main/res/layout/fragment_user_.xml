@@ -12,4 +12,10 @@
         android:layout_height="match_parent"
         android:text="user" />
 
+    <Button
+        android:id="@+id/nofication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="thông báo" />
+
 </RelativeLayout>
