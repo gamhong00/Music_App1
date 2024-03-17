@@ -28,8 +28,11 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
             case 3:
                 return new User_Fragment();
-            case 4:
+            case 4: 
                 return new Notification_fragment();
+            case 5: 
+                return new Search_Fragment();
+
             default:
                 return new Library_Fragment();
         }

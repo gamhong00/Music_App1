@@ -1,6 +1,6 @@
 package com.example.music_app1;
 import static com.example.music_app1.R.id.menu_explore;
-
+import static com.example.music_app1.R.id.menu_user;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -11,9 +11,11 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 
 public class MainActivity extends AppCompatActivity {
+
 
     public static ViewPager2 mViewPager2;
     private BottomNavigationView mBottomNavigationView;
@@ -44,15 +46,12 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         mBottomNavigationView.getMenu().findItem(R.id.menu_library).setChecked(true);
                         break;
-
                     case 1:
                         mBottomNavigationView.getMenu().findItem(menu_explore).setChecked(true);
                         break;
-
                     case 2:
                         mBottomNavigationView.getMenu().findItem(R.id.menu_zingchat).setChecked(true);
                         break;
-
                     case 3:
                         mBottomNavigationView.getMenu().findItem(R.id.menu_user).setChecked(true);
                         break;
@@ -68,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         mBottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 int id = item.getItemId();
                 if (id == R.id.menu_library) {
                     mViewPager2.setCurrentItem(0,false);
@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 } else if (id == R.id.menu_user) {
                     mViewPager2.setCurrentItem(3,false);
-
                     return true;
                 }
                 return false;
