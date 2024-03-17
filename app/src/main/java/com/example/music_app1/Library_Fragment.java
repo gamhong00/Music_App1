@@ -16,12 +16,6 @@ import android.widget.ImageButton;
 
 public class Library_Fragment extends Fragment {
 
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        Log.e("tincoder", "Fragment 1");
-//    }
-
     private ImageButton imgbtn_search;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,7 +27,7 @@ public class Library_Fragment extends Fragment {
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager2.setCurrentItem(4,false);
+                mViewPager2.setCurrentItem(5,false);
             }
         });
         return view;

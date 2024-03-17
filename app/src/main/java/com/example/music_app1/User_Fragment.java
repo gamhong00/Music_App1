@@ -10,13 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-
 import androidx.fragment.app.Fragment;
-
-
 
 public class User_Fragment extends Fragment {
 
+
+
+    int currentItem = mViewPager2.getCurrentItem();
     private Button btn_notification;
     
     private ImageButton imgbtn_search;
@@ -33,9 +33,7 @@ public class User_Fragment extends Fragment {
                 mViewPager2.setCurrentItem(4, false);
             }
         });
-    
 
-       
 
         imgbtn_search = view.findViewById(R.id.search);
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
@@ -46,4 +44,5 @@ public class User_Fragment extends Fragment {
         });
         return view;
     }
+
 }
