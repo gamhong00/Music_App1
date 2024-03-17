@@ -28,6 +28,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
             case 3:
                 return new User_Fragment();
+            case 4:
+                return new Notification_fragment();
             default:
                 return new Library_Fragment();
         }
@@ -35,6 +37,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 6;
     }
 }

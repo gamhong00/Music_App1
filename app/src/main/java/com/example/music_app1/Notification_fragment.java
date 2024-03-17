@@ -16,5 +16,6 @@ public class Notification_fragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_notification_, container, false);
     }
+
     
 }

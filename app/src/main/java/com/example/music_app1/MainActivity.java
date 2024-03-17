@@ -70,16 +70,17 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.menu_library) {
-                    mViewPager2.setCurrentItem(0);
+                    mViewPager2.setCurrentItem(0,false);
                     return true;
                 } else if (id == R.id.menu_explore) {
-                    mViewPager2.setCurrentItem(1);
+                    mViewPager2.setCurrentItem(1,false);
                     return true;
                 } else if (id == R.id.menu_zingchat) {
-                    mViewPager2.setCurrentItem(2);
+                    mViewPager2.setCurrentItem(2,false);
                     return true;
                 } else if (id == R.id.menu_user) {
-                    mViewPager2.setCurrentItem(3);
+                    mViewPager2.setCurrentItem(3,false);
+
                     return true;
                 }
                 return false;
