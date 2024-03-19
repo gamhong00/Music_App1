@@ -20,7 +20,14 @@
             android:text="Cá nhân"
             android:textSize="26sp"
             android:textStyle="bold" />
+        <ImageButton
 
+            android:id="@+id/notification"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:src="@drawable/bell_regular"
+            />
         <ImageButton
 
             android:id="@+id/search"
@@ -35,11 +42,5 @@
 
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/notification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="thông báo" />
 
 </RelativeLayout>

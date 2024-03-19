@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 
@@ -34,35 +35,8 @@ public class MainActivity extends AppCompatActivity {
         mViewPager2.setAdapter(adapter);
         mViewPager2.setOffscreenPageLimit(3); //load trước 3 viewPager
 
-        mViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
 
-            @Override
-            public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        mBottomNavigationView.getMenu().findItem(R.id.menu_library).setChecked(true);
-                        break;
-                    case 1:
-                        mBottomNavigationView.getMenu().findItem(menu_explore).setChecked(true);
-                        break;
-                    case 2:
-                        mBottomNavigationView.getMenu().findItem(R.id.menu_zingchat).setChecked(true);
-                        break;
-                    case 3:
-                        mBottomNavigationView.getMenu().findItem(R.id.menu_user).setChecked(true);
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-            }
-        });
+        mViewPager2.setUserInputEnabled(false);
 
         mBottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
@@ -71,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 if (id == R.id.menu_library) {
                     mViewPager2.setCurrentItem(0,false);
+                    Log.d("Tag", "c: "+ mViewPager2.getCurrentItem());
                     return true;
                 } else if (id == R.id.menu_explore) {
                     mViewPager2.setCurrentItem(1,false);

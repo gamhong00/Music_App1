@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 
 public class User_Fragment extends Fragment {
 
-    private Button btn_notification;
+    private ImageButton btn_notification;
     
     private ImageButton imgbtn_search;
     @Override

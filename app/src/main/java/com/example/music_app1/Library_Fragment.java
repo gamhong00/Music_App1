@@ -33,7 +33,7 @@ public class Library_Fragment extends Fragment {
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager2.setCurrentItem(4,false);
+                mViewPager2.setCurrentItem(5,false);
             }
         });
         return view;
