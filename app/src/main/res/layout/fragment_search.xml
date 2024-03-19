@@ -6,9 +6,156 @@
     tools:context=".Search_Fragment">
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/quaylai"
+            android:layout_width="49dp"
+            android:layout_height="54dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="mũi tên"
+            android:padding="30dp"
+            android:src="@drawable/leftarrow"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/search"
+                android:layout_width="320dp"
+                android:layout_height="44dp"
+                android:ems="10"
+                android:inputType="text"
+                android:background="@drawable/custom_search"
+                android:drawableStart="@drawable/search"
+                android:drawablePadding="20dp"
+                android:layout_marginTop="5dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:backgroundTint="@null"
+                android:hint="Tìm kiếm"
+                android:layout_marginStart="70dp"/>
+        </FrameLayout>
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="80dp"
+        android:text="Đề xuất cho bạn "
+        android:textSize="26sp"
+        android:textStyle="bold" />
+    <TableLayout
+        android:id="@+id/layoutDexuat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Trang Search" />
+        android:layout_marginTop="120dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:weightSum="9">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Thủy triều"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_propose"
+                />
+
+            <!-- Thêm thành phần cho cột 2 -->
+            <TextView
+                android:text="Thiên lý ơi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_propose"
+                android:layout_marginStart="5dp"/>
+
+            <!-- Thêm thành phần cho cột 3 -->
+            <TextView
+                android:text="Nâng chén tiêu sầu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+
+                android:background="@drawable/custom_propose"
+                android:layout_marginStart="5dp"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:text="Từng là"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_propose"
+                />
+
+            <!-- Thêm thành phần cho cột 2 -->
+            <TextView
+                android:text="Anh thương em rồi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/custom_propose"
+                android:padding="5dp"
+                android:layout_marginStart="5dp"/>
+
+            <!-- Thêm thành phần cho cột 3 -->
+            <TextView
+                android:text="Có lẽ bên nhau là sai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/custom_propose"
+                android:padding="5dp"
+                android:layout_marginStart="5dp"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:text="Hôm nay nghe gì"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/custom_propose"
+                android:padding="5dp"
+                />
+
+            <!-- Thêm thành phần cho cột 2 -->
+            <TextView
+                android:text="#Zingchart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_propose"
+                android:padding="5dp"
+                android:layout_marginStart="5dp"/>
+
+            <!-- Thêm thành phần cho cột 3 -->
+            <TextView
+                android:text="I"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_propose"
+                android:padding="5dp"
+                android:layout_marginStart="5dp"/>
+        </TableRow>
+    </TableLayout>
 </FrameLayout>
