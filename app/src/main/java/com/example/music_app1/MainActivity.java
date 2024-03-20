@@ -1,19 +1,14 @@
 package com.example.music_app1;
-import static com.example.music_app1.R.id.menu_explore;
-import static com.example.music_app1.R.id.menu_user;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.widget.Button;
 
+import com.example.music_app1.View.ViewPagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,9 +20,12 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
         mViewPager2 = findViewById(R.id.view_pager);
         mBottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 if (id == R.id.menu_library) {
                     mViewPager2.setCurrentItem(0,false);
                     temp = 0;
-                    Log.d("Tag", "c: "+ mViewPager2.getCurrentItem());
+
                     return true;
                 } else if (id == R.id.menu_explore) {
                     mViewPager2.setCurrentItem(1,false);
@@ -70,4 +68,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+
+
+
+
 }

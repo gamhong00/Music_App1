@@ -1,161 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Search_Fragment">
+    android:orientation="vertical"
+    tools:context=".View.Search_Fragment">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageButton
             android:id="@+id/quaylai"
             android:layout_width="49dp"
             android:layout_height="54dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:background="@android:color/transparent"
             android:contentDescription="mũi tên"
             android:padding="30dp"
-            android:src="@drawable/leftarrow"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"/>
+            android:src="@drawable/leftarrow" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
-                android:id="@+id/search"
+                android:id="@+id/edt_search"
                 android:layout_width="320dp"
                 android:layout_height="44dp"
-                android:ems="10"
-                android:inputType="text"
-                android:background="@drawable/custom_search"
-                android:drawableStart="@drawable/search"
-                android:drawablePadding="20dp"
+                android:layout_marginStart="70dp"
                 android:layout_marginTop="5dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
+                android:background="@drawable/custom_search"
                 android:backgroundTint="@null"
+                android:drawablePadding="20dp"
+                android:ems="10"
                 android:hint="Tìm kiếm"
-                android:layout_marginStart="70dp"/>
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp" />
+
+            <ImageButton
+                android:id="@+id/btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="350dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/search">
+
+            </ImageButton>
         </FrameLayout>
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="80dp"
-        android:text="Đề xuất cho bạn "
-        android:textSize="26sp"
-        android:textStyle="bold" />
-    <TableLayout
-        android:id="@+id/layoutDexuat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:weightSum="9">
-        <TableRow
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/img_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="20dp">
+
             <TextView
-                android:text="Thủy triều"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/custom_propose"
-                />
-
-            <!-- Thêm thành phần cho cột 2 -->
-            <TextView
-                android:text="Thiên lý ơi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/custom_propose"
-                android:layout_marginStart="5dp"/>
-
-            <!-- Thêm thành phần cho cột 3 -->
-            <TextView
-                android:text="Nâng chén tiêu sầu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-
-                android:background="@drawable/custom_propose"
-                android:layout_marginStart="5dp"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-            <TextView
-                android:text="Từng là"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/custom_propose"
-                />
-
-            <!-- Thêm thành phần cho cột 2 -->
-            <TextView
-                android:text="Anh thương em rồi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:background="@drawable/custom_propose"
-                android:padding="5dp"
-                android:layout_marginStart="5dp"/>
-
-            <!-- Thêm thành phần cho cột 3 -->
-            <TextView
-                android:text="Có lẽ bên nhau là sai"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:background="@drawable/custom_propose"
-                android:padding="5dp"
-                android:layout_marginStart="5dp"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-            <TextView
-                android:text="Hôm nay nghe gì"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:background="@drawable/custom_propose"
-                android:padding="5dp"
-                />
-
-            <!-- Thêm thành phần cho cột 2 -->
-            <TextView
-                android:text="#Zingchart"
+                android:id="@+id/tv_nameMusic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/custom_propose"
-                android:padding="5dp"
-                android:layout_marginStart="5dp"/>
+                android:textStyle="bold"
+                android:gravity="center_vertical"/>
 
-            <!-- Thêm thành phần cho cột 3 -->
             <TextView
-                android:text="I"
+                android:id="@+id/tv_nameCasi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/custom_propose"
-                android:padding="5dp"
-                android:layout_marginStart="5dp"/>
-        </TableRow>
-    </TableLayout>
-</FrameLayout>
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
