@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 public class Library_Fragment extends Fragment {
 
 //    @Override
@@ -18,7 +17,6 @@ public class Library_Fragment extends Fragment {
 //        super.onAttach(context);
 //        Log.e("tincoder", "Fragment 1");
 //    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
