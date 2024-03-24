@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -46,6 +47,8 @@ import retrofit2.Response;
 
 public class Search_Fragment extends Fragment {
     private ImageButton imgbtn_quaylai;
+//    private EditText edt_search;
+//    private ImageButton btn_search;
     private RecyclerView rcvMusic;
     List<Music> mListMusic;
 
@@ -70,6 +73,21 @@ public class Search_Fragment extends Fragment {
                 mViewPager2.setCurrentItem(temp,false);
             }
         });
+
+//        edt_search = view.findViewById(R.id.edt_search);
+//        btn_search = view.findViewById(R.id.btn_search);
+//        btn_search.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(edt_search.getText().toString() == ""){
+//
+//                }else{
+//                    callApiGetMusics(edt_search.getText().toString());
+//                }
+//            }
+//        });
+
+
 
 
         return view;
