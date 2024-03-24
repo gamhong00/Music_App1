@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Music_App1</string>
     <!-- TODO: Remove or change this placeholder text -->
-    
+
     <string name="tao_playlist">Tạo playlist\n</string>
     <string name="album">Album\n</string>
     <string name="playlist">Playlist\n</string>
