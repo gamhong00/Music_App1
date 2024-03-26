@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +49,8 @@ import retrofit2.Response;
 
 public class Search_Fragment extends Fragment {
     private ImageButton imgbtn_quaylai;
-//    private EditText edt_search;
-//    private ImageButton btn_search;
+    private EditText edt_search;
+    private ImageButton btn_search;
     private RecyclerView rcvMusic;
     List<Music> mListMusic;
 
@@ -64,7 +66,7 @@ public class Search_Fragment extends Fragment {
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         rcvMusic.addItemDecoration(itemDecoration);
         mListMusic = new ArrayList<>();
-        callApiGetMusics();
+
 
         imgbtn_quaylai = view.findViewById(R.id.quaylai);
         imgbtn_quaylai.setOnClickListener(new View.OnClickListener() {
@@ -73,8 +75,25 @@ public class Search_Fragment extends Fragment {
                 mViewPager2.setCurrentItem(temp,false);
             }
         });
+        callApiGetMusics("");
 
-//        edt_search = view.findViewById(R.id.edt_search);
+        edt_search = view.findViewById(R.id.edt_search);
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                callApiGetMusics(edt_search.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 //        btn_search = view.findViewById(R.id.btn_search);
 //        btn_search.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -82,7 +101,7 @@ public class Search_Fragment extends Fragment {
 //                if(edt_search.getText().toString() == ""){
 //
 //                }else{
-//                    callApiGetMusics(edt_search.getText().toString());
+//
 //                }
 //            }
 //        });
@@ -93,8 +112,8 @@ public class Search_Fragment extends Fragment {
         return view;
     }
 
-    public void callApiGetMusics(){
-        ApiService.apiService.getListMusics().enqueue(new Callback<List<Music>>() {
+    public void callApiGetMusics(String name){
+        ApiService.apiService.getListMusics(name).enqueue(new Callback<List<Music>>() {
             @Override
             public void onResponse(@NonNull Call<List<Music>> call, @NonNull Response<List<Music>> response) {
                 mListMusic = response.body();

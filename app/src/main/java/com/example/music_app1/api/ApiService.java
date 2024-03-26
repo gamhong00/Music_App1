@@ -10,12 +10,12 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiService {
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-    ApiService apiService = new Retrofit.Builder().baseUrl("https://api.8dzj9bzycq.workers.dev/").addConverterFactory(GsonConverterFactory.create(gson)).build().create(ApiService.class);
+    ApiService apiService = new Retrofit.Builder().baseUrl("http://172.20.10.2:3000").addConverterFactory(GsonConverterFactory.create(gson)).build().create(ApiService.class);
     @GET("music")
-    Call<List<Music>> getListMusics();
-
+    Call<List<Music>> getListMusics(@Query("name") String name);
 }

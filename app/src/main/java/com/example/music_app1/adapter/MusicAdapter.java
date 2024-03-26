@@ -26,7 +26,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
     }
 
     private final List<Music> mListMusic;
-    private MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer;
 
     @NonNull
     @Override
