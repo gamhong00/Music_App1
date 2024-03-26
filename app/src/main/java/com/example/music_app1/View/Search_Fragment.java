@@ -50,8 +50,9 @@ import retrofit2.Response;
 public class Search_Fragment extends Fragment {
     private ImageButton imgbtn_quaylai;
     private EditText edt_search;
-    private ImageButton btn_search;
+
     private RecyclerView rcvMusic;
+
     List<Music> mListMusic;
 
     @Override
@@ -94,19 +95,6 @@ public class Search_Fragment extends Fragment {
 
             }
         });
-//        btn_search = view.findViewById(R.id.btn_search);
-//        btn_search.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(edt_search.getText().toString() == ""){
-//
-//                }else{
-//
-//                }
-//            }
-//        });
-
-
 
 
         return view;

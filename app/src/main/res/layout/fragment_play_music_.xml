@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/pageplaymusic"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".View.PlayMusic_Fragment"
+    android:background="#EDBFBF">
+
+<LinearLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1">
+    <ImageView
+        android:id="@+id/img_music"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:contentDescription="hinh anh"/>
+
+
+    <TextView
+        android:id="@+id/name_music"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tên bài hát"
+        android:layout_gravity="center"
+        android:textSize="22sp"
+        android:textStyle="bold">
+
+    </TextView>
+    <TextView
+        android:id="@+id/name_artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ca sĩ"
+        android:layout_gravity="center">
+
+    </TextView>
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
+
+        <SeekBar
+            android:id="@+id/seekbar_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </SeekBar>
+
+        <ImageButton
+            android:id="@+id/playpause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Play"
+            android:src="@drawable/circle_pause_regular"
+            android:background="@android:color/transparent"
+            app:backgroundTint="@null">
+
+        </ImageButton>
+
+
+    </LinearLayout>
+</LinearLayout>
