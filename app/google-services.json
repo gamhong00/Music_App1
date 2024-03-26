@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "460249595159",
+    "project_id": "banner-9f766",
+    "storage_bucket": "banner-9f766.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460249595159:android:bab2c25af8cbc39fdf8b52",
+        "android_client_info": {
+          "package_name": "com.music.nan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkm4ItoSwZJU6u-xBsc1jpVY3Ubb2eSbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
