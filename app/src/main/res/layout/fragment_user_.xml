@@ -45,20 +45,18 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageButton
-
-            android:id="@+id/ganday"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar_user"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/custom_user"
-            android:contentDescription="@string/gan_day"
-            android:src="@drawable/user1" />
+            android:src="@drawable/avatar_default"
+             />
 
         <Button
             android:id="@+id/dangnhap"
@@ -71,6 +69,32 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             app:backgroundTint="@null" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="hong gam"
+            />
+
+        <TextView
+            android:id="@+id/email_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email"
+            />
+
     </LinearLayout>
 
     <TextView

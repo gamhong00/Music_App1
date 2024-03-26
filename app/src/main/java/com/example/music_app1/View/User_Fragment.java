@@ -3,16 +3,23 @@ package com.example.music_app1.View;
 import static com.example.music_app1.MainActivity.mViewPager2;
 
 
-
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.music_app1.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class User_Fragment extends Fragment {
 
@@ -22,11 +29,18 @@ public class User_Fragment extends Fragment {
     private ImageButton btn_notification;
     
     private ImageButton imgbtn_search;
+
+    LinearLayout linearLayout1, linearLayout2;
+    private ImageView avatar_user;
+    private TextView name_user, email_user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_, container, false);
         // Inflate the layout for this fragment
+
+        initUI(view);
+        showUserInformation();
 
         btn_notification = view.findViewById(R.id.notification);
         btn_notification.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +59,33 @@ public class User_Fragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void initUI(View view) {
+        avatar_user = view.findViewById(R.id.avatar_user);
+        name_user = view.findViewById(R.id.name_user);
+        email_user = view.findViewById(R.id.email_user);
+    }
+
+    private void showUserInformation(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null)
+            return;
+
+        String name = user.getDisplayName();
+        String email = user.getEmail();
+        Uri photoUrl = user.getPhotoUrl();
+
+        if(name == null) {
+            name_user.setVisibility(getView().GONE);
+        }
+        else{
+            name_user.setVisibility(getView().VISIBLE);
+            name_user.setText(name);
+        }
+
+        email_user.setText(email);
+        Glide.with(this).load(photoUrl).error(R.drawable.avatar_default).into(avatar_user);
     }
 
 }

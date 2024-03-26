@@ -1,5 +1,7 @@
 package com.example.music_app1.View;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,11 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.music_app1.MainActivity;
 import com.example.music_app1.R;
@@ -24,8 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText edt_email, edt_password;
+    private EditText edt_email, edt_password, edt_confirm_password;
     private Button btn_sign_up;
+    private ProgressDialog progress;
+    private AlertDialog.Builder alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +38,12 @@ public class SignUpActivity extends AppCompatActivity {
     private void initUI(){
         edt_email = findViewById(R.id.edt_email);
         edt_password = findViewById(R.id.edt_password);
+        edt_confirm_password = findViewById(R.id.edt_confirm_password);
         btn_sign_up = findViewById(R.id.btn_sign_up);
+
+        alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Loading");
+        alertDialog.setMessage("Please wait...");
     }
 
     private void initListener() {
@@ -53,11 +58,21 @@ public class SignUpActivity extends AppCompatActivity {
     private void onClickSignUp() {
         String strEmail = edt_email.getText().toString().trim();
         String strPassword = edt_password.getText().toString().trim();
+        String strConfirmPassword = edt_confirm_password.getText().toString().trim(); // Lấy mật khẩu xác nhận
+
+        // Kiểm tra mật khẩu và mật khẩu xác nhận
+        if (!strPassword.equals(strConfirmPassword)) {
+            Toast.makeText(this, "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        progress = ProgressDialog.show(this, "", "Please wait...", true);
         auth.createUserWithEmailAndPassword(strEmail, strPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progress.dismiss();
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                         Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
