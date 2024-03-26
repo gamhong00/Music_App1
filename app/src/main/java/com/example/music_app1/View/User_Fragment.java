@@ -3,6 +3,7 @@ package com.example.music_app1.View;
 import static com.example.music_app1.MainActivity.mViewPager2;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,6 +34,8 @@ public class User_Fragment extends Fragment {
     LinearLayout linearLayout1, linearLayout2;
     private ImageView avatar_user;
     private TextView name_user, email_user;
+
+    private Button btn_sign_out;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class User_Fragment extends Fragment {
                 mViewPager2.setCurrentItem(5,false);
             }
         });
+
+        setSignOutClickListener();
         return view;
     }
 
@@ -65,6 +70,8 @@ public class User_Fragment extends Fragment {
         avatar_user = view.findViewById(R.id.avatar_user);
         name_user = view.findViewById(R.id.name_user);
         email_user = view.findViewById(R.id.email_user);
+
+        btn_sign_out=view.findViewById(R.id.btn_sign_out);
     }
 
     private void showUserInformation(){
@@ -87,5 +94,19 @@ public class User_Fragment extends Fragment {
         email_user.setText(email);
         Glide.with(this).load(photoUrl).error(R.drawable.avatar_default).into(avatar_user);
     }
+
+    private void setSignOutClickListener() {
+        btn_sign_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(), SignInActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+    }
+
 
 }

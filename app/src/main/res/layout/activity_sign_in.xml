@@ -20,6 +20,7 @@
         android:textColor="#B236C8"/>
     
     <EditText
+        android:id="@+id/edt_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
@@ -29,9 +30,10 @@
         android:textColor="@color/black"/>
 
     <EditText
+        android:id="@+id/edt_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Passwword"
+        android:hint="Mật khẩu"
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:imeOptions="actionDone"
@@ -39,6 +41,7 @@
         android:textColor="@color/black"/>
 
     <Button
+        android:id="@+id/btn_sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"

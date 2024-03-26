@@ -60,6 +60,12 @@ public class SignUpActivity extends AppCompatActivity {
         String strPassword = edt_password.getText().toString().trim();
         String strConfirmPassword = edt_confirm_password.getText().toString().trim(); // Lấy mật khẩu xác nhận
 
+        // Kiểm tra xem người dùng đã nhập đủ thông tin chưa
+        if (strEmail.isEmpty() || strPassword.isEmpty() || strConfirmPassword.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // Kiểm tra mật khẩu và mật khẩu xác nhận
         if (!strPassword.equals(strConfirmPassword)) {
             Toast.makeText(this, "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
