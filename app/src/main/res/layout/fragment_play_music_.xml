@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/pageplaymusic"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".View.PlayMusic_Fragment"
+    android:background="#EDBFBF">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+        <ImageButton
+            android:id="@+id/thugon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="thu gọn"
+            android:src="@drawable/down"
+            android:background="@android:color/transparent"
+            android:layout_gravity="bottom|start">
+
+        </ImageButton>
+
+    </LinearLayout>
+
+<LinearLayout
+    android:id="@+id/content_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1">
+
+    <com.example.music_app1.View.CircularImageView
+        android:id="@+id/img_music"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:contentDescription="hinh anh"
+        android:src="@drawable/custom_button"
+        app:backgroundTint="@null"/>
+
+
+    <TextView
+        android:id="@+id/name_music"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tên bài hát"
+        android:layout_gravity="center"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp">
+
+    </TextView>
+    <TextView
+        android:id="@+id/name_artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ca sĩ"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp">
+
+    </TextView>
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
+
+        <SeekBar
+            android:id="@+id/seekbar_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </SeekBar>
+
+        <ImageButton
+            android:id="@+id/playpause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Play"
+            android:src="@drawable/circle_pause_regular"
+            android:background="@android:color/transparent"
+            app:backgroundTint="@null"
+            android:contentDescription="hinh anh">
+
+        </ImageButton>
+
+
+    </LinearLayout>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+
+    </LinearLayout>
+</LinearLayout>

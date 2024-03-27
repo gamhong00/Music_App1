@@ -18,6 +18,11 @@ public class Library_Fragment extends Fragment {
     // super.onAttach(context);
     // Log.e("tincoder", "Fragment 1");
     // }
+    // @Override
+    // public void onAttach(@NonNull Context context) {
+    // super.onAttach(context);
+    // Log.e("tincoder", "Fragment 1");
+    // }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
