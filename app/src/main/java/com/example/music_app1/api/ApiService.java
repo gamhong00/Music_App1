@@ -15,7 +15,7 @@ import retrofit2.http.Query;
 
 public interface ApiService {
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.137.1:3000").addConverterFactory(GsonConverterFactory.create(gson)).build().create(ApiService.class);
+    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.20.104:3000").addConverterFactory(GsonConverterFactory.create(gson)).build().create(ApiService.class);
     @GET("music")
     Call<List<Music>> getListMusics(@Query("name") String name);
 }
