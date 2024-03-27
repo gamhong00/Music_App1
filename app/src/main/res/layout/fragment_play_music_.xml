@@ -9,18 +9,45 @@
     tools:context=".View.PlayMusic_Fragment"
     android:background="#EDBFBF">
 
-<LinearLayout
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+        <ImageButton
+            android:id="@+id/thugon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="thu gọn"
+            android:src="@drawable/down"
+            android:background="@android:color/transparent"
+            android:layout_gravity="bottom|start">
 
+        </ImageButton>
+
+    </LinearLayout>
+
+<LinearLayout
+    android:id="@+id/content_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_weight="1">
-    <ImageView
+
+    <com.example.music_app1.View.CircularImageView
         android:id="@+id/img_music"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
-        android:contentDescription="hinh anh"/>
+        android:contentDescription="hinh anh"
+        android:src="@drawable/custom_button"
+        app:backgroundTint="@null"/>
 
 
     <TextView
@@ -30,7 +57,8 @@
         android:text="Tên bài hát"
         android:layout_gravity="center"
         android:textSize="22sp"
-        android:textStyle="bold">
+        android:textStyle="bold"
+        android:layout_marginTop="10dp">
 
     </TextView>
     <TextView
@@ -38,7 +66,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ca sĩ"
-        android:layout_gravity="center">
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp">
 
     </TextView>
 
@@ -66,10 +96,18 @@
             android:text="Play"
             android:src="@drawable/circle_pause_regular"
             android:background="@android:color/transparent"
-            app:backgroundTint="@null">
+            app:backgroundTint="@null"
+            android:contentDescription="hinh anh">
 
         </ImageButton>
 
+
+    </LinearLayout>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
 
     </LinearLayout>
 </LinearLayout>

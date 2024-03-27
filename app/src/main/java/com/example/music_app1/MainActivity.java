@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import com.example.music_app1.View.ViewPagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-
 public class MainActivity extends AppCompatActivity {
 
     public static int temp;
