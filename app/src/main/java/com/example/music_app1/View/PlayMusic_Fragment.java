@@ -29,7 +29,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.GradientDrawable;
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.palette.graphics.Palette;
+
 
 
 
@@ -101,15 +101,8 @@ public class PlayMusic_Fragment extends Fragment {
                 if(mediaPlayer.isPlaying()){
                     mediaPlayer.pause();
                     PlayPause.setImageResource(R.drawable.circle_play_regular);
-                    // Lấy animation hiện tại và hủy nó
                     Animation currentAnimation = imgMusic.getAnimation();
-                    if (currentAnimation != null) {
-                        currentAnimation.cancel();
 
-                        // Lưu lại vị trí hiện tại của animation
-                        float currentRotation = imgMusic.getRotation();
-                        imgMusic.setTag(currentRotation);
-                    }
                 }
                 else{
                     mediaPlayer.start();
