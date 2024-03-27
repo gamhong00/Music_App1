@@ -10,16 +10,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 public class Library_Fragment extends Fragment {
 
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        Log.e("tincoder", "Fragment 1");
-//    }
+    // @Override
+    // public void onAttach(@NonNull Context context) {
+    // super.onAttach(context);
+    // Log.e("tincoder", "Fragment 1");
+    // }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_library_, container, false);
     }
