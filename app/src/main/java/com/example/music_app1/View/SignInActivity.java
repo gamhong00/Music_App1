@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.music_app1.MainActivity;
 import com.example.music_app1.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,10 +39,6 @@ public class SignInActivity extends AppCompatActivity {
         edt_email = findViewById(R.id.edt_email);
         edt_password = findViewById(R.id.edt_password);
         btn_sign_in = findViewById(R.id.btn_sign_in);
-
-//        alertDialog = new AlertDialog.Builder(this);
-//        alertDialog.setTitle("Loading");
-//        alertDialog.setMessage("Please wait...");
     }
 
     private void initListener() {

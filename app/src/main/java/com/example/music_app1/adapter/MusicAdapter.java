@@ -6,32 +6,23 @@ import static com.example.music_app1.View.PlayMusic_Fragment.nameArtist;
 import static com.example.music_app1.View.PlayMusic_Fragment.nameMusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.pageplaymusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.seekBar;
-
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
-import com.example.music_app1.View.PlayMusic_Fragment;
 import com.squareup.picasso.Picasso;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -43,8 +34,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
     private final List<Music> mListMusic;
     public static MediaPlayer mediaPlayer;
-
-
 
     @NonNull
     @Override
@@ -161,8 +150,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         });
         mediaPlayer.start();
     }
-
-
 
 
 }

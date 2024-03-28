@@ -14,18 +14,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
-
 import com.bumptech.glide.Glide;
 import com.example.music_app1.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 public class User_Fragment extends Fragment {
-
-
-
+    private ImageButton phongtoButton;
     int currentItem = mViewPager2.getCurrentItem();
     private ImageButton btn_notification;
     
@@ -107,6 +104,4 @@ public class User_Fragment extends Fragment {
             }
         });
     }
-
-
 }

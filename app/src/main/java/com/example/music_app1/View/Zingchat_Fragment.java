@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-
 import androidx.fragment.app.Fragment;
-
 import com.example.music_app1.R;
 
 public class Zingchat_Fragment extends Fragment {
