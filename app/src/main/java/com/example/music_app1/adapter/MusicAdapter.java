@@ -1,5 +1,6 @@
 package com.example.music_app1.adapter;
 
+
 import static com.example.music_app1.MainActivity.mViewPager2;
 import static com.example.music_app1.View.PlayMusic_Fragment.imgMusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.nameArtist;
