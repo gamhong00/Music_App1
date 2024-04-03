@@ -1,4 +1,5 @@
 package com.example.music_app1;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle());
         mViewPager2.setAdapter(adapter);
-        mViewPager2.setOffscreenPageLimit(3); //load trước 3 viewPager
-        mViewPager2.setUserInputEnabled(false);
+        mViewPager2.setOffscreenPageLimit(3); // load trước 3 viewPager
 
+        mViewPager2.setUserInputEnabled(false);
 
         mBottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
 
@@ -45,20 +46,20 @@ public class MainActivity extends AppCompatActivity {
 
                 int id = item.getItemId();
                 if (id == R.id.menu_library) {
-                    mViewPager2.setCurrentItem(0,false);
+                    mViewPager2.setCurrentItem(0, false);
                     temp = 0;
 
                     return true;
                 } else if (id == R.id.menu_explore) {
-                    mViewPager2.setCurrentItem(1,false);
+                    mViewPager2.setCurrentItem(1, false);
                     temp = 1;
                     return true;
                 } else if (id == R.id.menu_zingchat) {
-                    mViewPager2.setCurrentItem(2,false);
+                    mViewPager2.setCurrentItem(2, false);
                     temp = 2;
                     return true;
                 } else if (id == R.id.menu_user) {
-                    mViewPager2.setCurrentItem(3,false);
+                    mViewPager2.setCurrentItem(3, false);
                     temp = 3;
                     return true;
                 }
@@ -68,4 +69,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }

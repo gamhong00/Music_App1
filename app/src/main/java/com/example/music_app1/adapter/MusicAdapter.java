@@ -1,19 +1,18 @@
 package com.example.music_app1.adapter;
 
+
 import static com.example.music_app1.MainActivity.mViewPager2;
 import static com.example.music_app1.View.PlayMusic_Fragment.imgMusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.nameArtist;
 import static com.example.music_app1.View.PlayMusic_Fragment.nameMusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.pageplaymusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.seekBar;
-
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
@@ -21,17 +20,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
-import com.example.music_app1.View.PlayMusic_Fragment;
 import com.squareup.picasso.Picasso;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -43,8 +36,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
     private final List<Music> mListMusic;
     public static MediaPlayer mediaPlayer;
-
-
 
     @NonNull
     @Override
@@ -62,6 +53,9 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         holder.tvname.setText(String.valueOf(music.getName()));
         holder.tvartist.setText(String.valueOf((music.getArtist())));
         Picasso.get().load(music.getImage()).into(holder.imgMusic);
+        if (music.isLike()){
+            holder.btnlike.setImageResource(R.drawable.heart_solid);
+        }
         holder.btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +85,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         private final ImageView imgMusic;
 
         private final LinearLayout btnplay;
+        private final ImageButton btnlike;
 
         public MusicViewHolder(@NonNull View itemView){
             super(itemView);
@@ -98,6 +93,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
             tvartist = itemView.findViewById(R.id.tv_artist);
             imgMusic = itemView.findViewById(R.id.img_music);
             btnplay = itemView.findViewById(R.id.play);
+            btnlike = itemView.findViewById(R.id.heart);
         }
     }
     private void playSound(String link) {
@@ -161,8 +157,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         });
         mediaPlayer.start();
     }
-
-
 
 
 }

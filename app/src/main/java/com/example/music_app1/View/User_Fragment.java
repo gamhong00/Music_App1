@@ -2,7 +2,6 @@ package com.example.music_app1.View;
 
 import static com.example.music_app1.MainActivity.mViewPager2;
 
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,21 +13,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
-
 import com.bumptech.glide.Glide;
 import com.example.music_app1.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class  User_Fragment extends Fragment {
-
-
+public class User_Fragment extends Fragment {
 
     int currentItem = mViewPager2.getCurrentItem();
     private ImageButton btn_notification;
-    
+
     private ImageButton imgbtn_search;
 
     LinearLayout linearLayout1, linearLayout2;
@@ -36,9 +31,10 @@ public class  User_Fragment extends Fragment {
     private TextView name_user, email_user;
 
     private Button btn_sign_out;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_, container, false);
         // Inflate the layout for this fragment
 
@@ -53,12 +49,11 @@ public class  User_Fragment extends Fragment {
             }
         });
 
-
         imgbtn_search = view.findViewById(R.id.search);
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager2.setCurrentItem(5,false);
+                mViewPager2.setCurrentItem(5, false);
             }
         });
 
@@ -71,22 +66,21 @@ public class  User_Fragment extends Fragment {
         name_user = view.findViewById(R.id.name_user);
         email_user = view.findViewById(R.id.email_user);
 
-        btn_sign_out=view.findViewById(R.id.btn_sign_out);
+        btn_sign_out = view.findViewById(R.id.btn_sign_out);
     }
 
-    private void showUserInformation(){
+    private void showUserInformation() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user == null)
+        if (user == null)
             return;
 
         String name = user.getDisplayName();
         String email = user.getEmail();
         Uri photoUrl = user.getPhotoUrl();
 
-        if(name == null) {
+        if (name == null) {
             name_user.setVisibility(getView().GONE);
-        }
-        else{
+        } else {
             name_user.setVisibility(getView().VISIBLE);
             name_user.setText(name);
         }
@@ -107,6 +101,4 @@ public class  User_Fragment extends Fragment {
             }
         });
     }
-
-
 }

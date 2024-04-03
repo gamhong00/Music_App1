@@ -9,9 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.music_app1.MainActivity;
 import com.example.music_app1.R;
 import com.google.android.gms.tasks.OnCompleteListener;

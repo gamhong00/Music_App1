@@ -13,7 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_weight="1">
         <ImageButton
             android:id="@+id/thugon"
             android:layout_width="100dp"
@@ -21,58 +22,55 @@
             android:contentDescription="thu gọn"
             android:src="@drawable/down"
             android:background="@android:color/transparent"
-            android:layout_gravity="bottom|start">
+            android:onClick="minimizeFragment">
 
         </ImageButton>
 
     </LinearLayout>
-
 <LinearLayout
-    android:id="@+id/content_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_weight="1">
-
-
-    <com.example.music_app1.View.CircularImageView
-        android:id="@+id/img_music"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center"
-        android:contentDescription="hinh anh"
-        android:src="@drawable/custom_button"
-        app:backgroundTint="@null" />
-
-    <TextView
-        android:id="@+id/name_music"
-        android:layout_width="wrap_content"
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tên bài hát"
-        android:layout_gravity="center"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp">
+        android:orientation="vertical"
+        android:layout_weight="1">
 
-    </TextView>
-    <TextView
-        android:id="@+id/name_artist"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ca sĩ"
-        android:textSize="20sp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp">
+        android:orientation="vertical">
 
-    </TextView>
+        <com.example.music_app1.View.CircularImageView
+            android:id="@+id/img_music"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:contentDescription="hinh anh"
+            android:src="@drawable/custom_button"
+            app:backgroundTint="@null"/>
 
-</LinearLayout>
+
+        <TextView
+            android:id="@+id/name_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên bài hát"
+            android:layout_gravity="center"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp">
+        </TextView>
+        <TextView
+            android:id="@+id/name_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ca sĩ"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp">
+        </TextView>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,13 +99,28 @@
 
         </ImageButton>
 
-
     </LinearLayout>
+
 </LinearLayout>
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
         >
+
+        <ImageButton
+            android:id="@+id/phongto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:contentDescription="thu gọn"
+            android:src="@drawable/expandarrow"
+            android:layout_marginLeft="20dp"
+            android:onClick="maximizeFragment">
+
+        </ImageButton>
 
     </LinearLayout>
 </LinearLayout>
