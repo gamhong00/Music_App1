@@ -40,6 +40,7 @@
     android:orientation="vertical"
     android:layout_weight="1">
 
+
     <com.example.music_app1.View.CircularImageView
         android:id="@+id/img_music"
         android:layout_width="300dp"
@@ -47,8 +48,7 @@
         android:layout_gravity="center"
         android:contentDescription="hinh anh"
         android:src="@drawable/custom_button"
-        app:backgroundTint="@null"/>
-
+        app:backgroundTint="@null" />
 
     <TextView
         android:id="@+id/name_music"

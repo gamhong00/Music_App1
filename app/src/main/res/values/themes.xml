@@ -4,6 +4,8 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
+    <style name="rounded_corner_image">
+        <item name="cornerSize">50%</item>
+    </style>
     <style name="Theme.Music_App1" parent="Base.Theme.Music_App1" />
 </resources>

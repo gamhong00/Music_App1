@@ -34,9 +34,12 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-        <activity
-            android:name=".Search"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".Search"-->
+<!--            android:exported="false" />-->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2130077702767467~9368541719"/>
     </application>
 
 </manifest>

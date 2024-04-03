@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/pageplaylist"
+    tools:context=".View.Playlist_Fragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,14 +15,14 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/imagebntback"
+            android:id="@+id/imagebntBack"
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:background="#F6F2F2"
             app:srcCompat="@drawable/ic_back1" />
 
         <ImageButton
-            android:id="@+id/imagebntmore"
+            android:id="@+id/imagebntMore"
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:layout_marginStart="300dp"
@@ -28,14 +30,14 @@
             app:srcCompat="@drawable/ic_more" />
             </LinearLayout>
     <ImageView
-            android:id="@+id/imagebaihat"
+            android:id="@+id/imageMusic"
             android:layout_width="173dp"
             android:layout_height="173dp"
             android:layout_gravity="center"
             tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-            android:id="@+id/textplaylist"
+            android:id="@+id/textPlaylist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -43,7 +45,7 @@
             android:text="Tên Playlist" />
 
     <TextView
-            android:id="@+id/textuser"
+            android:id="@+id/textUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -54,22 +56,23 @@
             android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textsobaihat"
+            android:id="@+id/textSobaihat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="149dp"
             android:text="Số Bài Hát" />
 
         <ImageView
-            android:id="@+id/imagebaihat"
+            android:id="@+id/imageBaihat"
             android:layout_width="4dp"
             android:layout_height="4dp"
             android:layout_marginTop="8dp"
-            app:srcCompat="@drawable/ic_dots" />
+            app:srcCompat="@drawable/ic_dots"
+            tools:ignore="DuplicateIds" />
 
 
         <TextView
-            android:id="@+id/textsophut"
+            android:id="@+id/textSophut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -84,15 +87,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <ImageButton
-                android:id="@+id/imagebntdown"
+                android:id="@+id/imagebntDown"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="55dp"
                 android:backgroundTint="#F3F1F1"
                 android:src="@drawable/ic_download"
-                android:tint="#302F2F" />
+                app:tint="#302F2F" />
             <TextView
-                android:id="@+id/texttaixuong"
+                android:id="@+id/textTaixuong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -100,7 +103,7 @@
                 android:text="Tải xuống" />
         </LinearLayout>
         <Button
-            android:id="@+id/bntphatngaunhien"
+            android:id="@+id/bntPhatngaunhien"
             android:layout_width="170dp"
             android:layout_height="40dp"
             android:text="Phát Ngẫu Nhiên" />
@@ -109,14 +112,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <ImageButton
-                android:id="@+id/imagebntplus"
+                android:id="@+id/imagebntPlus"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="55dp"
                 android:backgroundTint="#F4F1F1"
                 android:src="@drawable/ic_plus" />
             <TextView
-                android:id="@+id/textthembai"
+                android:id="@+id/textThembai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="38dp"
@@ -127,7 +130,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerviewplaylist"
+        android:id="@+id/recyclerviewPlaylist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"/>
@@ -136,14 +139,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/textbathaigoiy"
+            android:id="@+id/textBathatgoiy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:textSize="16dp"
             android:text="Bài hát gợi ý" />
         <TextView
-            android:id="@+id/textbaihatthinhhanh"
+            android:id="@+id/textBaihatthinhhanh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -151,13 +154,13 @@
             android:text="Bài hát thịnh hành trên Zing MP3" />
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerviewbaihatthinhhanh"
+        android:id="@+id/recyclerviewBaihatthinhhanh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"/>
     <Button
-        android:layout_below="@+id/listviewsuggestedsong"
-        android:id="@+id/button"
+        android:layout_below="@+id/recyclerviewBaihatthinhhanh"
+        android:id="@+id/btnThembai"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_gravity="center"
