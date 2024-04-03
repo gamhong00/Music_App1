@@ -41,10 +41,31 @@ public class Music {
         this.link = link;
     }
 
+    public int getView() {
+        return view;
+    }
+
+    public void setView(int view) {
+        this.view = view;
+    }
+
+    public boolean isLike() {
+        return like;
+    }
+
+    public void setLike(boolean like) {
+        this.like = like;
+    }
+
     private int id;
     private String name;
     private String artist;
     private String image;
     private String link;
+
+
+
+    private int view;
+    private boolean like;
 
 }

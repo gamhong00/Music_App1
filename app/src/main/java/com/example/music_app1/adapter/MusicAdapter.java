@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -52,6 +53,9 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         holder.tvname.setText(String.valueOf(music.getName()));
         holder.tvartist.setText(String.valueOf((music.getArtist())));
         Picasso.get().load(music.getImage()).into(holder.imgMusic);
+        if (music.isLike()){
+            holder.btnlike.setImageResource(R.drawable.heart_solid);
+        }
         holder.btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +85,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         private final ImageView imgMusic;
 
         private final LinearLayout btnplay;
+        private final ImageButton btnlike;
 
         public MusicViewHolder(@NonNull View itemView){
             super(itemView);
@@ -88,6 +93,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
             tvartist = itemView.findViewById(R.id.tv_artist);
             imgMusic = itemView.findViewById(R.id.img_music);
             btnplay = itemView.findViewById(R.id.play);
+            btnlike = itemView.findViewById(R.id.heart);
         }
     }
     private void playSound(String link) {
