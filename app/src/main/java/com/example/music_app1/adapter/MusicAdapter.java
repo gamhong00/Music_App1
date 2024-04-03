@@ -53,9 +53,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         holder.tvname.setText(String.valueOf(music.getName()));
         holder.tvartist.setText(String.valueOf((music.getArtist())));
         Picasso.get().load(music.getImage()).into(holder.imgMusic);
-        if (music.isLike()){
-            holder.btnlike.setImageResource(R.drawable.heart_solid);
-        }
+
         holder.btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

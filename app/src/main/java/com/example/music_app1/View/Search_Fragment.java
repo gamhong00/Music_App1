@@ -43,10 +43,10 @@ public class Search_Fragment extends Fragment {
     private ImageButton imgbtn_quaylai;
     private EditText edt_search;
 
-    private RecyclerView rcvMusic;
+    private   RecyclerView rcvMusic;
 
-    private MusicAdapter mMusicAdapter;
-    List<Music> mListMusic;
+    private   MusicAdapter  mMusicAdapter;
+     List<Music> mListMusic;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,7 +62,7 @@ public class Search_Fragment extends Fragment {
 
         mMusicAdapter = new MusicAdapter(mListMusic);
         rcvMusic.setAdapter(mMusicAdapter);
-        callApiGetMusics();
+        callApiGetMusics("");
         imgbtn_quaylai = view.findViewById(R.id.quaylai);
         imgbtn_quaylai.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +81,8 @@ public class Search_Fragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                callApiGetMusics();
+                mListMusic.clear();
+                callApiGetMusics(edt_search.getText().toString());
             }
 
             @Override
@@ -94,7 +95,7 @@ public class Search_Fragment extends Fragment {
         return view;
     }
 
-    public void callApiGetMusics(){
+    public void callApiGetMusics(String keyword){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("music");
         Log.d("tag",myRef.toString());
@@ -103,8 +104,10 @@ public class Search_Fragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Music music = snapshot.getValue(Music.class);
                 if(music != null){
-                    mListMusic.add(music);
-                    mMusicAdapter.notifyDataSetChanged();
+                    if(music.getName().toLowerCase().contains(keyword.toLowerCase())){
+                        mListMusic.add(music);
+                        mMusicAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 

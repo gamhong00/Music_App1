@@ -49,13 +49,7 @@ public class Music {
         this.view = view;
     }
 
-    public boolean isLike() {
-        return like;
-    }
 
-    public void setLike(boolean like) {
-        this.like = like;
-    }
 
     private int id;
     private String name;
@@ -66,6 +60,6 @@ public class Music {
 
 
     private int view;
-    private boolean like;
+
 
 }
