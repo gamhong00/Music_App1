@@ -12,18 +12,15 @@ import android.widget.ImageButton;
 import com.example.music_app1.R;
 
 public class Library_Fragment extends Fragment {
-    private ImageButton phongtoButton;
+
     private ImageButton imgbtn_search;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_library_, container, false);
-        phongtoButton = view.findViewById(R.id.phongto);
-        // Show phongtoButton if content is minimized
-        if (!StateUtility.isContentVisible) {
-            phongtoButton.setVisibility(View.VISIBLE);
-        }
+
+
 
         imgbtn_search = view.findViewById(R.id.search);
         imgbtn_search.setOnClickListener(new View.OnClickListener() {

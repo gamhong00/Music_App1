@@ -2,9 +2,15 @@ package com.example.music_app1.adapter;
 
 
 import static com.example.music_app1.MainActivity.mViewPager2;
+import static com.example.music_app1.MainActivity.mViewPagerMusic;
+import static com.example.music_app1.View.PlayMusic_Fragment.PlayPause;
+import static com.example.music_app1.View.PlayMusic_Fragment.PlayPause_;
 import static com.example.music_app1.View.PlayMusic_Fragment.imgMusic;
+import static com.example.music_app1.View.PlayMusic_Fragment.imgMusic_;
 import static com.example.music_app1.View.PlayMusic_Fragment.nameArtist;
+import static com.example.music_app1.View.PlayMusic_Fragment.nameArtist_;
 import static com.example.music_app1.View.PlayMusic_Fragment.nameMusic;
+import static com.example.music_app1.View.PlayMusic_Fragment.nameMusic_;
 import static com.example.music_app1.View.PlayMusic_Fragment.pageplaymusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.seekBar;
 import android.media.AudioAttributes;
@@ -57,14 +63,21 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         holder.btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager2.setCurrentItem(6,false);
-                playSound(music.getLink());
+                PlayPause.setImageResource(R.drawable.circle_pause_regular);
+                PlayPause_.setImageResource(R.drawable.pause_solid);
+
                 nameMusic.setText(holder.tvname.getText());
+                nameMusic_.setText(holder.tvname.getText());
                 nameArtist.setText(holder.tvartist.getText());
+                nameArtist_.setText(holder.tvartist.getText());
                 imgMusic.setImageDrawable(holder.imgMusic.getDrawable());
                 Animation rotation = AnimationUtils.loadAnimation(imgMusic.getContext(), R.anim.rotate);
                 imgMusic.startAnimation(rotation);
-
+                imgMusic_.setImageDrawable(holder.imgMusic.getDrawable());
+                Animation rotation1 = AnimationUtils.loadAnimation(imgMusic_.getContext(), R.anim.rotate);
+                imgMusic_.startAnimation(rotation1);
+                mViewPagerMusic.setCurrentItem(0,false);
+                playSound(music.getLink());
                 load_seekbar();
             }
         });

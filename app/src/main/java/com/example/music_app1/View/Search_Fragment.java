@@ -82,7 +82,7 @@ public class Search_Fragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mListMusic.clear();
-                callApiGetMusics(edt_search.getText().toString());
+                callApiGetMusics(edt_search.getText().toString().toLowerCase());
             }
 
             @Override
@@ -104,7 +104,7 @@ public class Search_Fragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Music music = snapshot.getValue(Music.class);
                 if(music != null){
-                    if(music.getName().toLowerCase().contains(keyword.toLowerCase())){
+                    if(music.getName().toLowerCase().contains(keyword)){
                         mListMusic.add(music);
                         mMusicAdapter.notifyDataSetChanged();
                     }
