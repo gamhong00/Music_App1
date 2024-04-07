@@ -6,6 +6,19 @@
     android:orientation="horizontal"
     android:padding="14dp">
 
+    <TextView
+        android:id="@+id/NumberRank"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:text="1"
+        android:textSize="32sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginRight="5dp"
+        android:gravity="center"
+        >
+
+    </TextView>
     <ImageView
 
         android:id="@+id/img_music"
@@ -34,19 +47,5 @@
             android:textColor="@color/black"
             android:textSize="14sp" />
     </LinearLayout>
-    <ImageButton
-        android:id="@+id/heart"
-        android:layout_weight="1"
-        android:layout_width="40dp"
-        android:layout_height="match_parent"
-        android:src="@drawable/heart_regular"
-        android:background="@android:color/transparent"/>
-    <ImageButton
-        android:id="@+id/downmusic"
-        android:layout_weight="1"
-        android:layout_width="40dp"
-        android:layout_height="match_parent"
-        android:src="@drawable/downloadsolid"
-        android:background="@android:color/transparent"
-        android:layout_marginStart="10dp"/>
+
 </LinearLayout>

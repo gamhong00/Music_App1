@@ -1,6 +1,11 @@
 package com.example.music_app1.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 public class Music {
+
     public int getId() {
         return id;
     }
@@ -41,25 +46,47 @@ public class Music {
         this.link = link;
     }
 
-    public int getView() {
-        return view;
+    public int getListens() {
+        return listens;
     }
 
-    public void setView(int view) {
-        this.view = view;
+    public void setListens(int listens) {
+        this.listens = listens;
     }
 
+    public Music() {
 
+    }
 
     private int id;
     private String name;
+
+
+
+
     private String artist;
     private String image;
     private String link;
 
+    private int listens;
 
+    @Override
+    public String toString() {
+        return "Music{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", artist='" + artist + '\'' +
+                ", image='" + image + '\'' +
+                ", link='" + link + '\'' +
+                ", listens=" + listens +
+                '}';
+    }
 
-    private int view;
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("listens", listens);
+        return result;
+    }
 
 
 }

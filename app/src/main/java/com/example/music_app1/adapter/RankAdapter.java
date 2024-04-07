@@ -1,9 +1,5 @@
 package com.example.music_app1.adapter;
 
-
-
-import static com.example.music_app1.MainActivity.mViewPager2;
-import static com.example.music_app1.MainActivity.mViewPagerMusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.PlayPause;
 import static com.example.music_app1.View.PlayMusic_Fragment.PlayPause_;
 import static com.example.music_app1.View.PlayMusic_Fragment.curentTime;
@@ -16,15 +12,13 @@ import static com.example.music_app1.View.PlayMusic_Fragment.nameMusic_;
 import static com.example.music_app1.View.PlayMusic_Fragment.pageplaymusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.seekBar;
 import static com.example.music_app1.View.PlayMusic_Fragment.totalTime;
+import static com.example.music_app1.adapter.MusicAdapter.mediaPlayer;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,40 +29,39 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.util.List;
 
+public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankViewHolder> {
+    private List<Integer> mDataList;
 
-public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHolder> {
-    public MusicAdapter(List<Music> mListMusic) {
+    private List<Music> mListMusic;
+    public RankAdapter(List<Integer> dataList, List<Music> mListMusic) {
+        this.mDataList = dataList;
         this.mListMusic = mListMusic;
     }
 
-    public void setData(List<Music> dataList) {
-        this.mListMusic = dataList;
-        notifyDataSetChanged();
-    }
 
-    private List<Music> mListMusic;
-    public static MediaPlayer mediaPlayer;
 
     @NonNull
     @Override
-    public MusicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-        return new MusicViewHolder(view);
+    public RankAdapter.RankViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_zingchat, parent, false);
+        return new RankViewHolder(view);
     }
 
-
     @Override
-    public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RankAdapter.RankViewHolder holder, int position) {
         Music music = mListMusic.get(position);
         if (music == null){
             return;
@@ -109,6 +102,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                 pageplaymusic.setBackground(gradientDrawable);
             }
         });
+        int number = mDataList.get(position);
+        holder.NumberRank.setText(String.valueOf(number));
     }
 
     @Override
@@ -119,15 +114,16 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         return 0;
     }
 
-    public static class MusicViewHolder extends RecyclerView.ViewHolder {
+    public class RankViewHolder extends RecyclerView.ViewHolder {
+       private TextView NumberRank;
         private final TextView tvname, tvartist;
         private final ImageView imgMusic;
 
         private final LinearLayout btnplay;
         private final ImageButton btnlike;
-
-        public MusicViewHolder(@NonNull View itemView){
+        public RankViewHolder(@NonNull View itemView) {
             super(itemView);
+            NumberRank = itemView.findViewById(R.id.NumberRank);
             tvname = itemView.findViewById(R.id.tv_name);
             tvartist = itemView.findViewById(R.id.tv_artist);
             imgMusic = itemView.findViewById(R.id.img_music);
@@ -135,6 +131,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
             btnlike = itemView.findViewById(R.id.heart);
         }
     }
+
     private void playSound(String link) {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
@@ -270,5 +267,4 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
 
     }
-
 }
