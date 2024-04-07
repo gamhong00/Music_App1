@@ -8,49 +8,78 @@
     android:orientation="vertical"
     android:padding="20dp"
     android:gravity="center"
-    android:background="@color/color_app"
+    android:background="@drawable/custom_bg"
     tools:context=".View.SignUpActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Đăng ký"
+        android:layout_marginBottom="20dp"
         android:textStyle="bold"
         android:textSize="30sp"
-        android:textColor="#B236C8"/>
+        android:textColor="@color/color_purple" />
 
-    <EditText
-        android:id="@+id/edt_email"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="10dp"
-        android:imeOptions="actionNext"
-        android:maxLength="100"
-        android:textColor="@color/black"/>
+        app:hintEnabled="false" >
 
-    <EditText
-        android:id="@+id/edt_password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"
+            android:maxLength="100"
+            android:background="@drawable/custom_edt_round"
+            android:textColor="@color/black"
+            android:hint="Email"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Mật khẩu"
-        android:inputType="textPassword"
+        app:passwordToggleEnabled="true"
         android:layout_marginTop="10dp"
-        android:imeOptions="actionNext"
-        android:maxLength="100"
-        android:textColor="@color/black"/>
+        app:hintEnabled="false">
 
-    <EditText
-        android:id="@+id/edt_confirm_password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:imeOptions="actionNext"
+            android:maxLength="100"
+            android:background="@drawable/custom_edt_round"
+            android:textColor="@color/black"
+            android:hint="Mật khẩu"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nhập lại mật khẩu"
-        android:inputType="textPassword"
+        app:passwordToggleEnabled="true"
         android:layout_marginTop="10dp"
-        android:imeOptions="actionDone"
-        android:maxLength="100"
-        android:textColor="@color/black"/>
+        app:hintEnabled="false" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:maxLength="100"
+            android:background="@drawable/custom_edt_round"
+            android:textColor="@color/black"
+            android:hint="Nhập lại mật khẩu"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_sign_up"

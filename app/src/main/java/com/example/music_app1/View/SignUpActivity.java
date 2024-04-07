@@ -16,13 +16,14 @@ import com.example.music_app1.MainActivity;
 import com.example.music_app1.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText edt_email, edt_password, edt_confirm_password;
+    private TextInputEditText edt_email, edt_password, edt_confirm_password;
     private Button btn_sign_up;
     private ProgressDialog progress;
     private AlertDialog.Builder alertDialog;
@@ -81,9 +82,9 @@ public class SignUpActivity extends AppCompatActivity {
                         progress.dismiss();
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finishAffinity();
+                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finishAffinity();
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(SignUpActivity.this, "Authentication failed.",

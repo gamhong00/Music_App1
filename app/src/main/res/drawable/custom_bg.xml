@@ -1,0 +1,7 @@
+<!-- gradient_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+    android:startColor="#C94BFF"
+    android:endColor="#FF4774"
+    android:angle="45"/> <!-- Góc của gradient, trong đoạn mã này, gradient sẽ bắt đầu từ trên cùng bên trái và kết thúc ở dưới cùng bên phải -->
+</shape>

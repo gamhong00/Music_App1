@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.music_app1.View.User_Fragment;
 import com.example.music_app1.View.ViewPagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
-
         mViewPager2 = findViewById(R.id.view_pager);
         mBottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager2.setUserInputEnabled(false);
 
-        
+
 
         mBottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
 
@@ -68,10 +67,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
-
-
 
 
 }
