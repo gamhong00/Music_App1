@@ -41,4 +41,12 @@
         android:layout_height="match_parent"
         android:src="@drawable/heart_regular"
         android:background="@android:color/transparent"/>
+    <ImageButton
+        android:id="@+id/downmusic"
+        android:layout_weight="1"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/downloadsolid"
+        android:background="@android:color/transparent"
+        android:layout_marginStart="10dp"/>
 </LinearLayout>

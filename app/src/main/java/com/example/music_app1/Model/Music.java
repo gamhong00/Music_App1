@@ -41,12 +41,12 @@ public class Music {
         this.link = link;
     }
 
-    public int getView() {
-        return view;
+    public int getListens() {
+        return listens;
     }
 
-    public void setView(int view) {
-        this.view = view;
+    public void setListens(int view) {
+        this.listens = view;
     }
 
 
@@ -59,7 +59,7 @@ public class Music {
 
 
 
-    private int view;
+    private int listens;
 
 
 }

@@ -49,7 +49,12 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         this.mListMusic = mListMusic;
     }
 
-    private final List<Music> mListMusic;
+    public void setData(List<Music> dataList) {
+        this.mListMusic = dataList;
+        notifyDataSetChanged();
+    }
+
+    private List<Music> mListMusic;
     public static MediaPlayer mediaPlayer;
 
     @NonNull
@@ -58,6 +63,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         return new MusicViewHolder(view);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
@@ -85,6 +91,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                 Animation rotation1 = AnimationUtils.loadAnimation(imgMusic_.getContext(), R.anim.rotate);
                 imgMusic_.startAnimation(rotation1);
                 playSound(music.getLink());
+
+                //Màu playmusic
                 Bitmap bitmap = ((BitmapDrawable) holder.imgMusic.getDrawable()).getBitmap();
                 int averageColor = getAverageColor(bitmap);
                 int averageColor_ = getAverageColor_(bitmap);
