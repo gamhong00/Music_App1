@@ -75,47 +75,57 @@ public class Search_Fragment extends Fragment {
         edt_search = view.findViewById(R.id.edt_search);
         edt_search.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mListMusic.clear();
+                callApiGetMusics(edt_search.getText().toString().toLowerCase());
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
-                filter(s.toString().toLowerCase());
             }
         });
 
+
         return view;
-    }
-    private void filter(String keyword) {
-        List<Music> filteredList = new ArrayList<>();
-        for (Music music : mListMusic) {
-            if (music.getName().toLowerCase().contains(keyword)) {
-                filteredList.add(music);
-            }
-        }
-        mMusicAdapter.setData(filteredList);
     }
 
     public void callApiGetMusics(String keyword){
 
-        mListMusic.clear();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("music");
-        myRef.addValueEventListener(new ValueEventListener() {
+
+        myRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Music music = dataSnapshot.getValue(Music.class);
-                    if (music != null) {
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Music music = snapshot.getValue(Music.class);
+                if(music != null){
+                    if(music.getName().toLowerCase().contains(keyword)){
                         mListMusic.add(music);
+                        mMusicAdapter.notifyDataSetChanged();
                     }
                 }
-                mMusicAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override
@@ -123,7 +133,6 @@ public class Search_Fragment extends Fragment {
                 Toast.makeText(getActivity(), "message", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
 }

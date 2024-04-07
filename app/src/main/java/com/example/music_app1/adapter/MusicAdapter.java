@@ -39,8 +39,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.util.List;
@@ -51,12 +49,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         this.mListMusic = mListMusic;
     }
 
-    public void setData(List<Music> dataList) {
-        this.mListMusic = dataList;
-        notifyDataSetChanged();
-    }
-
-    private List<Music> mListMusic;
+    private final List<Music> mListMusic;
     public static MediaPlayer mediaPlayer;
 
     @NonNull
@@ -65,7 +58,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         return new MusicViewHolder(view);
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
@@ -93,10 +85,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                 Animation rotation1 = AnimationUtils.loadAnimation(imgMusic_.getContext(), R.anim.rotate);
                 imgMusic_.startAnimation(rotation1);
                 playSound(music.getLink());
-
-                IncreaseListens(music);
-
-                //Màu playmusic
                 Bitmap bitmap = ((BitmapDrawable) holder.imgMusic.getDrawable()).getBitmap();
                 int averageColor = getAverageColor(bitmap);
                 int averageColor_ = getAverageColor_(bitmap);
@@ -261,14 +249,5 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         return timeString;
     }
 
-    //Click view tăng
-    public void IncreaseListens (Music music){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("music");
-        music.setListens(music.getListens()+1);
-        myRef.child(String.valueOf(music.getId())).updateChildren(music.toMap());
-
-
-    }
 
 }
