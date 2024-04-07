@@ -7,13 +7,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".View.PlayMusic_Fragment"
-    android:background="#EDBFBF">
+    android:background="@drawable/custom_user">
     <LinearLayout
         android:id="@+id/thanh_nhac"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingLeft="14dp"
-        android:paddingRight="14dp">
+
+        android:background="@android:color/white">
         <com.example.music_app1.View.CircularImageView
             android:id="@+id/img_music_"
             android:layout_width="40dp"
@@ -44,26 +45,30 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
+
         <ImageButton
             android:id="@+id/playpause_"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Play"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:src="@drawable/pause_solid"
             android:background="@android:color/transparent"
-            app:backgroundTint="@null"
-            android:contentDescription="hinh anh"/>
+            android:contentDescription="hinh anh"
+            android:src="@drawable/pause_solid"
+            android:paddingRight="14dp"
+            android:paddingLeft="14dp"
+            android:text="Play"
+            app:backgroundTint="@null" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        >
         <ImageButton
             android:id="@+id/small_viewpage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/chevron_down_solid"
+            android:padding="24dp"
             android:background="@android:color/transparent"/>
     </LinearLayout>
     <LinearLayout
@@ -76,9 +81,8 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
-            android:contentDescription="hinh anh"
             android:src="@drawable/custom_button"
-            app:backgroundTint="@null"/>
+            />
 
 
         <TextView
@@ -89,7 +93,8 @@
             android:layout_gravity="center"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white">
         </TextView>
         <TextView
             android:id="@+id/name_artist"
@@ -98,7 +103,8 @@
             android:text="Ca sĩ"
             android:textSize="20sp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:textColor="@color/gray">
         </TextView>
 
     </LinearLayout>
@@ -115,8 +121,27 @@
             android:id="@+id/seekbar_music"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
         </SeekBar>
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
+            <TextView
+                android:id="@+id/curentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@color/white"
+                android:layout_alignParentStart="true" />
+            <TextView
+                android:id="@+id/totalTime"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
 
         <ImageButton
             android:id="@+id/playpause"

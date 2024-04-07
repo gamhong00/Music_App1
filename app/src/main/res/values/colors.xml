@@ -5,4 +5,5 @@
     <color name="gray">#191818</color>
     <color name="color_app">#CF87DC</color>
     <color name="color_button">#B236C8</color>
+    <color name="colorTextHint">#504C4F</color>
 </resources>

@@ -1,10 +1,12 @@
 package com.example.music_app1.adapter;
 
 
+
 import static com.example.music_app1.MainActivity.mViewPager2;
 import static com.example.music_app1.MainActivity.mViewPagerMusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.PlayPause;
 import static com.example.music_app1.View.PlayMusic_Fragment.PlayPause_;
+import static com.example.music_app1.View.PlayMusic_Fragment.curentTime;
 import static com.example.music_app1.View.PlayMusic_Fragment.imgMusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.imgMusic_;
 import static com.example.music_app1.View.PlayMusic_Fragment.nameArtist;
@@ -13,9 +15,16 @@ import static com.example.music_app1.View.PlayMusic_Fragment.nameMusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.nameMusic_;
 import static com.example.music_app1.View.PlayMusic_Fragment.pageplaymusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.seekBar;
+import static com.example.music_app1.View.PlayMusic_Fragment.totalTime;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,22 +72,29 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         holder.btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PlayPause.setImageResource(R.drawable.circle_pause_regular);
-                PlayPause_.setImageResource(R.drawable.pause_solid);
-
                 nameMusic.setText(holder.tvname.getText());
                 nameMusic_.setText(holder.tvname.getText());
                 nameArtist.setText(holder.tvartist.getText());
                 nameArtist_.setText(holder.tvartist.getText());
+                PlayPause.setImageResource(R.drawable.circle_pause_regular);
+                PlayPause_.setImageResource(R.drawable.pause_solid);
                 imgMusic.setImageDrawable(holder.imgMusic.getDrawable());
                 Animation rotation = AnimationUtils.loadAnimation(imgMusic.getContext(), R.anim.rotate);
                 imgMusic.startAnimation(rotation);
                 imgMusic_.setImageDrawable(holder.imgMusic.getDrawable());
                 Animation rotation1 = AnimationUtils.loadAnimation(imgMusic_.getContext(), R.anim.rotate);
                 imgMusic_.startAnimation(rotation1);
-                mViewPagerMusic.setCurrentItem(0,false);
                 playSound(music.getLink());
-                load_seekbar();
+                Bitmap bitmap = ((BitmapDrawable) holder.imgMusic.getDrawable()).getBitmap();
+                int averageColor = getAverageColor(bitmap);
+                int averageColor_ = getAverageColor_(bitmap);
+                int[] colors = {
+                        averageColor, // Màu bắt đầu
+                        averageColor_ // Màu kết thúc (trong suốt)
+                };
+                GradientDrawable.Orientation orientation = GradientDrawable.Orientation.TOP_BOTTOM;
+                GradientDrawable gradientDrawable = new GradientDrawable(orientation, colors);
+                pageplaymusic.setBackground(gradientDrawable);
             }
         });
     }
@@ -115,15 +131,18 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         }
 
         mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build());
-
         try {
             mediaPlayer.setDataSource(link);
-            mediaPlayer.prepare();
 
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    totalTime.setText(millisecondsToTime(mediaPlayer.getDuration()));
+                    load_seekbar();
+                    mediaPlayer.start();
+                }
+            });
+            mediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -131,17 +150,15 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
     private void load_seekbar(){
         seekBar.setMax(mediaPlayer.getDuration());
-
         Handler mHandler = new Handler();
         Runnable mRunnable = new Runnable() {
             @Override
             public void run() {
                 // Lấy vị trí hiện tại của MediaPlayer
                 int mCurrentPosition = mediaPlayer.getCurrentPosition();
-
                 // Cập nhật seekbar
                 seekBar.setProgress(mCurrentPosition);
-
+                curentTime.setText(millisecondsToTime(mCurrentPosition));
                 // Lập lại việc cập nhật sau 1 giây
                 mHandler.postDelayed(this, 1000);
             }
@@ -153,6 +170,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                 if (fromUser) {
                     // Nếu người dùng thay đổi vị trí seekbar, chuyển đến vị trí tương ứng trong bài hát
                     mediaPlayer.seekTo(progress);
+                    curentTime.setText(millisecondsToTime(progress));
                 }
             }
 
@@ -166,7 +184,69 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                 mHandler.postDelayed(mRunnable, 1000);
             }
         });
-        mediaPlayer.start();
+
+    }
+
+    private int getAverageColor(Bitmap bitmap) {
+        int width = bitmap.getWidth()/2;
+        int height = bitmap.getHeight()/2;
+        int pixelCount = width * height;
+        int[] pixels = new int[pixelCount];
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+
+        int redSum = 0;
+        int greenSum = 0;
+        int blueSum = 0;
+
+        for (int pixel : pixels) {
+            redSum += (pixel >> 16) & 0xFF;
+            greenSum += (pixel >> 8) & 0xFF;
+            blueSum += pixel & 0xFF;
+        }
+
+        int averageRed = redSum / pixelCount;
+        int averageGreen = greenSum / pixelCount;
+        int averageBlue = blueSum / pixelCount;
+
+        return 0xFF000000 | (averageRed << 16) | (averageGreen << 8) | averageBlue;
+    }
+
+    private int getAverageColor_(Bitmap bitmap) {
+        int width = bitmap.getWidth()/2;
+        int height = bitmap.getHeight()/2;
+        int pixelCount = width * height;
+        int[] pixels = new int[pixelCount];
+        bitmap.getPixels(pixels, 0, width, width, height, width, height);
+
+        int redSum = 0;
+        int greenSum = 0;
+        int blueSum = 0;
+
+        for (int pixel : pixels) {
+            redSum += (pixel >> 16) & 0xFF;
+            greenSum += (pixel >> 8) & 0xFF;
+            blueSum += pixel & 0xFF;
+        }
+
+        int averageRed = redSum / pixelCount;
+        int averageGreen = greenSum / pixelCount;
+        int averageBlue = blueSum / pixelCount;
+
+        return 0xFF000000 | (averageRed << 16) | (averageGreen << 8) | averageBlue;
+    }
+
+    private String millisecondsToTime(int milliseconds) {
+        int seconds = (milliseconds / 1000) % 60;
+        int minutes = (milliseconds / (1000 * 60)) % 60;
+        int hours = (milliseconds / (1000 * 60 * 60)) % 24;
+
+        String timeString;
+        if (hours > 0) {
+            timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            timeString = String.format("%02d:%02d", minutes, seconds);
+        }
+        return timeString;
     }
 
 

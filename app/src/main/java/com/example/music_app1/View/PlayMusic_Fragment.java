@@ -7,7 +7,10 @@ import static com.example.music_app1.MainActivity.mViewPagerMusic;
 import static com.example.music_app1.adapter.MusicAdapter.mediaPlayer;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.os.Handler;
@@ -44,13 +47,15 @@ public class PlayMusic_Fragment extends Fragment {
     public   static TextView nameArtist, nameArtist_;
     public static SeekBar seekBar;
     public  static LinearLayout pageplaymusic, thanh_nhac;
-
+    public static TextView curentTime, totalTime;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_play_music_, container, false);
+        curentTime = view.findViewById(R.id.curentTime);
+        totalTime = view.findViewById(R.id.totalTime);
 
         imgMusic = view.findViewById(R.id.img_music);
         imgMusic_ = view.findViewById(R.id.img_music_);
@@ -63,6 +68,7 @@ public class PlayMusic_Fragment extends Fragment {
 
         seekBar = view.findViewById(R.id.seekbar_music);
         pageplaymusic = view.findViewById(R.id.pageplaymusic);
+
         PlayPause = view.findViewById(R.id.playpause);
         PlayPause_ = view.findViewById(R.id.playpause_);
 

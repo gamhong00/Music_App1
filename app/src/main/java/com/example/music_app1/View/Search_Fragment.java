@@ -83,6 +83,7 @@ public class Search_Fragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mListMusic.clear();
                 callApiGetMusics(edt_search.getText().toString().toLowerCase());
+
             }
 
             @Override
@@ -96,9 +97,10 @@ public class Search_Fragment extends Fragment {
     }
 
     public void callApiGetMusics(String keyword){
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("music");
-        Log.d("tag",myRef.toString());
+
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
