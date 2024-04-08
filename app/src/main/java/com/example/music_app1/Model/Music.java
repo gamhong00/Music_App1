@@ -1,5 +1,8 @@
 package com.example.music_app1.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Music {
     public int getId() {
         return id;
@@ -41,15 +44,13 @@ public class Music {
         this.link = link;
     }
 
-    public int getView() {
-        return view;
+    public int getListens() {
+        return listens;
     }
 
-    public void setView(int view) {
-        this.view = view;
+    public void setListens(int listens) {
+        this.listens = listens;
     }
-
-
 
     private int id;
     private String name;
@@ -57,9 +58,11 @@ public class Music {
     private String image;
     private String link;
 
+    private int listens;
 
-
-    private int view;
-
-
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("listens", listens);
+        return result;
+    }
 }
