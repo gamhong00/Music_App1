@@ -8,37 +8,56 @@
     android:orientation="vertical"
     android:padding="20dp"
     android:gravity="center"
-    android:background="@color/color_app"
+    android:background="@drawable/custom_bg"
     tools:context=".View.SignInActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Đăng nhập"
+        android:layout_marginBottom="20dp"
         android:textStyle="bold"
         android:textSize="30sp"
-        android:textColor="#B236C8"/>
-    
-    <EditText
-        android:id="@+id/edt_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:imeOptions="actionNext"
-        android:maxLength="100"
-        android:textColor="@color/black"/>
+        android:textColor="@color/color_purple" />
 
-    <EditText
-        android:id="@+id/edt_password"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Mật khẩu"
-        android:inputType="textPassword"
+        app:hintEnabled="false" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"
+            android:maxLength="100"
+            android:background="@drawable/custom_edt_round"
+            android:textColor="@color/black"
+            android:hint="Email" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
         android:layout_marginTop="10dp"
-        android:imeOptions="actionDone"
-        android:maxLength="100"
-        android:textColor="@color/black"/>
+        app:hintEnabled="false"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:maxLength="100"
+            android:background="@drawable/custom_edt_round"
+            android:textColor="@color/black"
+            android:hint="Mật khẩu"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_sign_in"
@@ -61,15 +80,68 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:text="Chưa có tài khoản"/>
+            android:text="Chưa có tài khoản ?"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:textSize="16sp"
-            android:textColor="#9C27B0"
+            android:textStyle="bold"
+            android:textColor="@color/color_purple"
             android:text="Đăng ký"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#cccccc" /> <!-- Thanh ngang trái -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Hoặc"
+            android:textColor="#cccccc"
+            android:textSize="18sp"
+            android:layout_gravity="center" /> <!-- Chữ "Or" -->
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#cccccc" /> <!-- Thanh ngang phải -->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+
+        <Button
+            android:id="@+id/btn_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_btn_phone"
+            android:drawableLeft="@drawable/ic_phone"
+            android:text="Đăng nhập bằng số điện thoại"
+            app:backgroundTint="@null" />
+
 
     </LinearLayout>
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_bg"
+    android:padding="10dp"
+    tools:context=".View.VerifyPhoneNumberActivity">
+
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/edt_phoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập số điện thoại"
+            android:layout_toEndOf="@+id/ccp"
+            android:layout_toStartOf="@+id/img_check"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:inputType="phone"/>
+
+        <ImageView
+            android:id="@+id/img_check"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_valid"
+            android:visibility="gone"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+
+    <Button
+        android:id="@+id/btn_verify_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_btn_black"
+        android:layout_below="@+id/edt_phoneNumber"
+        android:text="Lấy mã OTP"
+        android:textColor="@color/white"
+        app:backgroundTint="@null" />
+
+</RelativeLayout>

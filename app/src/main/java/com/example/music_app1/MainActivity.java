@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.example.music_app1.View.ViewPageMusicAdapter;
 
+import com.example.music_app1.View.User_Fragment;
 import com.example.music_app1.View.ViewPagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

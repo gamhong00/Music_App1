@@ -59,4 +59,5 @@ dependencies {
     //circle ImageView
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
+    implementation ("com.hbb20:ccp:2.5.1")
 }
