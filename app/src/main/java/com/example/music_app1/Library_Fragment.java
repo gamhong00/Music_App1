@@ -7,13 +7,18 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+public class Library_Fragment extends Fragment {
 
-public class User_Fragment extends Fragment {
+//    @Override
+//    public void onAttach(@NonNull Context context) {
+//        super.onAttach(context);
+//        Log.e("tincoder", "Fragment 1");
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_, container, false);
+        return inflater.inflate(R.layout.fragment_library_, container, false);
     }
 }

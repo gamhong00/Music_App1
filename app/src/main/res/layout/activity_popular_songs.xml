@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp">
+    
+    <!-- Tiêu đề "Popular Songs" -->
+    <TextView
+        android:id="@+id/popular_songs_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:text="Popular Songs"
+        android:gravity="center"
+        android:padding="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        tools:text="@string/common_google_play_services_enable_button" />
+    
+    <!-- RecyclerView cho danh sách Popular Songs -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/popular_songs_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/popular_songs_text_view"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

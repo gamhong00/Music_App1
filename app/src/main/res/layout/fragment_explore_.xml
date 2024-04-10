@@ -1,67 +1,123 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient_background">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    
+    <!-- Header -->
+    <RelativeLayout
+        android:id="@+id/header_container"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/header_height"
         android:background="@drawable/gradient_background">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+        
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:cardCornerRadius="20dp"> <!-- Đặt góc bo tròn ở đây -->
-
-
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_view"
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/app_name_text_size"
+            android:textStyle="bold" />
+    
+    </RelativeLayout>
+    
+    <!-- Search Bar -->
+    <SearchView
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_bar_height"
+        android:layout_below="@id/header_container"
+        android:background="@color/white"
+        android:iconifiedByDefault="false"
+        android:queryHint="@string/search_hint"
+        android:theme="@style/Widget.AppCompat.SearchView" />
+    
+    <!-- ScrollView -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_bar">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/banner_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:scrollbars="horizontal" />
+            
+            <!-- Popular Songs Title -->
+            <TextView
+                android:id="@+id/popular_songs_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                app:iconifiedByDefault="false"
-                app:queryHint="Bạn muốn nghe gì?"
-                app:searchIcon="@android:drawable/ic_menu_search" /> <!-- Hình nền cho ô tìm kiếm -->
-
-        </androidx.cardview.widget.CardView>
-
-    </androidx.appcompat.widget.Toolbar>
-
-
-
-        <!-- ViewPager with TabLayout -->
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbar">
-
-            <!-- TabLayout -->
-
-            <ScrollView
+                android:layout_below="@id/banner_recyclerview"
+                android:layout_margin="@dimen/margin_medium"
+                android:text="@string/popular_songs"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
+            
+            <!-- Popular Songs RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/popular_songs_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
-            </ScrollView>
-
-        </androidx.viewpager.widget.ViewPager>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/popular_songs_title"
+                android:layout_margin="@dimen/margin_medium"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:scrollbars="vertical" />
+            
+            <TextView
+                android:id="@+id/view_all_popular_songs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/popular_songs_recyclerview"
+                android:layout_margin="@dimen/margin_medium"
+                android:text="@string/view_all"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_medium" />
+            
+            <!-- New Songs Title -->
+            <TextView
+                android:id="@+id/new_songs_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_all_popular_songs"
+                android:layout_margin="@dimen/margin_medium"
+                android:text="@string/new_songs"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
+            
+            <!-- New Songs RecyclerView -->
+            
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/new_songs_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/new_songs_title"
+                android:layout_margin="@dimen/margin_medium"
+                android:scrollbars="vertical" />
+            
+            <TextView
+                android:id="@+id/view_all_new_songs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/new_songs_recyclerview"
+                android:layout_margin="@dimen/margin_medium"
+                android:text="@string/view_all"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_medium" />
+        
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>
-
-
-
-
-
-
-
-
-

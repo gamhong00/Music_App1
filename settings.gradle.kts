@@ -10,9 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
 rootProject.name = "Music_App1"
 include(":app")
- 

@@ -1,6 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <!-- Tiêu đề "All Songs" -->
+    <TextView
+        android:id="@+id/all_songs_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="All Songs"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+    
+    <!-- RecyclerView cho tất cả các bài hát -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/all_songs_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        android:layout_below="@id/all_songs_title" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
