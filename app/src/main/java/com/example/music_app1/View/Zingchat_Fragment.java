@@ -3,6 +3,7 @@ package com.example.music_app1.View;
 import static com.example.music_app1.MainActivity.mViewPager2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +92,16 @@ public class Zingchat_Fragment extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Music music = snapshot.getValue(Music.class);
+                if(music != null || mListMusic == null || mListMusic.isEmpty()){
+                    return;
+                }
+
+                for (int i = 0; i< mListMusic.size(); i++){
+                    if(music.getId() == mListMusic.get(i).getId()){
+                        mListMusic.set(i, music);
+                    }
+                }
                 Collections.sort(mListMusic, new Comparator<Music>() {
                     @Override
                     public int compare(Music m1, Music m2) {
