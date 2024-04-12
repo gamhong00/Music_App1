@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_addplaylist"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    tools:context=".View.PlaylistDialogFragment">
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:backgroundTint="#0E0E0E"
+        app:srcCompat="@drawable/admob_close_button_white_cross"
+        app:tint="#756E6E" />
+    <TextView
+        android:id="@+id/Name_playlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tên Playlist"
+        android:textSize="18sp" />
+
+
+
+    <EditText
+        android:id="@+id/edit_Name_playlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textColor="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="410dp"
+        android:layout_height="750dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/riengtu"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:text="Riêng tư"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/sw_riengtu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/phattuantu"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:text="Phát tuần tự"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/sw_phattuantu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tudongtai"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:text="Tự động tải"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/sw_tudongtai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/create_playlist_button"
+            android:layout_width="184dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="170dp"
+            android:text="TẠO PLAYLIST" />
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

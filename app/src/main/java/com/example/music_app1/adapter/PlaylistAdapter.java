@@ -9,6 +9,7 @@ import static com.example.music_app1.View.PlayMusic_Fragment.seekBar;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,10 +56,11 @@ public class PlaylistAdapter extends RecyclerView.Adapter <PlaylistAdapter.Playl
         }
         holder.textPlaylist.setText(String.valueOf(music.getName()));
         Picasso.get().load(music.getImage()).into(holder.imgMusic);
+        Log.e("img",String.valueOf(music.getImage()));
         holder.btnPhatngaunhien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager2.setCurrentItem(6, false);
+                mViewPager2.setCurrentItem(7, false);
                 playSound(music.getLink());
                 nameMusic.setText(holder.textPlaylist.getText());
                 nameArtist.setText(holder.textArtist.getText());

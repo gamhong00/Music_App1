@@ -58,6 +58,7 @@ public class Playlist_Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // hiển thị dialog tùy biến, chưa làm dialog nên chưa bỏ dô
+
             }
         });
         imgMusic = view.findViewById(R.id.imageMusic);
