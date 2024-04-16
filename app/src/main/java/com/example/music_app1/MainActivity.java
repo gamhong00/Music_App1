@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.example.music_app1.View.DataLocalManager;
 import com.example.music_app1.View.ViewPageMusicAdapter;
 
 import com.example.music_app1.View.User_Fragment;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DataLocalManager.init(getApplicationContext());
 
 
         mViewPager2 = findViewById(R.id.view_pager);

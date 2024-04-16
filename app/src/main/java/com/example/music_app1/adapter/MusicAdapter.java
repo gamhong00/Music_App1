@@ -39,6 +39,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
+import com.example.music_app1.View.DataLocalManager;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -73,8 +74,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         if (music == null){
             return;
         }
-        holder.tvname.setText(String.valueOf(music.getName()));
-        holder.tvartist.setText(String.valueOf((music.getArtist())));
+        holder.tvname.setText(music.getName());
+        holder.tvartist.setText(String.valueOf(music.getArtist()));
         Picasso.get().load(music.getImage()).into(holder.imgMusic);
 
         holder.btnplay.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +108,13 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                 GradientDrawable.Orientation orientation = GradientDrawable.Orientation.TOP_BOTTOM;
                 GradientDrawable gradientDrawable = new GradientDrawable(orientation, colors);
                 pageplaymusic.setBackground(gradientDrawable);
+
+
+                // Để vào máy
+                DataLocalManager.setNameMusic(music.getName());
+                DataLocalManager.setNameArtist(music.getArtist());
+                DataLocalManager.setImageMusic(music.getImage());
+                DataLocalManager.setLink(music.getLink());
             }
         });
     }

@@ -53,7 +53,7 @@
             android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:contentDescription="hinh anh"
-            android:src="@drawable/pause_solid"
+            android:src="@drawable/play_solid"
             android:paddingRight="14dp"
             android:paddingLeft="14dp"
             android:text="Play"
@@ -148,7 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Play"
-            android:src="@drawable/circle_pause_regular"
+            android:src="@drawable/circle_play_regular"
             android:background="@android:color/transparent"
             app:backgroundTint="@null"
             android:contentDescription="hinh anh"/>

@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.os.Handler;
@@ -31,7 +32,9 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.example.music_app1.R;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 
 
 public class PlayMusic_Fragment extends Fragment {
@@ -58,20 +61,36 @@ public class PlayMusic_Fragment extends Fragment {
         totalTime = view.findViewById(R.id.totalTime);
 
         imgMusic = view.findViewById(R.id.img_music);
+//        Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic);
         imgMusic_ = view.findViewById(R.id.img_music_);
+//        Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic_);
         Animation rotation = AnimationUtils.loadAnimation(imgMusic.getContext(), R.anim.rotate);
 
         nameMusic = view.findViewById(R.id.name_music);
+//        nameMusic.setText(DataLocalManager.getNameMusic());
         nameMusic_ = view.findViewById(R.id.name_music_);
+//        nameMusic_.setText(DataLocalManager.getNameMusic());
+
         nameArtist = view.findViewById(R.id.name_artist);
+//        nameArtist.setText(DataLocalManager.getNameArtist());
         nameArtist_ = view.findViewById(R.id.name_artist_);
+//        nameArtist_.setText(DataLocalManager.getNameArtist());
 
         seekBar = view.findViewById(R.id.seekbar_music);
         pageplaymusic = view.findViewById(R.id.pageplaymusic);
 
+//        playSound(DataLocalManager.getLink());
         PlayPause = view.findViewById(R.id.playpause);
         PlayPause_ = view.findViewById(R.id.playpause_);
-
+        if(DataLocalManager.getImageMusic() != null && DataLocalManager.getNameMusic()!=null && DataLocalManager.getNameArtist()!=null && DataLocalManager.getLink()!=null){
+            Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic);
+            Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic_);
+            nameMusic.setText(DataLocalManager.getNameMusic());
+            nameMusic_.setText(DataLocalManager.getNameMusic());
+            nameArtist.setText(DataLocalManager.getNameArtist());
+            nameArtist_.setText(DataLocalManager.getNameArtist());
+            playSound(DataLocalManager.getLink());
+        }
         PlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +180,79 @@ public class PlayMusic_Fragment extends Fragment {
         });
         return view;
     }
+    private void playSound(String link) {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
 
+        mediaPlayer = new MediaPlayer();
+        try {
+            mediaPlayer.setDataSource(link);
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    totalTime.setText(millisecondsToTime(mediaPlayer.getDuration()));
+                    load_seekbar();
+                }
+            });
+            mediaPlayer.prepareAsync();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void load_seekbar(){
+        seekBar.setMax(mediaPlayer.getDuration());
+        Handler mHandler = new Handler();
+        Runnable mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                // Lấy vị trí hiện tại của MediaPlayer
+                int mCurrentPosition = mediaPlayer.getCurrentPosition();
+                // Cập nhật seekbar
+                seekBar.setProgress(mCurrentPosition);
+                curentTime.setText(millisecondsToTime(mCurrentPosition));
+                // Lập lại việc cập nhật sau 1 giây
+                mHandler.postDelayed(this, 1000);
+            }
+        };
+        mHandler.postDelayed(mRunnable,1000);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    // Nếu người dùng thay đổi vị trí seekbar, chuyển đến vị trí tương ứng trong bài hát
+                    mediaPlayer.seekTo(progress);
+                    curentTime.setText(millisecondsToTime(progress));
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                mHandler.removeCallbacks(mRunnable);
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mHandler.postDelayed(mRunnable, 1000);
+            }
+        });
+
+    }
+    private String millisecondsToTime(int milliseconds) {
+        int seconds = (milliseconds / 1000) % 60;
+        int minutes = (milliseconds / (1000 * 60)) % 60;
+        int hours = (milliseconds / (1000 * 60 * 60)) % 24;
+
+        String timeString;
+        if (hours > 0) {
+            timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            timeString = String.format("%02d:%02d", minutes, seconds);
+        }
+        return timeString;
+    }
 
 }

@@ -72,7 +72,7 @@ public class Zingchat_Fragment extends Fragment {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("music");
-        Query query = myRef.orderByChild("listens").limitToLast(10);
+        Query query = myRef.orderByChild("listens");
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -93,13 +93,14 @@ public class Zingchat_Fragment extends Fragment {
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Music music = snapshot.getValue(Music.class);
-                if(music != null || mListMusic == null || mListMusic.isEmpty()){
+
+                if(mListMusic == null || mListMusic.isEmpty()){
                     return;
                 }
-
                 for (int i = 0; i< mListMusic.size(); i++){
                     if(music.getId() == mListMusic.get(i).getId()){
                         mListMusic.set(i, music);
+
                     }
                 }
                 Collections.sort(mListMusic, new Comparator<Music>() {

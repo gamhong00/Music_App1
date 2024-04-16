@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
+import com.example.music_app1.View.DataLocalManager;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -100,6 +101,11 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankViewHolder
                 GradientDrawable.Orientation orientation = GradientDrawable.Orientation.TOP_BOTTOM;
                 GradientDrawable gradientDrawable = new GradientDrawable(orientation, colors);
                 pageplaymusic.setBackground(gradientDrawable);
+
+                DataLocalManager.setNameMusic(music.getName());
+                DataLocalManager.setNameArtist(music.getArtist());
+                DataLocalManager.setImageMusic(music.getImage());
+                DataLocalManager.setLink(music.getLink());
             }
         });
         int number = mDataList.get(position);
@@ -264,7 +270,5 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankViewHolder
         DatabaseReference myRef = database.getReference("music");
         music.setListens(music.getListens()+1);
         myRef.child(String.valueOf(music.getId())).updateChildren(music.toMap());
-
-
     }
 }
