@@ -1,5 +1,7 @@
 package com.example.music_app1.Model;
 
+import java.util.List;
+
 public class Playlist {
 
     public int getId() {
@@ -17,14 +19,14 @@ public class Playlist {
     public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
-
-    public String getMusic() {
+    public List<Music> getMusic() {
         return music;
     }
 
-    public void setMusic(String music) {
+    public void setMusic(List<Music> music) {
         this.music = music;
     }
+
 
     public String getName() {
         return name;
@@ -49,9 +51,11 @@ public class Playlist {
     }
     private int id;
     private String idUser;
-    private String music;
+    private List<Music> music;
     private String name;
     private String image;
 
     private int view;
+
+
 }

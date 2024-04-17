@@ -34,7 +34,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new Search_Fragment();
             case 6:
                 return new PlayMusic_Fragment();
-
+            case 7:
+                return new Playlist_Fragment();
             default:
                 return new Library_Fragment();
         }
@@ -42,6 +43,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 7;
+        return 8;
     }
 }

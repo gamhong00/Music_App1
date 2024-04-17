@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import com.example.music_app1.View.Playlist_Fragment;
 import com.example.music_app1.View.ViewPagerAdapter;
 import com.example.music_app1.View.favoritesong_Fragment;
-import com.example.music_app1.adapter.PlaylistAdapter;
+//import com.example.music_app1.adapter.PlaylistAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 

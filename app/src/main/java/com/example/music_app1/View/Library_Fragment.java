@@ -33,7 +33,6 @@ import com.example.music_app1.R;
 //import com.example.music_app1.adapter.MusicAdapter;
 //import com.example.music_app1.adapter.listMusicAdapter;
 import com.example.music_app1.adapter.listPlaylistAdapter;
-import com.example.music_app1.adapter.listPlaylistAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -75,7 +74,8 @@ public class Library_Fragment extends Fragment {
 
         mPlaylistAdapter = new listPlaylistAdapter(mListPlaylist);
         recyclerviewPlaylist.setAdapter(mPlaylistAdapter);
-        callApiGetMusics();
+        callApiGetPlaylists();
+//        callApiGetMusics();
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +117,42 @@ public class Library_Fragment extends Fragment {
         });
       return view;
     }
-    public void callApiGetMusics(){
+//    public void callApiGetMusics(){
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("playlist");
+//        Log.d("tagg",myRef.toString());
+//        myRef.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                Playlist playlist = snapshot.getValue(Playlist.class);
+//                if(playlist != null){
+//                    mListPlaylist.add(playlist);
+//                    mPlaylistAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(getActivity(), "message", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+    public void callApiGetPlaylists(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("playlist");
         Log.d("tagg",myRef.toString());

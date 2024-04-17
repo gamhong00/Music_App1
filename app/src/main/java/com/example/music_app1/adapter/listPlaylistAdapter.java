@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,8 +52,15 @@ public class listPlaylistAdapter extends RecyclerView.Adapter<listPlaylistAdapte
             return;
         }
         holder.tvname.setText(String.valueOf(playlist.getName()));
-        holder.tvartist.setText(String.valueOf((playlist.getIdUser())));
+        holder.tvidUser.setText(String.valueOf((playlist.getIdUser())));
         Picasso.get().load(playlist.getImage()).into(holder.imgMusic);
+        holder.btnplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager2.setCurrentItem(7,false);
+
+            }
+        });
     }
 
     @Override
@@ -64,22 +72,18 @@ public class listPlaylistAdapter extends RecyclerView.Adapter<listPlaylistAdapte
     }
 
     public static class PlaylistViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvname, tvartist;
+        private final TextView tvname, tvidUser;
         private final ImageView imgMusic;
+        private final LinearLayout btnplay;
 
 
         public PlaylistViewHolder(@NonNull View itemView){
             super(itemView);
             tvname = itemView.findViewById(R.id.tv_name);
-            tvartist = itemView.findViewById(R.id.tv_artist);
+            tvidUser = itemView.findViewById(R.id.idUser);
             imgMusic = itemView.findViewById(R.id.img_music);
+            btnplay = itemView.findViewById(R.id.playlistUser);
 
-            tvname.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
         }
 
     }

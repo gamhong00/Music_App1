@@ -39,7 +39,7 @@ public class listMusicAdapter extends RecyclerView.Adapter<listMusicAdapter.Musi
     @NonNull
     @Override
     public MusicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_playlist, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_suggestedsong, parent, false);
         return new MusicViewHolder(view);
     }
 
@@ -73,12 +73,6 @@ public class listMusicAdapter extends RecyclerView.Adapter<listMusicAdapter.Musi
             tvartist = itemView.findViewById(R.id.tv_artist);
             imgMusic = itemView.findViewById(R.id.img_music);
 
-            tvname.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
         }
 
     }

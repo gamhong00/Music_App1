@@ -159,7 +159,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"/>
     <Button
-        android:layout_below="@+id/recyclerviewBaihatthinhhanh"
+        android:layout_below="@+id/recyclerviewsuggestedsong"
         android:id="@+id/btnThembai"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
