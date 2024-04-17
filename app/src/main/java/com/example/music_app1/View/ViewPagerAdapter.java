@@ -15,7 +15,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position){
+        switch (position) {
 
             case 0:
                 return new Library_Fragment();
@@ -28,13 +28,11 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
             case 3:
                 return new User_Fragment();
-            case 4: 
+            case 4:
                 return new Notification_fragment();
-            case 5: 
+            case 5:
                 return new Search_Fragment();
             case 6:
-                return new PlayMusic_Fragment();
-            case 7:
                 return new Playlist_Fragment();
             default:
                 return new Library_Fragment();
@@ -43,6 +41,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 8;
+        return 7;
     }
 }

@@ -43,23 +43,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Library_Fragment extends Fragment {
-    private ImageButton phongtoButton;
+
     private ImageButton imgbtn_search, add_playlist;
     private RecyclerView recyclerviewPlaylist;
     List<Playlist> mListPlaylist;
     private listPlaylistAdapter mPlaylistAdapter;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_library_, container, false);
-//        phongtoButton = view.findViewById(R.id.phongto);
-//        // Show phongtoButton if content is minimized
-//        if (!StateUtility.isContentVisible) {
-//            phongtoButton.setVisibility(View.VISIBLE);
-//        }
+
+        //
         recyclerviewPlaylist = view.findViewById(R.id.recyclerviewPlaylist1);
         add_playlist = view.findViewById(R.id.add_playlist);
 
@@ -68,29 +64,31 @@ public class Library_Fragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerviewPlaylist.setLayoutManager(linearLayoutManager);
         // hai dong duoi can thi dung, ko thif thoi
-//        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-//        recyclerviewPlaylist.addItemDecoration(itemDecoration);
+        // DividerItemDecoration itemDecoration = new
+        // DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        // recyclerviewPlaylist.addItemDecoration(itemDecoration);
         mListPlaylist = new ArrayList<>();
 
         mPlaylistAdapter = new listPlaylistAdapter(mListPlaylist);
         recyclerviewPlaylist.setAdapter(mPlaylistAdapter);
         callApiGetPlaylists();
-//        callApiGetMusics();
+        // callApiGetMusics();
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager2.setCurrentItem(5,false);
+                mViewPager2.setCurrentItem(5, false);
             }
         });
         // Create AlertDialog (assuming dialog_addplaylist.xml is defined)
-//        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.AppTheme_FullscreenDialog);
-//        builder.setView(R.layout.dialog_playlist);
-//        dialog = builder.create();
-//        add_playlist.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Trong Library_Fragment, khi người dùng chuyển đến Playlist_Fragment:
-//                dialog.show();
+        // AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(),
+        // R.style.AppTheme_FullscreenDialog);
+        // builder.setView(R.layout.dialog_playlist);
+        // dialog = builder.create();
+        // add_playlist.setOnClickListener(new View.OnClickListener() {
+        // @Override
+        // public void onClick(View view) {
+        // // Trong Library_Fragment, khi người dùng chuyển đến Playlist_Fragment:
+        // dialog.show();
         add_playlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,68 +97,72 @@ public class Library_Fragment extends Fragment {
 
                 // Hiển thị dialog
                 playlistDialogFragment.show(getParentFragmentManager(), "playlist_dialog");
-// 1. Thêm Library_Fragment vào Backstack (nếu cần)
-//                getFragmentManager().beginTransaction()
-//                        .replace(R.id.view_pager, new Library_Fragment())
-//                        .addToBackStack(null)
-//                        .commit();
+                // 1. Thêm Library_Fragment vào Backstack (nếu cần)
+                // getFragmentManager().beginTransaction()
+                // .replace(R.id.view_pager, new Library_Fragment())
+                // .addToBackStack(null)
+                // .commit();
 
-// 2. Khởi tạo Playlist_Fragment
-//                Playlist_Fragment playlistFragment = new Playlist_Fragment();
+                // 2. Khởi tạo Playlist_Fragment
+                // Playlist_Fragment playlistFragment = new Playlist_Fragment();
 
-// 3. Hiển thị Playlist_Fragment
-//                getFragmentManager().beginTransaction()
-//                        .replace(R.id.pageplaylist, playlistFragment)
-//                        .commit();
+                // 3. Hiển thị Playlist_Fragment
+                // getFragmentManager().beginTransaction()
+                // .replace(R.id.pageplaylist, playlistFragment)
+                // .commit();
 
             }
         });
-      return view;
+        return view;
     }
-//    public void callApiGetMusics(){
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("playlist");
-//        Log.d("tagg",myRef.toString());
-//        myRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                Playlist playlist = snapshot.getValue(Playlist.class);
-//                if(playlist != null){
-//                    mListPlaylist.add(playlist);
-//                    mPlaylistAdapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(getActivity(), "message", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-    public void callApiGetPlaylists(){
+
+    // public void callApiGetMusics(){
+    // FirebaseDatabase database = FirebaseDatabase.getInstance();
+    // DatabaseReference myRef = database.getReference("playlist");
+    // Log.d("tagg",myRef.toString());
+    // myRef.addChildEventListener(new ChildEventListener() {
+    // @Override
+    // public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String
+    // previousChildName) {
+    // Playlist playlist = snapshot.getValue(Playlist.class);
+    // if(playlist != null){
+    // mListPlaylist.add(playlist);
+    // mPlaylistAdapter.notifyDataSetChanged();
+    // }
+    // }
+    //
+    // @Override
+    // public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String
+    // previousChildName) {
+    //
+    // }
+    //
+    // @Override
+    // public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+    //
+    // }
+    //
+    // @Override
+    // public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String
+    // previousChildName) {
+    //
+    // }
+    //
+    // @Override
+    // public void onCancelled(@NonNull DatabaseError error) {
+    // Toast.makeText(getActivity(), "message", Toast.LENGTH_SHORT).show();
+    // }
+    // });
+    // }
+    public void callApiGetPlaylists() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("playlist");
-        Log.d("tagg",myRef.toString());
+        Log.d("tagg", myRef.toString());
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Playlist playlist = snapshot.getValue(Playlist.class);
-                if(playlist != null){
+                if (playlist != null) {
                     mListPlaylist.add(playlist);
                     mPlaylistAdapter.notifyDataSetChanged();
                 }

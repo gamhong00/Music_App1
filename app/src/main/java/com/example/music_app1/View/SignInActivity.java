@@ -5,9 +5,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,13 +19,14 @@ import com.example.music_app1.MainActivity;
 import com.example.music_app1.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignInActivity extends AppCompatActivity {
     private LinearLayout layout_sign_up;
-    private EditText edt_email, edt_password;
-    private Button btn_sign_in;
+    private TextInputEditText edt_email, edt_password;
+    private Button btn_sign_in, btn_phone;
     private ProgressDialog progress;
     private AlertDialog.Builder alertDialog;
 
@@ -39,6 +44,12 @@ public class SignInActivity extends AppCompatActivity {
         edt_email = findViewById(R.id.edt_email);
         edt_password = findViewById(R.id.edt_password);
         btn_sign_in = findViewById(R.id.btn_sign_in);
+
+        btn_phone = findViewById(R.id.btn_phone);
+
+//        alertDialog = new AlertDialog.Builder(this);
+//        alertDialog.setTitle("Loading");
+//        alertDialog.setMessage("Please wait...");
     }
 
     private void initListener() {
@@ -54,6 +65,14 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onClickSignIn();
+            }
+        });
+
+        btn_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignInActivity.this, VerifyPhoneNumberActivity.class);
+                startActivity(intent);
             }
         });
     }

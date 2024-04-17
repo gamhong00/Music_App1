@@ -4,55 +4,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/custom_user"
     tools:context=".View.Search_Fragment">
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/quaylai"
-            android:layout_width="49dp"
-            android:layout_height="54dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:contentDescription="mũi tên"
-            android:padding="30dp"
-            android:src="@drawable/leftarrow" />
-
-        <FrameLayout
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edt_search"
-                android:layout_width="320dp"
-                android:layout_height="44dp"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/custom_search"
-                android:backgroundTint="@null"
-                android:drawablePadding="20dp"
-                android:ems="10"
-                android:hint="Tìm kiếm"
-                android:inputType="text"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp" />
-
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="100"
+            android:background="@drawable/custom_search">
             <ImageButton
                 android:id="@+id/btn_search"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="350dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/search">
-
+                android:src="@drawable/magnifying_glass_solid__1_">
             </ImageButton>
-        </FrameLayout>
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textColor="@android:color/black"
+                android:hint="Tìm kiếm"
+                android:textColorHint="@color/colorTextHint"
+                android:background="@android:color/transparent"
+                />
+        </LinearLayout>
+        <ImageButton
+            android:id="@+id/quaylai"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/leftarrow" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_musics"

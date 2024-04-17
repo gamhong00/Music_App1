@@ -7,34 +7,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".View.PlayMusic_Fragment"
-    android:background="#EDBFBF">
-
+    android:background="@drawable/custom_user">
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1">
+        android:id="@+id/thanh_nhac"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="14dp"
+
+        android:background="@android:color/white">
+        <com.example.music_app1.View.CircularImageView
+            android:id="@+id/img_music_"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:contentDescription="hinh anh"
+            android:src="@drawable/custom_button"
+            app:backgroundTint="@null"/>
+        <LinearLayout
+            android:layout_weight="10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name_music_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/name_artist_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </LinearLayout>
+
         <ImageButton
-            android:id="@+id/thugon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:contentDescription="thu gọn"
-            android:src="@drawable/down"
+            android:id="@+id/playpause_"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:background="@android:color/transparent"
-            android:onClick="minimizeFragment">
-
-        </ImageButton>
-
+            android:contentDescription="hinh anh"
+            android:src="@drawable/play_solid"
+            android:paddingRight="14dp"
+            android:paddingLeft="14dp"
+            android:text="Play"
+            app:backgroundTint="@null" />
     </LinearLayout>
-<LinearLayout
-        android:id="@+id/content_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
-
-
+        >
+        <ImageButton
+            android:id="@+id/small_viewpage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/chevron_down_solid"
+            android:padding="24dp"
+            android:background="@android:color/transparent"/>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,9 +81,8 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
-            android:contentDescription="hinh anh"
             android:src="@drawable/custom_button"
-            app:backgroundTint="@null"/>
+            />
 
 
         <TextView
@@ -58,7 +93,8 @@
             android:layout_gravity="center"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white">
         </TextView>
         <TextView
             android:id="@+id/name_artist"
@@ -67,7 +103,8 @@
             android:text="Ca sĩ"
             android:textSize="20sp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:textColor="@color/gray">
         </TextView>
 
     </LinearLayout>
@@ -84,43 +121,38 @@
             android:id="@+id/seekbar_music"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
         </SeekBar>
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
+            <TextView
+                android:id="@+id/curentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@color/white"
+                android:layout_alignParentStart="true" />
+            <TextView
+                android:id="@+id/totalTime"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
 
         <ImageButton
             android:id="@+id/playpause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Play"
-            android:src="@drawable/circle_pause_regular"
+            android:src="@drawable/circle_play_regular"
             android:background="@android:color/transparent"
             app:backgroundTint="@null"
-            android:contentDescription="hinh anh">
+            android:contentDescription="hinh anh"/>
 
-        </ImageButton>
-
-    </LinearLayout>
-
-</LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="39dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical"
-        >
-
-        <ImageButton
-            android:id="@+id/phongto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:contentDescription="thu gọn"
-            android:src="@drawable/expandarrow"
-            android:layout_marginLeft="20dp"
-            android:onClick="maximizeFragment">
-
-        </ImageButton>
 
     </LinearLayout>
 </LinearLayout>
