@@ -82,7 +82,9 @@ public class PlayMusic_Fragment extends Fragment {
 //        playSound(DataLocalManager.getLink());
         PlayPause = view.findViewById(R.id.playpause);
         PlayPause_ = view.findViewById(R.id.playpause_);
-        if(DataLocalManager.getImageMusic() != null && DataLocalManager.getNameMusic()!=null && DataLocalManager.getNameArtist()!=null && DataLocalManager.getLink()!=null){
+        if(DataLocalManager.getImageMusic().isEmpty() && DataLocalManager.getNameMusic().isEmpty() && DataLocalManager.getNameArtist().isEmpty() && DataLocalManager.getLink().isEmpty()){
+
+        }else {
             Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic);
             Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic_);
             nameMusic.setText(DataLocalManager.getNameMusic());

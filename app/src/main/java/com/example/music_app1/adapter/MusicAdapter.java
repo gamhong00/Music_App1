@@ -23,6 +23,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,18 +41,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
 import com.example.music_app1.View.DataLocalManager;
+import com.example.music_app1.View.MusicDownloader;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.core.Context;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHolder> {
+
     public MusicAdapter(List<Music> mListMusic) {
         this.mListMusic = mListMusic;
     }
-
     public void setData(List<Music> dataList) {
         this.mListMusic = dataList;
         notifyDataSetChanged();
@@ -68,6 +75,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
     }
 
 
+
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
         Music music = mListMusic.get(position);
@@ -77,6 +85,18 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         holder.tvname.setText(music.getName());
         holder.tvartist.setText(String.valueOf(music.getArtist()));
         Picasso.get().load(music.getImage()).into(holder.imgMusic);
+
+        holder.btndown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Khởi tạo MusicDownloader với context
+                MusicDownloader musicDownloader = new MusicDownloader(v.getContext());
+                // Gọi phương thức downloadMusic với URL của tập tin và tên tập tin mong muốn
+                musicDownloader.downloadMusic(music.getLink(), music.getName()+".mp3",music.getName());
+                
+
+            }
+        });
 
         holder.btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +139,12 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         });
     }
 
+
+
+    private File getExternalFilesDir(String directoryMusic) {
+        return null;
+    }
+
     @Override
     public int getItemCount() {
         if(mListMusic != null){
@@ -132,7 +158,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         private final ImageView imgMusic;
 
         private final LinearLayout btnplay;
-        private final ImageButton btnlike;
+        private final ImageButton btnlike, btndown;
 
         public MusicViewHolder(@NonNull View itemView){
             super(itemView);
@@ -141,6 +167,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
             imgMusic = itemView.findViewById(R.id.img_music);
             btnplay = itemView.findViewById(R.id.play);
             btnlike = itemView.findViewById(R.id.heart);
+            btndown = itemView.findViewById(R.id.downmusic);
         }
     }
     private void playSound(String link) {
@@ -272,7 +299,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
     //Click view tăng
     public void IncreaseListens (Music music){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("music");
+        DatabaseReference myRef = database.getReference("playlist/music");
         music.setListens(music.getListens()+1);
         myRef.child(String.valueOf(music.getId())).updateChildren(music.toMap());
 

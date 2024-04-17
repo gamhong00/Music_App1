@@ -8,12 +8,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import com.example.music_app1.R;
 
 public class Library_Fragment extends Fragment {
 
     private ImageButton imgbtn_search;
+    private Button taixuong;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -23,12 +25,23 @@ public class Library_Fragment extends Fragment {
 
 
         imgbtn_search = view.findViewById(R.id.search);
+        taixuong = view.findViewById(R.id.download);
+
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mViewPager2.setCurrentItem(5,false);
             }
         });
+
+        taixuong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPager2.setCurrentItem(6,false);
+            }
+        });
+
+
         return view;
     }
 }
