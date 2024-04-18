@@ -5,6 +5,8 @@ import static com.example.music_app1.MainActivity.mViewPager2;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ public class Library_Fragment extends Fragment {
         taixuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 mViewPager2.setCurrentItem(6,false);
             }
         });
@@ -44,4 +47,6 @@ public class Library_Fragment extends Fragment {
 
         return view;
     }
+
+
 }

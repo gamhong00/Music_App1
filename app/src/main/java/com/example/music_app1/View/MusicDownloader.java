@@ -7,11 +7,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageException;
@@ -26,8 +21,7 @@ public class MusicDownloader {
     }
 
 
-
-    public void downloadMusic(String url, String fileName, String songFolderName) {
+    public void downloadMusic(String url, String fileName) {
 
         final File songFolder = new File(Environment.getExternalStorageDirectory(), "Music");
 
@@ -41,24 +35,14 @@ public class MusicDownloader {
             }
         }
 
-        // Tạo thư mục con trong thư mục Music
-        File songSubFolder = new File(songFolder, songFolderName);
-        if (!songSubFolder.exists()) {
-            // Nếu thư mục con không tồn tại, tạo mới thư mục con với tên là songFolderName
-            if (songSubFolder.mkdirs()) {
-                Log.d("SubFolderCreation", "Thư mục con được tạo thành công");
-            } else {
-                Log.e("SubFolderCreation", "Không thể tạo thư mục con");
-                return; // Trả về nếu không thể tạo thư mục con
-            }
-        }
+
 
         // Tạo tham chiếu đến Firebase Storage
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl(url);
 
         // Tải tập tin từ Firebase Storage vào thư mục con
-        final File file = new File(songSubFolder, fileName);
+        final File file = new File(songFolder, fileName);
         storageRef.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
@@ -68,7 +52,7 @@ public class MusicDownloader {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-               // Xử lý khi có lỗi xảy ra trong quá trình tải xuống
+                // Xử lý khi có lỗi xảy ra trong quá trình tải xuống
                 if (e instanceof StorageException) {
                     int errorCode = ((StorageException) e).getErrorCode();
                     Log.e("DownloadError", "HTTP result code: " + errorCode);

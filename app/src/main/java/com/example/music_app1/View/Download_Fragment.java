@@ -8,6 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -19,15 +22,19 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.music_app1.R;
+import com.example.music_app1.adapter.MusicDownloadAdapter;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class Download_Fragment extends Fragment {
-    private ListView listView;
+    private RecyclerView rcv;
+    private static final int PERMISSION_REQUEST_CODE = 100;
+    private List<String> mp3Files = new ArrayList<>();
 
 
     @Override
@@ -39,50 +46,20 @@ public class Download_Fragment extends Fragment {
         // Tạo danh sách các tệp nhạc từ thư mục "Music"
         File musicDirectory = new File(Environment.getExternalStorageDirectory(), "Music");
         File[] musicFiles = musicDirectory.listFiles();
-        List<String> musicList = new ArrayList<>();
+        List<File> musicList = new ArrayList<>();
         if (musicFiles != null) {
-            for (File file : musicFiles) {
-                musicList.add(file.getName());
-            }
+            musicList.addAll(Arrays.asList(musicFiles));
         }
-
+        MusicDownloadAdapter adapter1 = new MusicDownloadAdapter(musicList);
         // Hiển thị danh sách nhạc lên ListView
-        ListView listView = view.findViewById(R.id.list_down);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, musicList);
-        listView.setAdapter(adapter);
-
-        listView = view.findViewById(R.id.list_down);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Lấy tên bài hát đã chọn
-                String selectedMusic = musicList.get(position);
-
-                // Xác định đường dẫn tới bài hát trong thư mục "Music"
-                File selectedMusicFile = new File(musicDirectory, selectedMusic);
-                Uri musicUri = Uri.fromFile(selectedMusicFile);
-
-                // Phát bài hát
-                playMusic(musicUri);
-            }
-        });
+        rcv = view.findViewById(R.id.list_down);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rcv.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        rcv.addItemDecoration(itemDecoration);
+        rcv.setAdapter(adapter1);
 
         return view;
     }
-    private void playMusic(Uri musicUri) {
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
 
-        mediaPlayer = new MediaPlayer();
-        try {
-            mediaPlayer.setDataSource(getContext(), musicUri);
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

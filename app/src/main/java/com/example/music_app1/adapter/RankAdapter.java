@@ -126,7 +126,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankViewHolder
         private final ImageView imgMusic;
 
         private final LinearLayout btnplay;
-        private final ImageButton btnlike;
+
         public RankViewHolder(@NonNull View itemView) {
             super(itemView);
             NumberRank = itemView.findViewById(R.id.NumberRank);
@@ -134,7 +134,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankViewHolder
             tvartist = itemView.findViewById(R.id.tv_artist);
             imgMusic = itemView.findViewById(R.id.img_music);
             btnplay = itemView.findViewById(R.id.play);
-            btnlike = itemView.findViewById(R.id.heart);
+
         }
     }
 

@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.music_app1.View.DataLocalManager;
@@ -25,14 +27,17 @@ public class MainActivity extends AppCompatActivity {
     public static ViewPager2 mViewPager2;
     public static ViewPager2 mViewPagerMusic;
     public static BottomNavigationView mBottomNavigationView;
+    public static Context main;
 
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DataLocalManager.init(getApplicationContext());
 
+
+        DataLocalManager.init(getApplicationContext());
+        main = this;
 
         mViewPager2 = findViewById(R.id.view_pager);
         mViewPagerMusic = findViewById(R.id.view_pager_music);
@@ -41,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle());
         mViewPager2.setAdapter(adapter);
-        mViewPager2.setOffscreenPageLimit(3); //load trước 3 viewPager
+         //load trước 3 viewPager
         mViewPager2.setUserInputEnabled(false);
 
 
@@ -78,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
     public static int dpToPx(Context context, int dp) {
         return (int) TypedValue.applyDimension(
@@ -87,4 +91,8 @@ public class MainActivity extends AppCompatActivity {
                 context.getResources().getDisplayMetrics()
         );
     }
+
+
+
+
 }

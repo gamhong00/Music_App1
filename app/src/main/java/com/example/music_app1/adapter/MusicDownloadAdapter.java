@@ -14,34 +14,28 @@ import static com.example.music_app1.View.PlayMusic_Fragment.nameMusic_;
 import static com.example.music_app1.View.PlayMusic_Fragment.pageplaymusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.seekBar;
 import static com.example.music_app1.View.PlayMusic_Fragment.totalTime;
+import static com.example.music_app1.adapter.MusicAdapter.mediaPlayer;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.music_app1.MainActivity;
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
 import com.example.music_app1.View.DataLocalManager;
@@ -56,20 +50,20 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHolder> {
+public class MusicDownloadAdapter extends RecyclerView.Adapter<MusicDownloadAdapter.MusicViewHolder> {
 
-    public MusicAdapter(List<Music> mListMusic) {
+    public MusicDownloadAdapter(List<File> mListMusic) {
         this.mListMusic = mListMusic;
     }
 
 
-    public void setData(List<Music> dataList) {
+    public void setData(List<File> dataList) {
         this.mListMusic = dataList;
         notifyDataSetChanged();
     }
 
-    private List<Music> mListMusic;
-    public static MediaPlayer mediaPlayer;
+    private List<File> mListMusic;
+
 
     @NonNull
     @Override
@@ -82,37 +76,20 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
-        Music music = mListMusic.get(position);
+        File music = mListMusic.get(position);
         if (music == null){
             return;
         }
-        holder.tvname.setText(music.getName());
-        holder.tvartist.setText(String.valueOf(music.getArtist()));
-        Picasso.get().load(music.getImage()).into(holder.imgMusic);
-        holder.btnellipsis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog();
-            }
-        });
-//        holder.btndown.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Khởi tạo MusicDownloader với context
-//                MusicDownloader musicDownloader = new MusicDownloader(v.getContext());
-//                // Gọi phương thức downloadMusic với URL của tập tin và tên tập tin mong muốn
-//                musicDownloader.downloadMusic(music.getLink(), music.getName()+".mp3");
-//
-//            }
-//        });
+        holder.tvname.setText(music.getName().replace(".mp3", ""));
+        holder.imgMusic.setImageBitmap(getAlbumArt(music.getPath()));
+
+
 
         holder.btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 nameMusic.setText(holder.tvname.getText());
                 nameMusic_.setText(holder.tvname.getText());
-                nameArtist.setText(holder.tvartist.getText());
-                nameArtist_.setText(holder.tvartist.getText());
                 PlayPause.setImageResource(R.drawable.circle_pause_regular);
                 PlayPause_.setImageResource(R.drawable.pause_solid);
                 imgMusic.setImageDrawable(holder.imgMusic.getDrawable());
@@ -121,9 +98,9 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                 imgMusic_.setImageDrawable(holder.imgMusic.getDrawable());
                 Animation rotation1 = AnimationUtils.loadAnimation(imgMusic_.getContext(), R.anim.rotate);
                 imgMusic_.startAnimation(rotation1);
-                playSound(music.getLink());
+                playSound(music.getPath());
 
-                IncreaseListens(music);
+
 
                 //Màu playmusic
                 Bitmap bitmap = ((BitmapDrawable) holder.imgMusic.getDrawable()).getBitmap();
@@ -138,20 +115,12 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                 pageplaymusic.setBackground(gradientDrawable);
 
 
-                // Để vào máy
-                DataLocalManager.setNameMusic(music.getName());
-                DataLocalManager.setNameArtist(music.getArtist());
-                DataLocalManager.setImageMusic(music.getImage());
-                DataLocalManager.setLink(music.getLink());
             }
         });
     }
 
 
 
-    private File getExternalFilesDir(String directoryMusic) {
-        return null;
-    }
 
     @Override
     public int getItemCount() {
@@ -166,7 +135,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         private final ImageView imgMusic;
 
         private final LinearLayout btnplay;
-        private final ImageButton  btnellipsis;
+
 
         public MusicViewHolder(@NonNull View itemView){
             super(itemView);
@@ -174,7 +143,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
             tvartist = itemView.findViewById(R.id.tv_artist);
             imgMusic = itemView.findViewById(R.id.img_music);
             btnplay = itemView.findViewById(R.id.play);
-            btnellipsis = itemView.findViewById(R.id.ellipsis);
 
         }
     }
@@ -311,39 +279,17 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         music.setListens(music.getListens()+1);
         myRef.child(String.valueOf(music.getId())).updateChildren(music.toMap());
     }
+    // Phương thức để lấy hình từ file mp3
+    private Bitmap getAlbumArt(String filePath) {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(filePath);
 
-    private   void showDialog() {
-
-
-        final Dialog dialog = new Dialog(MainActivity.main);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.bottomsheet_layout);
-        LinearLayout dowloadMusic = dialog.findViewById(R.id.layoutdowload);
-        dowloadMusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        LinearLayout likeMusic = dialog.findViewById(R.id.layoutLike);
-        likeMusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        LinearLayout addPlaylist = dialog.findViewById(R.id.layoutAddplaylist);
-        addPlaylist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        byte[] art = retriever.getEmbeddedPicture();
+        if (art != null) {
+            return BitmapFactory.decodeByteArray(art, 0, art.length);
+        } else {
+            return null;
+        }
     }
 
 }
