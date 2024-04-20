@@ -1,10 +1,18 @@
-package com.example.music_app1.View;
+package com.example.music_app1.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.music_app1.View.Download_Fragment;
+import com.example.music_app1.View.Explore_Fragment;
+import com.example.music_app1.View.Library_Fragment;
+import com.example.music_app1.View.Notification_fragment;
+import com.example.music_app1.View.Search_Fragment;
+import com.example.music_app1.View.User_Fragment;
+import com.example.music_app1.View.Zingchat_Fragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
 

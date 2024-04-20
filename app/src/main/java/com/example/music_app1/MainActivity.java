@@ -4,21 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.view.ViewGroup;
 
 import com.example.music_app1.View.DataLocalManager;
-import com.example.music_app1.View.ViewPageMusicAdapter;
+import com.example.music_app1.adapter.ViewPageMusicAdapter;
 
-import com.example.music_app1.View.User_Fragment;
-import com.example.music_app1.View.ViewPagerAdapter;
+import com.example.music_app1.adapter.ViewPagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,7 +48,15 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPageMusicAdapter adapter1 = new ViewPageMusicAdapter(getSupportFragmentManager(), getLifecycle());
         mViewPagerMusic.setAdapter(adapter1);
-
+        mViewPagerMusic.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                ViewGroup.LayoutParams layoutParams = mViewPagerMusic.getLayoutParams();
+                layoutParams.height += positionOffsetPixels;
+                mViewPagerMusic.setLayoutParams(layoutParams);
+            }
+        });
 
         mBottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
 

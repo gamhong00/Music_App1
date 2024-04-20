@@ -1,6 +1,7 @@
 package com.example.music_app1.View;
 
 import android.content.Context;
+
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,7 +12,11 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
+import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.Mp3File;
+
 import java.io.File;
+
 
 public class MusicDownloader {
     private Context context;
@@ -21,7 +26,7 @@ public class MusicDownloader {
     }
 
 
-    public void downloadMusic(String url, String fileName) {
+    public void downloadMusic(String url, String fileName, String artistName) {
 
         final File songFolder = new File(Environment.getExternalStorageDirectory(), "Music");
 
@@ -48,6 +53,7 @@ public class MusicDownloader {
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 // Tải xuống thành công, hiển thị thông báo
                 Toast.makeText(context, "Tải thành công", Toast.LENGTH_SHORT).show();
+                // Lấy metadata từ file nhạc
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

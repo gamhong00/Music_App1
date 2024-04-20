@@ -15,6 +15,7 @@ import static com.example.music_app1.View.PlayMusic_Fragment.pageplaymusic;
 import static com.example.music_app1.View.PlayMusic_Fragment.seekBar;
 import static com.example.music_app1.View.PlayMusic_Fragment.totalTime;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Bitmap;
@@ -47,6 +48,7 @@ import com.example.music_app1.R;
 import com.example.music_app1.View.DataLocalManager;
 import com.example.music_app1.View.MusicDownloader;
 
+import com.example.music_app1.View.PlayMusic_Fragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -81,7 +83,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
 
     @Override
-    public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MusicViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Music music = mListMusic.get(position);
         if (music == null){
             return;
@@ -92,65 +94,19 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         holder.btnellipsis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
+                showDialog(music);
             }
         });
-//        holder.btndown.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Khởi tạo MusicDownloader với context
-//                MusicDownloader musicDownloader = new MusicDownloader(v.getContext());
-//                // Gọi phương thức downloadMusic với URL của tập tin và tên tập tin mong muốn
-//                musicDownloader.downloadMusic(music.getLink(), music.getName()+".mp3");
-//
-//            }
-//        });
+
 
         holder.btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nameMusic.setText(holder.tvname.getText());
-                nameMusic_.setText(holder.tvname.getText());
-                nameArtist.setText(holder.tvartist.getText());
-                nameArtist_.setText(holder.tvartist.getText());
-                PlayPause.setImageResource(R.drawable.circle_pause_regular);
-                PlayPause_.setImageResource(R.drawable.pause_solid);
-                imgMusic.setImageDrawable(holder.imgMusic.getDrawable());
-                Animation rotation = AnimationUtils.loadAnimation(imgMusic.getContext(), R.anim.rotate);
-                imgMusic.startAnimation(rotation);
-                imgMusic_.setImageDrawable(holder.imgMusic.getDrawable());
-                Animation rotation1 = AnimationUtils.loadAnimation(imgMusic_.getContext(), R.anim.rotate);
-                imgMusic_.startAnimation(rotation1);
-                playSound(music.getLink());
-
-                IncreaseListens(music);
-
-                //Màu playmusic
-                Bitmap bitmap = ((BitmapDrawable) holder.imgMusic.getDrawable()).getBitmap();
-                int averageColor = getAverageColor(bitmap);
-                int averageColor_ = getAverageColor_(bitmap);
-                int[] colors = {
-                        averageColor, // Màu bắt đầu
-                        averageColor_ // Màu kết thúc (trong suốt)
-                };
-                GradientDrawable.Orientation orientation = GradientDrawable.Orientation.TOP_BOTTOM;
-                GradientDrawable gradientDrawable = new GradientDrawable(orientation, colors);
-                pageplaymusic.setBackground(gradientDrawable);
-
-
-                // Để vào máy
-                DataLocalManager.setNameMusic(music.getName());
-                DataLocalManager.setNameArtist(music.getArtist());
-                DataLocalManager.setImageMusic(music.getImage());
-                DataLocalManager.setLink(music.getLink());
+                PlayMusic_Fragment.mListMusic = mListMusic;
+                PlayMusic_Fragment.position = position;
+                PlayMusic_Fragment.playMusic(music);
             }
         });
-    }
-
-
-
-    private File getExternalFilesDir(String directoryMusic) {
-        return null;
     }
 
     @Override
@@ -178,143 +134,9 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
         }
     }
-    private void playSound(String link) {
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-
-        mediaPlayer = new MediaPlayer();
-        try {
-            mediaPlayer.setDataSource(link);
-
-            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    totalTime.setText(millisecondsToTime(mediaPlayer.getDuration()));
-                    load_seekbar();
-                    mediaPlayer.start();
-                }
-            });
-            mediaPlayer.prepareAsync();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void load_seekbar(){
-        seekBar.setMax(mediaPlayer.getDuration());
-        Handler mHandler = new Handler();
-        Runnable mRunnable = new Runnable() {
-            @Override
-            public void run() {
-                // Lấy vị trí hiện tại của MediaPlayer
-                int mCurrentPosition = mediaPlayer.getCurrentPosition();
-                // Cập nhật seekbar
-                seekBar.setProgress(mCurrentPosition);
-                curentTime.setText(millisecondsToTime(mCurrentPosition));
-                // Lập lại việc cập nhật sau 1 giây
-                mHandler.postDelayed(this, 1000);
-            }
-        };
-        mHandler.postDelayed(mRunnable,1000);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) {
-                    // Nếu người dùng thay đổi vị trí seekbar, chuyển đến vị trí tương ứng trong bài hát
-                    mediaPlayer.seekTo(progress);
-                    curentTime.setText(millisecondsToTime(progress));
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                mHandler.removeCallbacks(mRunnable);
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                mHandler.postDelayed(mRunnable, 1000);
-            }
-        });
-
-    }
-
-    private int getAverageColor(Bitmap bitmap) {
-        int width = bitmap.getWidth()/2;
-        int height = bitmap.getHeight()/2;
-        int pixelCount = width * height;
-        int[] pixels = new int[pixelCount];
-        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
-
-        int redSum = 0;
-        int greenSum = 0;
-        int blueSum = 0;
-
-        for (int pixel : pixels) {
-            redSum += (pixel >> 16) & 0xFF;
-            greenSum += (pixel >> 8) & 0xFF;
-            blueSum += pixel & 0xFF;
-        }
-
-        int averageRed = redSum / pixelCount;
-        int averageGreen = greenSum / pixelCount;
-        int averageBlue = blueSum / pixelCount;
-
-        return 0xFF000000 | (averageRed << 16) | (averageGreen << 8) | averageBlue;
-    }
-
-    private int getAverageColor_(Bitmap bitmap) {
-        int width = bitmap.getWidth()/2;
-        int height = bitmap.getHeight()/2;
-        int pixelCount = width * height;
-        int[] pixels = new int[pixelCount];
-        bitmap.getPixels(pixels, 0, width, width, height, width, height);
-
-        int redSum = 0;
-        int greenSum = 0;
-        int blueSum = 0;
-
-        for (int pixel : pixels) {
-            redSum += (pixel >> 16) & 0xFF;
-            greenSum += (pixel >> 8) & 0xFF;
-            blueSum += pixel & 0xFF;
-        }
-
-        int averageRed = redSum / pixelCount;
-        int averageGreen = greenSum / pixelCount;
-        int averageBlue = blueSum / pixelCount;
-
-        return 0xFF000000 | (averageRed << 16) | (averageGreen << 8) | averageBlue;
-    }
-
-    private String millisecondsToTime(int milliseconds) {
-        int seconds = (milliseconds / 1000) % 60;
-        int minutes = (milliseconds / (1000 * 60)) % 60;
-        int hours = (milliseconds / (1000 * 60 * 60)) % 24;
-
-        String timeString;
-        if (hours > 0) {
-            timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        } else {
-            timeString = String.format("%02d:%02d", minutes, seconds);
-        }
-        return timeString;
-    }
-
-    //Click view tăng
-    public void IncreaseListens (Music music){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("playlist/music");
-        music.setListens(music.getListens()+1);
-        myRef.child(String.valueOf(music.getId())).updateChildren(music.toMap());
-    }
-
-    private   void showDialog() {
 
 
+    private static void showDialog(Music music) {
         final Dialog dialog = new Dialog(MainActivity.main);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheet_layout);
@@ -322,7 +144,9 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         dowloadMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                MusicDownloader musicDownloader = new MusicDownloader(v.getContext());
+//                // Gọi phương thức downloadMusic với URL của tập tin và tên tập tin mong muốn
+                musicDownloader.downloadMusic(music.getLink(), music.getName()+".mp3", music.getArtist());
             }
         });
         LinearLayout likeMusic = dialog.findViewById(R.id.layoutLike);
@@ -345,5 +169,4 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
-
 }

@@ -31,14 +31,22 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
+import com.example.music_app1.adapter.MusicAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class PlayMusic_Fragment extends Fragment {
 
+    public static List<Music> mListMusic;
+    public static int position;
 
     private RelativeLayout.LayoutParams layoutParams, params;
     public static ImageButton PlayPause;
@@ -51,6 +59,8 @@ public class PlayMusic_Fragment extends Fragment {
     public static SeekBar seekBar;
     public  static LinearLayout pageplaymusic, thanh_nhac;
     public static TextView curentTime, totalTime;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +77,7 @@ public class PlayMusic_Fragment extends Fragment {
         Animation rotation = AnimationUtils.loadAnimation(imgMusic.getContext(), R.anim.rotate);
 
         nameMusic = view.findViewById(R.id.name_music);
-//        nameMusic.setText(DataLocalManager.getNameMusic());
+
         nameMusic_ = view.findViewById(R.id.name_music_);
 //        nameMusic_.setText(DataLocalManager.getNameMusic());
 
@@ -82,17 +92,8 @@ public class PlayMusic_Fragment extends Fragment {
 //        playSound(DataLocalManager.getLink());
         PlayPause = view.findViewById(R.id.playpause);
         PlayPause_ = view.findViewById(R.id.playpause_);
-        if(DataLocalManager.getImageMusic().isEmpty() && DataLocalManager.getNameMusic().isEmpty() && DataLocalManager.getNameArtist().isEmpty() && DataLocalManager.getLink().isEmpty()){
 
-        }else {
-            Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic);
-            Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic_);
-            nameMusic.setText(DataLocalManager.getNameMusic());
-            nameMusic_.setText(DataLocalManager.getNameMusic());
-            nameArtist.setText(DataLocalManager.getNameArtist());
-            nameArtist_.setText(DataLocalManager.getNameArtist());
-            playSound(DataLocalManager.getLink());
-        }
+
         PlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,15 +108,8 @@ public class PlayMusic_Fragment extends Fragment {
                     PlayPause.setImageResource(R.drawable.circle_pause_regular);
                     PlayPause_.setImageResource(R.drawable.pause_solid);
                     if (imgMusic.getAnimation() == null) {
-                        // Lấy trạng thái góc quay từ tag của ImageView
-                        Float savedRotation = (Float) imgMusic.getTag();
-                        float rotation = savedRotation != null ? savedRotation : 0.0f;
-                        // Khởi tạo animation quay với góc quay đã lưu
-                        RotateAnimation rotationAnimation = new RotateAnimation(rotation, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                        rotationAnimation.setDuration(20000);
-                        rotationAnimation.setRepeatCount(Animation.INFINITE);
-                        // Bắt đầu animation
-                        imgMusic.startAnimation(rotationAnimation);
+                        Animation rotation1 = AnimationUtils.loadAnimation(imgMusic.getContext(), R.anim.rotate);
+                        imgMusic.startAnimation(rotation1);
                     }
                 }
             }
@@ -136,19 +130,14 @@ public class PlayMusic_Fragment extends Fragment {
                     PlayPause_.setImageResource(R.drawable.pause_solid);
                     PlayPause.setImageResource(R.drawable.circle_pause_regular);
                     if (imgMusic_.getAnimation() == null) {
-                        // Lấy trạng thái góc quay từ tag của ImageView
-                        Float savedRotation = (Float) imgMusic_.getTag();
-                        float rotation = savedRotation != null ? savedRotation : 0.0f;
-                        // Khởi tạo animation quay với góc quay đã lưu
-                        RotateAnimation rotationAnimation = new RotateAnimation(rotation, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                        rotationAnimation.setDuration(20000);
-                        rotationAnimation.setRepeatCount(Animation.INFINITE);
-                        // Bắt đầu animation
-                        imgMusic_.startAnimation(rotationAnimation);
+                        Animation rotation1 = AnimationUtils.loadAnimation(imgMusic_.getContext(), R.anim.rotate);
+                        imgMusic_.startAnimation(rotation1);
                     }
                 }
             }
         });
+
+
         thanh_nhac = view.findViewById(R.id.thanh_nhac);
         layoutParams = (RelativeLayout.LayoutParams) mBottomNavigationView.getLayoutParams();
         params = (RelativeLayout.LayoutParams) mViewPagerMusic.getLayoutParams();
@@ -167,6 +156,7 @@ public class PlayMusic_Fragment extends Fragment {
         });
 
         small_viewpage = view.findViewById(R.id.small_viewpage);
+
         small_viewpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,6 +168,30 @@ public class PlayMusic_Fragment extends Fragment {
                     params.height--;
                     mViewPagerMusic.setLayoutParams(params);
                 }
+            }
+        });
+        view.findViewById(R.id.nextMusic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(position == mListMusic.size() - 1){
+                    position = 0;
+                }else{
+                    position++;
+                }
+                Music music = mListMusic.get(position);
+                playMusic(music);
+            }
+        });
+        view.findViewById(R.id.previousMusic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(position == 0){
+                    position = mListMusic.size() - 1;
+                }else {
+                    position--;
+                }
+                Music music = mListMusic.get(position);
+                playMusic(music);
             }
         });
         return view;
@@ -205,7 +219,7 @@ public class PlayMusic_Fragment extends Fragment {
         }
     }
 
-    private void load_seekbar(){
+    public static void load_seekbar(){
         seekBar.setMax(mediaPlayer.getDuration());
         Handler mHandler = new Handler();
         Runnable mRunnable = new Runnable() {
@@ -243,7 +257,7 @@ public class PlayMusic_Fragment extends Fragment {
         });
 
     }
-    private String millisecondsToTime(int milliseconds) {
+    public static String millisecondsToTime(int milliseconds) {
         int seconds = (milliseconds / 1000) % 60;
         int minutes = (milliseconds / (1000 * 60)) % 60;
         int hours = (milliseconds / (1000 * 60 * 60)) % 24;
@@ -257,4 +271,117 @@ public class PlayMusic_Fragment extends Fragment {
         return timeString;
     }
 
+    public static void playMusic(Music music){
+        nameMusic.setText(music.getName());
+        nameMusic_.setText(music.getName());
+        nameArtist.setText(music.getArtist());
+        nameArtist_.setText(music.getArtist());
+        PlayPause.setImageResource(R.drawable.circle_pause_regular);
+        PlayPause_.setImageResource(R.drawable.pause_solid);
+        Picasso.get().load(music.getImage()).into(imgMusic);
+        Animation rotation = AnimationUtils.loadAnimation(imgMusic.getContext(), R.anim.rotate);
+        imgMusic.startAnimation(rotation);
+        Picasso.get().load(music.getImage()).into(imgMusic_);
+        Animation rotation1 = AnimationUtils.loadAnimation(imgMusic_.getContext(), R.anim.rotate);
+        imgMusic_.startAnimation(rotation1);
+        //Màu playmusic
+        Bitmap bitmap = ((BitmapDrawable) imgMusic.getDrawable()).getBitmap();
+        int averageColor = getAverageColor(bitmap);
+        int averageColor_ = getAverageColor_(bitmap);
+        int[] colors = {
+                averageColor, // Màu bắt đầu
+                averageColor_ // Màu kết thúc (trong suốt)
+        };
+        GradientDrawable.Orientation orientation = GradientDrawable.Orientation.TOP_BOTTOM;
+        GradientDrawable gradientDrawable = new GradientDrawable(orientation, colors);
+        pageplaymusic.setBackground(gradientDrawable);
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
+        mediaPlayer = new MediaPlayer();
+        try {
+            mediaPlayer.setDataSource(music.getLink());
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    totalTime.setText(millisecondsToTime(mediaPlayer.getDuration()));
+                    load_seekbar();
+                    mediaPlayer.start();
+                }
+            });
+            mediaPlayer.prepareAsync();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        // Để vào máy
+        DataLocalManager.setNameMusic(music.getName());
+        DataLocalManager.setNameArtist(music.getArtist());
+        DataLocalManager.setImageMusic(music.getImage());
+        DataLocalManager.setLink(music.getLink());
+
+        IncreaseListens(music);
+    }
+
+    public static int getAverageColor(Bitmap bitmap) {
+        int width = bitmap.getWidth()/2;
+        int height = bitmap.getHeight()/2;
+        int pixelCount = width * height;
+        int[] pixels = new int[pixelCount];
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+
+        int redSum = 0;
+        int greenSum = 0;
+        int blueSum = 0;
+
+        for (int pixel : pixels) {
+            redSum += (pixel >> 16) & 0xFF;
+            greenSum += (pixel >> 8) & 0xFF;
+            blueSum += pixel & 0xFF;
+        }
+
+        int averageRed = redSum / pixelCount;
+        int averageGreen = greenSum / pixelCount;
+        int averageBlue = blueSum / pixelCount;
+
+        return 0xFF000000 | (averageRed << 16) | (averageGreen << 8) | averageBlue;
+    }
+
+    public static int getAverageColor_(Bitmap bitmap) {
+        int width = bitmap.getWidth()/2;
+        int height = bitmap.getHeight()/2;
+        int pixelCount = width * height;
+        int[] pixels = new int[pixelCount];
+        bitmap.getPixels(pixels, 0, width, width, height, width, height);
+
+        int redSum = 0;
+        int greenSum = 0;
+        int blueSum = 0;
+
+        for (int pixel : pixels) {
+            redSum += (pixel >> 16) & 0xFF;
+            greenSum += (pixel >> 8) & 0xFF;
+            blueSum += pixel & 0xFF;
+        }
+
+        int averageRed = redSum / pixelCount;
+        int averageGreen = greenSum / pixelCount;
+        int averageBlue = blueSum / pixelCount;
+
+        return 0xFF000000 | (averageRed << 16) | (averageGreen << 8) | averageBlue;
+    }
+
+
+
+    //Click view tăng
+    public static void IncreaseListens (Music music){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("music");
+        music.setListens(music.getListens()+1);
+        myRef.child(String.valueOf(music.getId())).updateChildren(music.toMap());
+    }
 }

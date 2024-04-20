@@ -65,4 +65,16 @@ public class Music {
         result.put("listens", listens);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Music{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", artist='" + artist + '\'' +
+                ", image='" + image + '\'' +
+                ", link='" + link + '\'' +
+                ", listens=" + listens +
+                '}';
+    }
 }

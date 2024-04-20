@@ -60,4 +60,5 @@ dependencies {
     implementation ("com.hbb20:ccp:2.5.1")
 
     implementation ("com.google.firebase:firebase-storage:20.0.0")
+    implementation ("com.mpatric:mp3agic:0.9.1")
 }

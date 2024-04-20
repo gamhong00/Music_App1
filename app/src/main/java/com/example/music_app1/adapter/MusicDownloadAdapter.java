@@ -43,6 +43,8 @@ import com.example.music_app1.View.MusicDownloader;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.Mp3File;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -82,14 +84,29 @@ public class MusicDownloadAdapter extends RecyclerView.Adapter<MusicDownloadAdap
         }
         holder.tvname.setText(music.getName().replace(".mp3", ""));
         holder.imgMusic.setImageBitmap(getAlbumArt(music.getPath()));
-
-
-
+        // Kiểm tra xem file MP3 có chứa tag ID3v2 không
+        try {
+            // Tạo đối tượng Mp3File từ đường dẫn file MP3
+            Mp3File mp3file = new Mp3File(music.getPath());
+            // Kiểm tra xem file MP3 có chứa tag ID3v2 không
+            if (mp3file.hasId3v2Tag()) {
+                // Lấy thông tin ID3v2 tag
+                ID3v2 id3v2Tag = mp3file.getId3v2Tag();
+                holder.tvartist.setText(id3v2Tag.getArtist());
+            } else {
+                // File MP3 không chứa tag ID3v2
+                holder.tvartist.setText("");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         holder.btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 nameMusic.setText(holder.tvname.getText());
                 nameMusic_.setText(holder.tvname.getText());
+                nameArtist.setText(holder.tvartist.getText());
+                nameArtist_.setText(holder.tvartist.getText());
                 PlayPause.setImageResource(R.drawable.circle_pause_regular);
                 PlayPause_.setImageResource(R.drawable.pause_solid);
                 imgMusic.setImageDrawable(holder.imgMusic.getDrawable());
@@ -273,12 +290,7 @@ public class MusicDownloadAdapter extends RecyclerView.Adapter<MusicDownloadAdap
     }
 
     //Click view tăng
-    public void IncreaseListens (Music music){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("playlist/music");
-        music.setListens(music.getListens()+1);
-        myRef.child(String.valueOf(music.getId())).updateChildren(music.toMap());
-    }
+
     // Phương thức để lấy hình từ file mp3
     private Bitmap getAlbumArt(String filePath) {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();

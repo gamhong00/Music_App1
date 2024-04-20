@@ -22,4 +22,6 @@ public class MySharePreferences {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(MY_SHARED_PREFERENCES, Context.MODE_PRIVATE);
         return sharedPreferences.getString(key, "");
     }
+
+
 }
