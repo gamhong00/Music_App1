@@ -33,6 +33,7 @@ android {
     }
 }
 
+
 dependencies {
 
 
@@ -62,4 +63,8 @@ dependencies {
     implementation ("com.google.firebase:firebase-storage:20.0.0")
     implementation ("com.mpatric:mp3agic:0.9.1")
     implementation("androidx.media:media:1.2.0")
+
+    //Vẽ biểu đồ
+    implementation ("com.jjoe64:graphview:4.2.2")
+
 }
