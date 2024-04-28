@@ -271,4 +271,6 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankViewHolder
         music.setListens(music.getListens()+1);
         myRef.child(String.valueOf(music.getId())).updateChildren(music.toMap());
     }
+
+
 }

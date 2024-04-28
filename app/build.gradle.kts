@@ -33,6 +33,7 @@ android {
     }
 }
 
+
 dependencies {
 
 
@@ -60,4 +61,8 @@ dependencies {
     implementation ("com.hbb20:ccp:2.5.1")
 
     implementation ("com.google.firebase:firebase-storage:20.0.0")
+
+    //Vẽ biểu đồ
+    implementation ("com.jjoe64:graphview:4.2.2")
+
 }

@@ -92,10 +92,10 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         holder.btnellipsis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
+                showDialog(music);
             }
         });
-//        holder.btndown.setOnClickListener(new View.OnClickListener() {
+//        holder.btndownmusic.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                // Khởi tạo MusicDownloader với context
@@ -166,7 +166,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         private final ImageView imgMusic;
 
         private final LinearLayout btnplay;
-        private final ImageButton  btnellipsis;
+        private final ImageButton  btnellipsis ;
+        private final ImageView btndownmusic;
 
         public MusicViewHolder(@NonNull View itemView){
             super(itemView);
@@ -175,6 +176,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
             imgMusic = itemView.findViewById(R.id.img_music);
             btnplay = itemView.findViewById(R.id.play);
             btnellipsis = itemView.findViewById(R.id.ellipsis);
+            btndownmusic = itemView.findViewById(R.id.btndownmusic);
+
 
         }
     }
@@ -312,7 +315,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         myRef.child(String.valueOf(music.getId())).updateChildren(music.toMap());
     }
 
-    private   void showDialog() {
+    private   void showDialog(Music music) {
 
 
         final Dialog dialog = new Dialog(MainActivity.main);
@@ -322,6 +325,10 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         dowloadMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                 //Khởi tạo MusicDownloader với context
+                MusicDownloader musicDownloader = new MusicDownloader(v.getContext());
+                // Gọi phương thức downloadMusic với URL của tập tin và tên tập tin mong muốn
+                musicDownloader.downloadMusic(music.getLink(), music.getName()+".mp3");
                 dialog.dismiss();
             }
         });
