@@ -1,77 +1,59 @@
 package com.example.music_app1.adapter;
 
 
+import static com.example.music_app1.Nofication.CHANNEL_ID;
 
-import static com.example.music_app1.View.PlayMusic_Fragment.PlayPause;
-import static com.example.music_app1.View.PlayMusic_Fragment.PlayPause_;
-import static com.example.music_app1.View.PlayMusic_Fragment.curentTime;
-import static com.example.music_app1.View.PlayMusic_Fragment.imgMusic;
-import static com.example.music_app1.View.PlayMusic_Fragment.imgMusic_;
-import static com.example.music_app1.View.PlayMusic_Fragment.nameArtist;
-import static com.example.music_app1.View.PlayMusic_Fragment.nameArtist_;
-import static com.example.music_app1.View.PlayMusic_Fragment.nameMusic;
-import static com.example.music_app1.View.PlayMusic_Fragment.nameMusic_;
-import static com.example.music_app1.View.PlayMusic_Fragment.pageplaymusic;
-import static com.example.music_app1.View.PlayMusic_Fragment.seekBar;
-import static com.example.music_app1.View.PlayMusic_Fragment.totalTime;
-
+import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.Bitmap;
+import android.app.Notification;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
-import android.os.Handler;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.music_app1.MainActivity;
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
-import com.example.music_app1.View.DataLocalManager;
-import com.example.music_app1.View.MusicDownloader;
+import com.example.music_app1.DataLocal.MusicDownloader;
 
 import com.example.music_app1.View.PlayMusic_Fragment;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHolder> {
+public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHolder> implements Filterable {
 
-    public MusicAdapter(List<Music> mListMusic) {
+    public MusicAdapter(List<Music> mListMusic, Context context) {
+        this.context = context;
         this.mListMusic = mListMusic;
-    }
-
-
-    public void setData(List<Music> dataList) {
-        this.mListMusic = dataList;
-        notifyDataSetChanged();
+        OldmListMusic = mListMusic;
     }
 
     private List<Music> mListMusic;
+    private List<Music> OldmListMusic;
     public static MediaPlayer mediaPlayer;
+    private Context context;
 
     @NonNull
     @Override
@@ -81,11 +63,10 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Music music = mListMusic.get(position);
-        if (music == null){
+        if (music == null) {
             return;
         }
         holder.tvname.setText(music.getName());
@@ -94,7 +75,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         holder.btnellipsis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(music);
+                showDialog(music, context);
             }
         });
 
@@ -105,8 +86,36 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                 PlayMusic_Fragment.mListMusic = mListMusic;
                 PlayMusic_Fragment.position = position;
                 PlayMusic_Fragment.playMusic(music);
+                sendNotificationMedia(music);
             }
         });
+    }
+
+    private void sendNotificationMedia(Music music) {
+        MediaSessionCompat mediaSessionCompat = new MediaSessionCompat(context, "tag");
+        Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_small_music)
+                .setSubText(music.getName())
+                .setContentTitle(music.getName())
+                .setContentText(music.getArtist())
+                .addAction(R.drawable.backward_step_solid, "backward", null)
+                .addAction(R.drawable.pause_solid, "pause", null)
+                .addAction(R.drawable.forward_step_solid, "next", null)
+                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView(1)
+                        .setMediaSession(mediaSessionCompat.getSessionToken())).build();
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        managerCompat.notify(1, notification);
     }
 
     @Override
@@ -116,6 +125,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         }
         return 0;
     }
+
+
 
     public static class MusicViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvname, tvartist;
@@ -134,10 +145,40 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
         }
     }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String strSearch = constraint.toString();
+                if(strSearch.isEmpty()){
+                    mListMusic = OldmListMusic;
+                }
+                else {
+                    List<Music> list = new ArrayList<>();
+                    for (Music music : OldmListMusic){
+                        if (music.getName().toLowerCase().contains(strSearch.toLowerCase())){
+                            list.add(music);
+                        }
+                    }
+                    mListMusic = list;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mListMusic;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mListMusic = (List<Music>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
 
 
-    private static void showDialog(Music music) {
-        final Dialog dialog = new Dialog(MainActivity.main);
+    private static void showDialog(Music music, Context context) {
+        final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheet_layout);
         LinearLayout dowloadMusic = dialog.findViewById(R.id.layoutdowload);

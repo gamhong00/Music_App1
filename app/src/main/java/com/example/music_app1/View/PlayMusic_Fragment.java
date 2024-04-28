@@ -1,30 +1,21 @@
 package com.example.music_app1.View;
 
-import static android.view.animation.AnimationUtils.loadAnimation;
 import static com.example.music_app1.MainActivity.dpToPx;
 import static com.example.music_app1.MainActivity.mBottomNavigationView;
 import static com.example.music_app1.MainActivity.mViewPagerMusic;
 import static com.example.music_app1.adapter.MusicAdapter.mediaPlayer;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.os.Handler;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,9 +23,14 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.example.music_app1.DataLocal.DataLocalManager;
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
-import com.example.music_app1.adapter.MusicAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -71,32 +67,65 @@ public class PlayMusic_Fragment extends Fragment {
         totalTime = view.findViewById(R.id.totalTime);
 
         imgMusic = view.findViewById(R.id.img_music);
-//        Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic);
+
         imgMusic_ = view.findViewById(R.id.img_music_);
-//        Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic_);
-        Animation rotation = AnimationUtils.loadAnimation(imgMusic.getContext(), R.anim.rotate);
+
 
         nameMusic = view.findViewById(R.id.name_music);
 
         nameMusic_ = view.findViewById(R.id.name_music_);
-//        nameMusic_.setText(DataLocalManager.getNameMusic());
+
 
         nameArtist = view.findViewById(R.id.name_artist);
-//        nameArtist.setText(DataLocalManager.getNameArtist());
+
         nameArtist_ = view.findViewById(R.id.name_artist_);
-//        nameArtist_.setText(DataLocalManager.getNameArtist());
+
 
         seekBar = view.findViewById(R.id.seekbar_music);
         pageplaymusic = view.findViewById(R.id.pageplaymusic);
-
-//        playSound(DataLocalManager.getLink());
         PlayPause = view.findViewById(R.id.playpause);
         PlayPause_ = view.findViewById(R.id.playpause_);
+        if(DataLocalManager.getImageMusic().isEmpty() && DataLocalManager.getNameMusic().isEmpty() && DataLocalManager.getNameArtist().isEmpty() && DataLocalManager.getLink().isEmpty()){
 
+        }else {
+            Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic);
+            Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic_);
+            nameMusic.setText(DataLocalManager.getNameMusic());
+            nameMusic_.setText(DataLocalManager.getNameMusic());
+            nameArtist.setText(DataLocalManager.getNameArtist());
+            nameArtist_.setText(DataLocalManager.getNameArtist());
+            playSound(DataLocalManager.getLink());
+            Animation rotation = AnimationUtils.loadAnimation(imgMusic.getContext(), R.anim.rotate);
+            Glide.with(this)
+                    .asBitmap()
+                    .load(DataLocalManager.getImageMusic())
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    )
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+
+                            int averageColor = getAverageColor(resource);
+                            int averageColor_ = getAverageColor_(resource);
+                            int[] colors = {
+                                    averageColor, // Màu bắt đầu
+                                    averageColor_ // Màu kết thúc (trong suốt)
+                            };
+                            GradientDrawable.Orientation orientation = GradientDrawable.Orientation.TOP_BOTTOM;
+                            GradientDrawable gradientDrawable = new GradientDrawable(orientation, colors);
+                            pageplaymusic.setBackground(gradientDrawable);
+
+                        }
+                    });
+
+        }
+        Animation rotation = AnimationUtils.loadAnimation(imgMusic.getContext(), R.anim.rotate);
 
         PlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(mediaPlayer.isPlaying()){
                     mediaPlayer.pause();
                     PlayPause.setImageResource(R.drawable.circle_play_regular);
@@ -187,11 +216,12 @@ public class PlayMusic_Fragment extends Fragment {
             public void onClick(View v) {
                 if(position == 0){
                     position = mListMusic.size() - 1;
+                    playMusic(mListMusic.get(position));
                 }else {
                     position--;
+                    playMusic(mListMusic.get(position));
                 }
-                Music music = mListMusic.get(position);
-                playMusic(music);
+
             }
         });
         return view;
@@ -285,16 +315,28 @@ public class PlayMusic_Fragment extends Fragment {
         Animation rotation1 = AnimationUtils.loadAnimation(imgMusic_.getContext(), R.anim.rotate);
         imgMusic_.startAnimation(rotation1);
         //Màu playmusic
-        Bitmap bitmap = ((BitmapDrawable) imgMusic.getDrawable()).getBitmap();
-        int averageColor = getAverageColor(bitmap);
-        int averageColor_ = getAverageColor_(bitmap);
-        int[] colors = {
-                averageColor, // Màu bắt đầu
-                averageColor_ // Màu kết thúc (trong suốt)
-        };
-        GradientDrawable.Orientation orientation = GradientDrawable.Orientation.TOP_BOTTOM;
-        GradientDrawable gradientDrawable = new GradientDrawable(orientation, colors);
-        pageplaymusic.setBackground(gradientDrawable);
+        Glide.with(pageplaymusic.getContext())
+                .asBitmap()
+                .load(music.getImage())
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                )
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+
+                        int averageColor = getAverageColor(resource);
+                        int averageColor_ = getAverageColor_(resource);
+                        int[] colors = {
+                                averageColor, // Màu bắt đầu
+                                averageColor_ // Màu kết thúc (trong suốt)
+                        };
+                        GradientDrawable.Orientation orientation = GradientDrawable.Orientation.TOP_BOTTOM;
+                        GradientDrawable gradientDrawable = new GradientDrawable(orientation, colors);
+                        pageplaymusic.setBackground(gradientDrawable);
+
+                    }
+                });
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.release();
@@ -324,7 +366,7 @@ public class PlayMusic_Fragment extends Fragment {
         DataLocalManager.setImageMusic(music.getImage());
         DataLocalManager.setLink(music.getLink());
 
-        IncreaseListens(music);
+
     }
 
     public static int getAverageColor(Bitmap bitmap) {

@@ -1,12 +1,15 @@
-package com.example.music_app1.View;
+package com.example.music_app1.DataLocal;
 
 import android.content.Context;
+
+import com.example.music_app1.View.MySharePreferences;
 
 public class DataLocalManager {
     private static final String MUSIC_NAME = "MUSIC_NAME";
     private static final String ARTIST_NAME = "ARTIST_NAME";
     private static final String IMAGE_MUSIC = "IMAGE_MUSIC";
     private static final String LINK_MUSIC = "LINK_MUSIC";
+    private static final String BACKGROUND_COLOR = "BACKGROUND_COLOR";
     private static DataLocalManager instance;
     private MySharePreferences mySharePreferences;
 

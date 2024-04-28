@@ -45,13 +45,13 @@ public class Explore_Fragment extends Fragment {
 
         imgbtn_search = view.findViewById(R.id.search);
         rcvMusic = view.findViewById(R.id.rcv_musics);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rcvMusic.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         rcvMusic.addItemDecoration(itemDecoration);
         mListMusic = new ArrayList<>();
 
-        mMusicAdapter = new MusicAdapter(mListMusic);
+        mMusicAdapter = new MusicAdapter(mListMusic, getContext());
         rcvMusic.setAdapter(mMusicAdapter);
         callApiGetMusics("");
         imgbtn_search.setOnClickListener(new View.OnClickListener() {

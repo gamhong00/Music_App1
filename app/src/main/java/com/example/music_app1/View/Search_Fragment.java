@@ -60,9 +60,9 @@ public class Search_Fragment extends Fragment {
         rcvMusic.addItemDecoration(itemDecoration);
         mListMusic = new ArrayList<>();
 
-        mMusicAdapter = new MusicAdapter(mListMusic);
+        mMusicAdapter = new MusicAdapter(mListMusic, getContext());
         rcvMusic.setAdapter(mMusicAdapter);
-        callApiGetMusics("");
+        callApiGetMusics();
         imgbtn_quaylai = view.findViewById(R.id.quaylai);
         imgbtn_quaylai.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,24 +84,15 @@ public class Search_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
-                filter(s.toString().toLowerCase());
+                mMusicAdapter.getFilter().filter(s);
             }
         });
 
         return view;
     }
-    private void filter(String keyword) {
-        List<Music> filteredList = new ArrayList<>();
-        for (Music music : mListMusic) {
-            if (music.getName().toLowerCase().contains(keyword)) {
-                filteredList.add(music);
-            }
-        }
-        mMusicAdapter.setData(filteredList);
-    }
 
-    public void callApiGetMusics(String keyword){
+
+    public void callApiGetMusics(){
 
         mListMusic.clear();
         FirebaseDatabase database = FirebaseDatabase.getInstance();

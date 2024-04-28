@@ -158,8 +158,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/circle_play_regular"
                 android:background="@android:color/transparent"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"/>
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"/>
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

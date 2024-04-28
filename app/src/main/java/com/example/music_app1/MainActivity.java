@@ -10,7 +10,7 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-import com.example.music_app1.View.DataLocalManager;
+import com.example.music_app1.DataLocal.DataLocalManager;
 import com.example.music_app1.adapter.ViewPageMusicAdapter;
 
 import com.example.music_app1.adapter.ViewPagerAdapter;
