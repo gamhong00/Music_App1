@@ -134,7 +134,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
         private final LinearLayout btnplay;
         private final ImageButton  btnellipsis ;
-        private final ImageView btndownmusic;
 
         public MusicViewHolder(@NonNull View itemView){
             super(itemView);
