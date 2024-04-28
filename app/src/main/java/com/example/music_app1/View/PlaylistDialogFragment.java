@@ -2,6 +2,7 @@ package com.example.music_app1.View;
 
 import static com.example.music_app1.MainActivity.mViewPager2;
 import static com.example.music_app1.MainActivity.temp;
+import static com.example.music_app1.adapter.listPlaylistAdapter.p;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,16 +18,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.music_app1.Model.Music;
+import com.example.music_app1.Model.Playlist;
 import com.example.music_app1.R;
 import com.example.music_app1.adapter.MusicAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistDialogFragment extends DialogFragment {
@@ -36,8 +43,6 @@ public class PlaylistDialogFragment extends DialogFragment {
     private Switch swPhatTuanTu;
     private Switch swTuDongTai;
     private Button createPlaylistButton;
-    private MusicAdapter mMusicAdapter;
-    List<Music> mListMusic;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_playlist, container, false);
@@ -66,64 +71,68 @@ public class PlaylistDialogFragment extends DialogFragment {
                 // Lấy tên playlist từ EditText
                 String playlistName = editNamePlaylist.getText().toString();
 
-                // Lấy trạng thái của các switch
-                boolean isPrivate = swRiengTu.isChecked();
-                boolean isSequential = swPhatTuanTu.isChecked();
-                boolean isAutoDownload = swTuDongTai.isChecked();
+                // Tạo một playlist mới
+                Playlist newPlaylist = new Playlist();// Có thể tự động tạo hoặc tăng tự động theo thứ tự
+                newPlaylist.setIdUser(""); // Lấy từ dữ liệu người dùng đăng nhập hoặc thông tin người dùng
+                newPlaylist.setName(playlistName);
+                newPlaylist.setImage(null); // Có thể để trống hoặc thêm sau khi tải ảnh lên
 
-                // Thực hiện các thao tác cần thiết với thông tin playlist như lưu vào cơ sở dữ liệu
-                // ...
-                // Gọi hàm thêm playlist vào cơ sở dữ liệu
-                //addPlaylistToDatabase(playlistName, isPrivate, isSequential, isAutoDownload);
+                // Tạo danh sách trống cho các bài hát (nếu cần)
+                newPlaylist.setMusic(new ArrayList <>()); // Hoặc null tùy thuộc vào yêu cầu của ứng dụng
 
-                // Sau khi thực hiện xong, đóng dialog
-                dismiss();
+                // Lưu playlist lên Firebase Realtime Database
+                DatabaseReference playlistsRef = FirebaseDatabase.getInstance().getReference("playlist");
+                String playlistId = playlistsRef.push().getKey(); // Tạo một id mới cho playlist
+                playlistsRef.child(playlistId).setValue(newPlaylist)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                // Xử lý khi lưu playlist thành công
+                                dismiss(); // Đóng dialog sau khi tạo playlist thành công
+
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Xử lý khi có lỗi xảy ra trong quá trình lưu playlist
+                                dismiss(); // Đóng dialog sau khi xảy ra lỗi
+                                Toast.makeText(getActivity(), "Đã xảy ra lỗi khi tạo playlist", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                // Sự kiện lắng nghe khi thêm playlist mới
+                playlistsRef.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                        String playlistId = dataSnapshot.getKey();
+                        // Sử dụng playlistId ở đây để thực hiện các hoạt động liên quan đến playlist mới được thêm vào
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                    // Các phương thức khác của ChildEventListener
+                });
             }
         });
-
-        return view;
-    }
-    // xử lý dialog full màn hình
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.FullscreenDialogTheme);
-//    }
-
-    public void callApiGetMusics(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("music");
-        Log.d("tag",myRef.toString());
-        myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Music music = snapshot.getValue(Music.class);
-                if(music != null){
-                    mListMusic.add(music);
-                    mMusicAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "message", Toast.LENGTH_SHORT).show();
-            }
-        });
+                return view;
     }
 }
 

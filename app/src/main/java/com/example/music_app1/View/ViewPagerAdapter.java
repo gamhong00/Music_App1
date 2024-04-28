@@ -19,13 +19,10 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
             case 0:
                 return new Library_Fragment();
-
             case 1:
                 return new Explore_Fragment();
-
             case 2:
                 return new Zingchat_Fragment();
-
             case 3:
                 return new User_Fragment();
             case 4:
@@ -34,6 +31,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new Search_Fragment();
             case 6:
                 return new Playlist_Fragment();
+            case 7:
+                return new favoritesong_Fragment();
             default:
                 return new Library_Fragment();
         }
@@ -41,6 +40,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 7;
+        return 8;
     }
 }

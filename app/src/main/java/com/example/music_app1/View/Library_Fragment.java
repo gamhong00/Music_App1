@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -42,9 +43,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Library_Fragment extends Fragment {
+public class Library_Fragment extends Fragment{
 
     private ImageButton imgbtn_search, add_playlist;
+    private Button playlist;
     private RecyclerView recyclerviewPlaylist;
     List<Playlist> mListPlaylist;
     private listPlaylistAdapter mPlaylistAdapter;
@@ -57,6 +59,7 @@ public class Library_Fragment extends Fragment {
 
         //
         recyclerviewPlaylist = view.findViewById(R.id.recyclerviewPlaylist1);
+        playlist = view.findViewById(R.id.playlist);
         add_playlist = view.findViewById(R.id.add_playlist);
 
         imgbtn_search = view.findViewById(R.id.search);
@@ -79,16 +82,6 @@ public class Library_Fragment extends Fragment {
                 mViewPager2.setCurrentItem(5, false);
             }
         });
-        // Create AlertDialog (assuming dialog_addplaylist.xml is defined)
-        // AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(),
-        // R.style.AppTheme_FullscreenDialog);
-        // builder.setView(R.layout.dialog_playlist);
-        // dialog = builder.create();
-        // add_playlist.setOnClickListener(new View.OnClickListener() {
-        // @Override
-        // public void onClick(View view) {
-        // // Trong Library_Fragment, khi người dùng chuyển đến Playlist_Fragment:
-        // dialog.show();
         add_playlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,63 +90,19 @@ public class Library_Fragment extends Fragment {
 
                 // Hiển thị dialog
                 playlistDialogFragment.show(getParentFragmentManager(), "playlist_dialog");
-                // 1. Thêm Library_Fragment vào Backstack (nếu cần)
-                // getFragmentManager().beginTransaction()
-                // .replace(R.id.view_pager, new Library_Fragment())
-                // .addToBackStack(null)
-                // .commit();
-
-                // 2. Khởi tạo Playlist_Fragment
-                // Playlist_Fragment playlistFragment = new Playlist_Fragment();
-
-                // 3. Hiển thị Playlist_Fragment
-                // getFragmentManager().beginTransaction()
-                // .replace(R.id.pageplaylist, playlistFragment)
-                // .commit();
 
             }
         });
+        playlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager2.setCurrentItem(7, false);
+            }
+        });
+
         return view;
     }
 
-    // public void callApiGetMusics(){
-    // FirebaseDatabase database = FirebaseDatabase.getInstance();
-    // DatabaseReference myRef = database.getReference("playlist");
-    // Log.d("tagg",myRef.toString());
-    // myRef.addChildEventListener(new ChildEventListener() {
-    // @Override
-    // public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String
-    // previousChildName) {
-    // Playlist playlist = snapshot.getValue(Playlist.class);
-    // if(playlist != null){
-    // mListPlaylist.add(playlist);
-    // mPlaylistAdapter.notifyDataSetChanged();
-    // }
-    // }
-    //
-    // @Override
-    // public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String
-    // previousChildName) {
-    //
-    // }
-    //
-    // @Override
-    // public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-    //
-    // }
-    //
-    // @Override
-    // public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String
-    // previousChildName) {
-    //
-    // }
-    //
-    // @Override
-    // public void onCancelled(@NonNull DatabaseError error) {
-    // Toast.makeText(getActivity(), "message", Toast.LENGTH_SHORT).show();
-    // }
-    // });
-    // }
     public void callApiGetPlaylists() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("playlist");

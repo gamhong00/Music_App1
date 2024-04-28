@@ -3,6 +3,22 @@ package com.example.music_app1.Model;
 import java.util.List;
 
 public class Playlist {
+    private int id;
+    private String idUser;
+    private List<Music> music;
+    private String name;
+    private String image;
+
+    public Playlist() {
+    }
+
+    public Playlist(int id, String idUser, List<Music> music, String name, String image) {
+        this.id = id;
+        this.idUser = idUser;
+        this.music = music;
+        this.name = name;
+        this.image = image;
+    }
 
     public int getId() {
         return id;
@@ -19,6 +35,7 @@ public class Playlist {
     public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
+
     public List<Music> getMusic() {
         return music;
     }
@@ -27,7 +44,6 @@ public class Playlist {
         this.music = music;
     }
 
-
     public String getName() {
         return name;
     }
@@ -35,6 +51,7 @@ public class Playlist {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getImage() {
         return image;
     }
@@ -42,20 +59,4 @@ public class Playlist {
     public void setImage(String image) {
         this.image = image;
     }
-    public int getView() {
-        return view;
-    }
-
-    public void setView(int view) {
-        this.view = view;
-    }
-    private int id;
-    private String idUser;
-    private List<Music> music;
-    private String name;
-    private String image;
-
-    private int view;
-
-
 }

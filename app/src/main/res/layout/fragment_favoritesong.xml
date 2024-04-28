@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -20,17 +20,16 @@
             app:layout_constraintVertical_bias="0.023"
             app:srcCompat="@drawable/ic_back1" />
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/btn_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="185dp"
             android:backgroundTint="#00F4F1F1"
             app:layout_constraintVertical_bias="0.023"
-            app:srcCompat="@drawable/ic_back1"
             tools:srcCompat="@drawable/ic_download" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/image_Search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
@@ -39,7 +38,7 @@
             app:srcCompat="@drawable/ic_search" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/btn_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
@@ -64,13 +63,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textSobaihat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="115dp"
                 android:text="Số bài hát" />
             <ImageView
-                android:id="@+id/imagebaihat"
+                android:id="@+id/imageBaihat"
                 android:layout_width="4dp"
                 android:layout_height="4dp"
                 android:layout_marginTop="8dp"
@@ -83,7 +82,7 @@
         </LinearLayout>
     </LinearLayout>
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/bntPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -126,7 +125,7 @@
             app:layout_constraintGuide_begin="20dp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textMoinhat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mới nhất"
@@ -148,7 +147,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerviewbaihatyeuthich"
+        android:id="@+id/recyclerviewFavoritesong"
         android:layout_marginStart="12dp"/>
     <TextView
         android:layout_width="wrap_content"

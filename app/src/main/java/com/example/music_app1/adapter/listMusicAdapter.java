@@ -51,7 +51,10 @@ public class listMusicAdapter extends RecyclerView.Adapter<listMusicAdapter.Musi
         }
         holder.tvname.setText(String.valueOf(music.getName()));
         holder.tvartist.setText(String.valueOf((music.getArtist())));
-        Picasso.get().load(music.getImage()).into(holder.imgMusic);
+
+        String imageUrl = music.getImage();
+        Picasso.get().load(imageUrl).into(imgMusic);
+//        Picasso.get().load(music.getImage()).into(holder.imgMusic);
     }
 
     @Override

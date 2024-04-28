@@ -10,6 +10,7 @@ import static com.example.music_app1.View.PlayMusic_Fragment.seekBar;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ public class listPlaylistAdapter extends RecyclerView.Adapter<listPlaylistAdapte
     }
 
     private final List<Playlist> mListPlaylist;
+    public static int p;
+    // Interface để gửi vị trí item được nhấn đến MainActivity
 
     @NonNull
     @Override
@@ -54,11 +57,20 @@ public class listPlaylistAdapter extends RecyclerView.Adapter<listPlaylistAdapte
         holder.tvname.setText(String.valueOf(playlist.getName()));
         holder.tvidUser.setText(String.valueOf((playlist.getIdUser())));
         Picasso.get().load(playlist.getImage()).into(holder.imgMusic);
+        Log.e("minh",String.valueOf(position));
+
+        // Thêm listener cho nút phát
         holder.btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewPager2.setCurrentItem(7,false);
-
+                // Gửi vị trí của item được nhấn đến MainActivity
+                int po = holder.getAdapterPosition();
+                if (mViewPager2 != null) {
+                    mViewPager2.setCurrentItem(6, false);
+                    p = po;
+                    Log.e("position",String.valueOf(p));
+                    mViewPager2.getAdapter().notifyDataSetChanged();
+                }
             }
         });
     }
@@ -72,9 +84,9 @@ public class listPlaylistAdapter extends RecyclerView.Adapter<listPlaylistAdapte
     }
 
     public static class PlaylistViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvname, tvidUser;
-        private final ImageView imgMusic;
-        private final LinearLayout btnplay;
+        private TextView tvname, tvidUser;
+        private ImageView imgMusic;
+        private LinearLayout btnplay;
 
 
         public PlaylistViewHolder(@NonNull View itemView){
