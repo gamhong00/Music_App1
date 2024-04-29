@@ -6,9 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="@drawable/custom_bg"
+    android:background="@color/white"
     android:gravity="center"
     tools:context=".View.EnterOtpActivity">
+
+    <ImageView
+        android:layout_width="217dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/send_otp" />
 
     <EditText
         android:id="@+id/edt_otp"

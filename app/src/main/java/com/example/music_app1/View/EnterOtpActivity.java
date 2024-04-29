@@ -115,11 +115,12 @@ public class EnterOtpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            Toast.makeText(EnterOtpActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(EnterOtpActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(getApplicationContext(),"Signin Code Error", Toast.LENGTH_LONG).show();
+                            Toast.makeText(EnterOtpActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
