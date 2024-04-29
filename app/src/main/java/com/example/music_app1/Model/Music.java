@@ -1,5 +1,8 @@
 package com.example.music_app1.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Music {
     public int getId() {
         return id;
@@ -41,10 +44,37 @@ public class Music {
         this.link = link;
     }
 
+    public int getListens() {
+        return listens;
+    }
+
+    public void setListens(int listens) {
+        this.listens = listens;
+    }
+
     private int id;
     private String name;
     private String artist;
     private String image;
     private String link;
 
+    private int listens;
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("listens", listens);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Music{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", artist='" + artist + '\'' +
+                ", image='" + image + '\'' +
+                ", link='" + link + '\'' +
+                ", listens=" + listens +
+                '}';
+    }
 }

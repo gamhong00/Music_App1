@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8E4DF"
+    android:background="@drawable/custom_user"
     android:orientation="vertical"
     tools:context=".Library_Fragment">
 
@@ -27,7 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:src="@drawable/bell_regular"/>
+            android:src="@drawable/bell_regular"
+            android:contentDescription="thong bao"/>
 
         <ImageButton
 
@@ -106,12 +107,41 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_paper_slide"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="10dp">
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:background="@drawable/custom_upgrade">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zing MP3 PREMIUM"
+            android:textColor="#E3B324"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_margin="10dp">
 
-    </androidx.viewpager2.widget.ViewPager2>
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50,000đ"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp">
+
+        </TextView>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/premium"
+            android:background="@android:color/transparent"
+            >
+
+        </ImageButton>
+
+    </LinearLayout>
 
 </LinearLayout>

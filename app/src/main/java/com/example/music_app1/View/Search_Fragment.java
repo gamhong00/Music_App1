@@ -6,47 +6,46 @@ import static com.example.music_app1.MainActivity.temp;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
 import com.example.music_app1.adapter.MusicAdapter;
-import com.example.music_app1.api.ApiService;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class Search_Fragment extends Fragment {
     private ImageButton imgbtn_quaylai;
-    private RecyclerView rcvMusic;
+    private EditText edt_search;
+
+    private   RecyclerView rcvMusic;
+
+    private   MusicAdapter  mMusicAdapter;
     List<Music> mListMusic;
 
     @Override
@@ -57,12 +56,13 @@ public class Search_Fragment extends Fragment {
         rcvMusic = view.findViewById(R.id.rcv_musics);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rcvMusic.setLayoutManager(linearLayoutManager);
-
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         rcvMusic.addItemDecoration(itemDecoration);
         mListMusic = new ArrayList<>();
-        callApiGetMusics();
 
+        mMusicAdapter = new MusicAdapter(mListMusic, getContext());
+        rcvMusic.setAdapter(mMusicAdapter);
+        callApiGetMusics();
         imgbtn_quaylai = view.findViewById(R.id.quaylai);
         imgbtn_quaylai.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,24 +72,49 @@ public class Search_Fragment extends Fragment {
         });
 
 
+        edt_search = view.findViewById(R.id.edt_search);
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mMusicAdapter.getFilter().filter(s);
+            }
+        });
+
         return view;
     }
 
+
     public void callApiGetMusics(){
-        ApiService.apiService.getListMusics().enqueue(new Callback<List<Music>>() {
+
+        mListMusic.clear();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("music");
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onResponse(@NonNull Call<List<Music>> call, @NonNull Response<List<Music>> response) {
-                mListMusic = response.body();
-                MusicAdapter musicAdapter = new MusicAdapter(mListMusic);
-                rcvMusic.setAdapter(musicAdapter);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Music music = dataSnapshot.getValue(Music.class);
+                    if (music != null) {
+                        mListMusic.add(music);
+                    }
+                }
+                mMusicAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Music>> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "onFaile", Toast.LENGTH_SHORT).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "message", Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
+    }
 
 }

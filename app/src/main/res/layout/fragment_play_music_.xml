@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/pageplaymusic"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".View.PlayMusic_Fragment"
+    android:background="@drawable/custom_user">
+    <LinearLayout
+        android:id="@+id/thanh_nhac"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="14dp"
+
+        android:background="@android:color/white">
+        <com.example.music_app1.View.CircularImageView
+            android:id="@+id/img_music_"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:contentDescription="hinh anh"
+            android:src="@drawable/custom_button"
+            app:backgroundTint="@null"/>
+        <LinearLayout
+            android:layout_weight="10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name_music_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/name_artist_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/playpause_"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:contentDescription="hinh anh"
+            android:src="@drawable/play_solid"
+            android:paddingRight="14dp"
+            android:paddingLeft="14dp"
+            android:text="Play"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageButton
+            android:id="@+id/small_viewpage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/chevron_down_solid"
+            android:padding="24dp"
+            android:background="@android:color/transparent"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="40dp">
+
+        <com.example.music_app1.View.CircularImageView
+            android:id="@+id/img_music"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:src="@drawable/custom_button"
+            />
+
+
+        <TextView
+            android:id="@+id/name_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên bài hát"
+            android:layout_gravity="center"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+            android:paddingTop="60dp">
+        </TextView>
+        <TextView
+            android:id="@+id/name_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ca sĩ"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/gray">
+        </TextView>
+
+    </LinearLayout>
+
+
+
+        <SeekBar
+            android:id="@+id/seekbar_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </SeekBar>
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/curentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@color/white"
+                android:layout_alignParentStart="true" />
+            <TextView
+                android:id="@+id/totalTime"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="100dp"
+            >
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/previousMusic"
+                android:src="@drawable/backward_step_solid"
+                android:background="@android:color/transparent"/>
+            <ImageButton
+                android:id="@+id/playpause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/circle_play_regular"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/nextMusic"
+                android:src="@drawable/forward_step_solid"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+
+
+</LinearLayout>

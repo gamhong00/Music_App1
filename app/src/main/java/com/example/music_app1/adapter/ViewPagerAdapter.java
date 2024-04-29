@@ -1,4 +1,4 @@
-package com.example.music_app1.View;
+package com.example.music_app1.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -6,8 +6,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class ViewPagerAdapter extends FragmentStateAdapter {
+import com.example.music_app1.View.Download_Fragment;
+import com.example.music_app1.View.Explore_Fragment;
+import com.example.music_app1.View.Library_Fragment;
+import com.example.music_app1.View.Notification_fragment;
+import com.example.music_app1.View.Search_Fragment;
+import com.example.music_app1.View.User_Fragment;
+import com.example.music_app1.View.Zingchat_Fragment;
 
+public class ViewPagerAdapter extends FragmentStateAdapter {
 
     public ViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
@@ -33,6 +40,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new Notification_fragment();
             case 5: 
                 return new Search_Fragment();
+            case 6:
+                return new Download_Fragment();
 
             default:
                 return new Library_Fragment();
@@ -41,6 +50,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 6;
+        return 7;
     }
 }
