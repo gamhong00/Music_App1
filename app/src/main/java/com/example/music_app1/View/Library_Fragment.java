@@ -19,8 +19,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.music_app1.DataLocal.DataLocalManager;
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
+import com.example.music_app1.adapter.HistoryAdapter;
 import com.example.music_app1.adapter.MusicAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,14 +37,15 @@ public class Library_Fragment extends Fragment {
 
     private ImageButton imgbtn_search;
     private Button taixuong;
-    List<Music> mListMusic;
-    MusicAdapter adapter;
+    private  RecyclerView recyclerView;
+
+    public static HistoryAdapter historyAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_library_, container, false);
-        mListMusic = new ArrayList<>();
+
 
 
         imgbtn_search = view.findViewById(R.id.search);
@@ -63,39 +66,17 @@ public class Library_Fragment extends Fragment {
             }
         });
 
-        RecyclerView recyclerView = view.findViewById(R.id.history_music);
+        recyclerView = view.findViewById(R.id.history_music);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(layoutManager);
-         adapter = new MusicAdapter(mListMusic, getContext());
-        recyclerView.setAdapter(adapter);
-        callApiGetMusics();
+        historyAdapter = new HistoryAdapter(DataLocalManager.getListMusic(), getContext());
+
+        recyclerView.setAdapter(historyAdapter);
+
         return view;
     }
-    public void callApiGetMusics(){
 
-        mListMusic.clear();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("music");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Music music = dataSnapshot.getValue(Music.class);
-                    if (music != null) {
-                        mListMusic.add(music);
-                    }
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "message", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
 
 
 }
