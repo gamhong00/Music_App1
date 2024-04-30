@@ -52,10 +52,7 @@ public class MusicDownloadAdapter extends RecyclerView.Adapter<MusicDownloadAdap
     }
 
 
-    public void setData(List<File> dataList) {
-        this.mListMusic = dataList;
-        notifyDataSetChanged();
-    }
+
 
     private List<File> mListMusic;
 

@@ -58,6 +58,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankViewHolder
             }
         });
 
+
     }
 
     @Override
