@@ -3,6 +3,8 @@ package com.example.music_app1.View;
 import static com.example.music_app1.MainActivity.dpToPx;
 import static com.example.music_app1.MainActivity.mBottomNavigationView;
 import static com.example.music_app1.MainActivity.mViewPagerMusic;
+
+import static com.example.music_app1.View.Library_Fragment.historyAdapter;
 import static com.example.music_app1.adapter.MusicAdapter.mediaPlayer;
 
 import android.graphics.Bitmap;
@@ -85,20 +87,20 @@ public class PlayMusic_Fragment extends Fragment {
         pageplaymusic = view.findViewById(R.id.pageplaymusic);
         PlayPause = view.findViewById(R.id.playpause);
         PlayPause_ = view.findViewById(R.id.playpause_);
-        if(DataLocalManager.getImageMusic().isEmpty() && DataLocalManager.getNameMusic().isEmpty() && DataLocalManager.getNameArtist().isEmpty() && DataLocalManager.getLink().isEmpty()){
+        if(DataLocalManager.getMusic() == null){
 
         }else {
-            Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic);
-            Picasso.get().load(DataLocalManager.getImageMusic()).into(imgMusic_);
-            nameMusic.setText(DataLocalManager.getNameMusic());
-            nameMusic_.setText(DataLocalManager.getNameMusic());
-            nameArtist.setText(DataLocalManager.getNameArtist());
-            nameArtist_.setText(DataLocalManager.getNameArtist());
+            Picasso.get().load(DataLocalManager.getMusic().getImage()).into(imgMusic);
+            Picasso.get().load(DataLocalManager.getMusic().getImage()).into(imgMusic_);
+            nameMusic.setText(DataLocalManager.getMusic().getName());
+            nameMusic_.setText(DataLocalManager.getMusic().getName());
+            nameArtist.setText(DataLocalManager.getMusic().getArtist());
+            nameArtist_.setText(DataLocalManager.getMusic().getArtist());
             playSound(DataLocalManager.getLink());
             Animation rotation = AnimationUtils.loadAnimation(imgMusic.getContext(), R.anim.rotate);
             Glide.with(this)
                     .asBitmap()
-                    .load(DataLocalManager.getImageMusic())
+                    .load(DataLocalManager.getMusic().getImage())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                     )
@@ -361,11 +363,20 @@ public class PlayMusic_Fragment extends Fragment {
 
 
         // Để vào máy
-        DataLocalManager.setNameMusic(music.getName());
-        DataLocalManager.setNameArtist(music.getArtist());
-        DataLocalManager.setImageMusic(music.getImage());
-        DataLocalManager.setLink(music.getLink());
 
+        DataLocalManager.setMusic(music);
+
+
+        List<Music> mMusicHistory = DataLocalManager.getListMusic();
+        mMusicHistory.add(0,music);
+            for (int i = 1; i< mMusicHistory.size(); i++){
+                if(music.getId() == mMusicHistory.get(i).getId()){
+                    mMusicHistory.remove(i);
+                }
+            }
+
+        DataLocalManager.setListMusic(mMusicHistory);
+        historyAdapter.notifyDataSetChanged();
 
     }
 
