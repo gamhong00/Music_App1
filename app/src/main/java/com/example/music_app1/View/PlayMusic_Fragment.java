@@ -13,6 +13,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -376,6 +377,8 @@ public class PlayMusic_Fragment extends Fragment {
             }
 
         DataLocalManager.setListMusic(mMusicHistory);
+        Log.d("Du lieu trong List", DataLocalManager.getListMusic().toString());
+        historyAdapter.setMusicList(mMusicHistory);
         historyAdapter.notifyDataSetChanged();
 
     }
