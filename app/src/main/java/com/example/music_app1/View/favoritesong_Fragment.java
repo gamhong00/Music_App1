@@ -1,0 +1,127 @@
+package com.example.music_app1.View;
+
+import static com.example.music_app1.MainActivity.mViewPager2;
+import static com.example.music_app1.MainActivity.temp;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.music_app1.Model.Music;
+import com.example.music_app1.R;
+import com.example.music_app1.adapter.MusicAdapter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class favoritesong_Fragment extends Fragment {
+
+    private ImageButton imgbtnBack;
+    private ImageButton imgbtnDown;
+    private ImageButton imgbtnSearch;
+    private ImageButton imgbtnMore;
+    private Button play;
+    private RecyclerView rcvFavoritesong;
+    private MusicAdapter mMusicfavoriteAdapter;
+    List<Music> mListfavotiteMusic;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_favoritesong,container ,false);
+
+        rcvFavoritesong = view.findViewById(R.id.recyclerviewFavoritesong);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rcvFavoritesong.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        rcvFavoritesong.addItemDecoration(itemDecoration);
+        mListfavotiteMusic = new ArrayList<>();
+        mMusicfavoriteAdapter = new MusicAdapter(mListfavotiteMusic,getContext());
+        rcvFavoritesong.setAdapter(mMusicfavoriteAdapter);
+        callApiGetFavoritesong();
+
+        imgbtnBack = view.findViewById(R.id.btn_back);
+        imgbtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager2.setCurrentItem(temp,false);
+            }
+        });
+        imgbtnMore = view.findViewById(R.id.btn_more);
+        imgbtnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // hiển thị dialog tùy biến, chưa làm dialog nên chưa bỏ dô
+
+            }
+        });
+        imgbtnSearch = view.findViewById(R.id.image_Search);
+        imgbtnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager2.setCurrentItem(5,false);
+            }
+        });
+        imgbtnDown = view.findViewById(R.id.btn_down);
+        imgbtnDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // chưa làm gắn down
+                }
+        });
+
+        return view;
+    }
+    public void callApiGetFavoritesong(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("music");
+        Log.d("tag",myRef.toString());
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Music music = snapshot.getValue(Music.class);
+                if(music != null){
+                    mListfavotiteMusic.add(music);
+                    mMusicfavoriteAdapter.notifyDataSetChanged();
+
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "message", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}

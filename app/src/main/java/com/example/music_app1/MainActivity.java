@@ -1,6 +1,9 @@
 package com.example.music_app1;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
@@ -13,8 +16,13 @@ import android.view.ViewGroup;
 import com.example.music_app1.DataLocal.DataLocalManager;
 import com.example.music_app1.adapter.ViewPageMusicAdapter;
 
+import com.example.music_app1.View.User_Fragment;
 import com.example.music_app1.adapter.ViewPagerAdapter;
+import com.example.music_app1.View.favoritesong_Fragment;
+//import com.example.music_app1.adapter.PlaylistAdapter;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public static ViewPager2 mViewPager2;
     public static ViewPager2 mViewPagerMusic;
     public static BottomNavigationView mBottomNavigationView;
-    public static Context main;
+    
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -32,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         DataLocalManager.init(getApplicationContext());
-        main = this;
+       
 
         mViewPager2 = findViewById(R.id.view_pager);
         mViewPagerMusic = findViewById(R.id.view_pager_music);
@@ -41,10 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle());
         mViewPager2.setAdapter(adapter);
-         //load trước 3 viewPager
+    
         mViewPager2.setUserInputEnabled(false);
-
-
 
         ViewPageMusicAdapter adapter1 = new ViewPageMusicAdapter(getSupportFragmentManager(), getLifecycle());
         mViewPagerMusic.setAdapter(adapter1);
@@ -65,20 +71,20 @@ public class MainActivity extends AppCompatActivity {
 
                 int id = item.getItemId();
                 if (id == R.id.menu_library) {
-                    mViewPager2.setCurrentItem(0,false);
+                    mViewPager2.setCurrentItem(0, false);
                     temp = 0;
 
                     return true;
                 } else if (id == R.id.menu_explore) {
-                    mViewPager2.setCurrentItem(1,false);
+                    mViewPager2.setCurrentItem(1, false);
                     temp = 1;
                     return true;
                 } else if (id == R.id.menu_zingchat) {
-                    mViewPager2.setCurrentItem(2,false);
+                    mViewPager2.setCurrentItem(2, false);
                     temp = 2;
                     return true;
                 } else if (id == R.id.menu_user) {
-                    mViewPager2.setCurrentItem(3,false);
+                    mViewPager2.setCurrentItem(3, false);
                     temp = 3;
                     return true;
                 }
@@ -87,12 +93,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     public static int dpToPx(Context context, int dp) {
         return (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 dp,
-                context.getResources().getDisplayMetrics()
-        );
+                context.getResources().getDisplayMetrics());
     }
 
 

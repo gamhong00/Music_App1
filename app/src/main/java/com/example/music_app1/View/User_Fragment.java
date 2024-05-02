@@ -2,7 +2,6 @@ package com.example.music_app1.View;
 
 import static com.example.music_app1.MainActivity.mViewPager2;
 
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,12 +19,11 @@ import com.example.music_app1.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
 public class User_Fragment extends Fragment {
-    private ImageButton phongtoButton;
+
     int currentItem = mViewPager2.getCurrentItem();
     private ImageButton btn_notification;
-    
+
     private ImageButton imgbtn_search;
 
     LinearLayout linearLayout1, linearLayout2;
@@ -35,9 +33,10 @@ public class User_Fragment extends Fragment {
     private String phoneNumber;
 
     private Button btn_sign_out;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_, container, false);
         // Inflate the layout for this fragment
 
@@ -53,12 +52,11 @@ public class User_Fragment extends Fragment {
             }
         });
 
-
         imgbtn_search = view.findViewById(R.id.search);
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager2.setCurrentItem(5,false);
+                mViewPager2.setCurrentItem(5, false);
             }
         });
 
@@ -71,18 +69,18 @@ public class User_Fragment extends Fragment {
         name_user = view.findViewById(R.id.name_user);
         infor_user = view.findViewById(R.id.infor_user);
 
-        btn_sign_out=view.findViewById(R.id.btn_sign_out);
+        btn_sign_out = view.findViewById(R.id.btn_sign_out);
     }
 
     // Hàm để lấy dữ liệu từ Bundle và trả về số điện thoại
     // Hàm để lấy dữ liệu từ Bundle
-//    private void getDataFromBundle() {
-//        Bundle bundle = getArguments();
-//        if (bundle != null) {
-//            // Lấy số điện thoại từ Bundle
-//            phoneNumber = bundle.getString("phone_number");
-//        }
-//    }
+    // private void getDataFromBundle() {
+    // Bundle bundle = getArguments();
+    // if (bundle != null) {
+    // // Lấy số điện thoại từ Bundle
+    // phoneNumber = bundle.getString("phone_number");
+    // }
+    // }
 
     private void displayUserInfo() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -108,10 +106,9 @@ public class User_Fragment extends Fragment {
                 String email = user.getEmail();
                 Uri photoUrl = user.getPhotoUrl();
 
-                if(name == null) {
+                if (name == null) {
                     name_user.setVisibility(getView().GONE);
-                }
-                else{
+                } else {
                     name_user.setVisibility(getView().VISIBLE);
                     name_user.setText(name);
                 }
