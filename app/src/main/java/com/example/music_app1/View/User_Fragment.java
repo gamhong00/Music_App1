@@ -6,6 +6,7 @@ import static com.example.music_app1.MainActivity.mViewPager2;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
+import com.example.music_app1.Helper;
+import com.example.music_app1.MainActivity;
 import com.example.music_app1.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,7 +28,7 @@ public class User_Fragment extends Fragment {
     private ImageButton phongtoButton;
     int currentItem = mViewPager2.getCurrentItem();
     private ImageButton btn_notification;
-    
+
     private ImageButton imgbtn_search;
 
     LinearLayout linearLayout1, linearLayout2;
@@ -62,6 +65,22 @@ public class User_Fragment extends Fragment {
             }
         });
 
+        LinearLayout btn_layoutUpdatePremium= view.findViewById((R.id.layoutUpdatePremium));
+
+        Boolean isPremium= Helper.getKeyIsPremium(getContext());
+        if(!isPremium){
+            btn_layoutUpdatePremium.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), RegisterPremiumActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }else{
+            btn_layoutUpdatePremium.setVisibility(View.GONE);
+        }
+
+
         setSignOutClickListener();
         return view;
     }
@@ -89,7 +108,7 @@ public class User_Fragment extends Fragment {
         if (user != null) {
             // Xác định cách đăng nhập của người dùng (số điện thoại hoặc email)
             String loginMethod;
-            if (user.getPhoneNumber() != null) {
+            if (user.getPhoneNumber().trim().length()>0) {
                 loginMethod = "phone"; // Đăng nhập bằng số điện thoại
             } else {
                 loginMethod = "email"; // Đăng nhập bằng email/password
@@ -104,7 +123,7 @@ public class User_Fragment extends Fragment {
                 infor_user.setText(phoneNumber);
 
             } else {
-                String name = user.getDisplayName();
+                String name= Helper.getKeyName(getContext());
                 String email = user.getEmail();
                 Uri photoUrl = user.getPhotoUrl();
 
@@ -128,6 +147,7 @@ public class User_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                Helper.clearUser(getContext());
                 Intent intent = new Intent(getActivity(), SignInActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);

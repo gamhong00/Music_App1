@@ -66,5 +66,5 @@ dependencies {
 
     //Vẽ biểu đồ
     implementation ("com.jjoe64:graphview:4.2.2")
-
+    implementation(files("libs/zpdk-release-v3.1.aar"))
 }

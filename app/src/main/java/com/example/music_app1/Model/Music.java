@@ -20,6 +20,14 @@ public class Music {
         this.name = name;
     }
 
+    public boolean getIsPremium() {
+        return isPremium;
+    }
+
+    public void setPremium(boolean premium) {
+        isPremium = premium;
+    }
+
     public String getArtist() {
         return artist;
     }
@@ -54,6 +62,7 @@ public class Music {
 
     private int id;
     private String name;
+    private boolean isPremium;
     private String artist;
     private String image;
     private String link;
@@ -71,6 +80,7 @@ public class Music {
         return "Music{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", isPremium='"+ isPremium + '\''+
                 ", artist='" + artist + '\'' +
                 ", image='" + image + '\'' +
                 ", link='" + link + '\'' +

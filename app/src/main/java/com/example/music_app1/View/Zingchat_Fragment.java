@@ -84,7 +84,7 @@ public class Zingchat_Fragment extends Fragment {
         for (int i = 1; i <= 100; i++) {
             dataList.add(i);
         }
-        mRankAdapter = new RankAdapter(dataList, mListMusic);
+        mRankAdapter = new RankAdapter(view.getContext(), dataList, mListMusic);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         DividerItemDecoration itemDecoration1 = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
