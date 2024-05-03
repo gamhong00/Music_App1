@@ -2,9 +2,9 @@ package com.example.music_app1.View;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -14,14 +14,25 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.music_app1.Helper;
 import com.example.music_app1.MainActivity;
+import com.example.music_app1.Model.User;
 import com.example.music_app1.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignInActivity extends AppCompatActivity {
     private LinearLayout layout_sign_up;
@@ -30,11 +41,13 @@ public class SignInActivity extends AppCompatActivity {
     private ProgressDialog progress;
     private AlertDialog.Builder alertDialog;
 
+    public Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
+        context= this;
         initUI();
         initListener();
     }
@@ -95,6 +108,8 @@ public class SignInActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progress.dismiss();
                         if (task.isSuccessful()) {
+                            String valueUID = task.getResult().getUser().getUid();
+                            getUserPremium(valueUID);
                             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                             startActivity(intent);
                             finishAffinity();
@@ -105,5 +120,25 @@ public class SignInActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    private void getUserPremium(String valueUID){
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+        Query query = usersRef.orderByChild("uid").equalTo(valueUID);
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    User user = userSnapshot.getValue(User.class);
+                    Helper.saveUser(context, user.uid, user.name, user.isPremium);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(context, "Lỗi không tìm thấy người dùng", Toast.LENGTH_LONG);
+            }
+        });
     }
 }

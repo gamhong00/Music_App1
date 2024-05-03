@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.RegisterPremiumActivity"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/backPaymentPremium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_back_24"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chọn phương thức thanh toán"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:paddingVertical="8dp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="180dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/zaloimg"
+            android:scaleType="centerCrop"
+            android:id="@+id/imageZalo"/>
+
+        <ImageView
+            android:id="@+id/icon_checked"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/imageZalo"
+            android:layout_alignEnd="@id/imageZalo"
+            android:layout_marginTop="-100dp"
+            android:src="@drawable/baseline_check_24"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/buttonPay"
+        app:backgroundTint="@null"
+        android:layout_marginTop="10dp"
+        android:text="Thanh toán"
+        android:background="@drawable/custom_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"/>
+
+</LinearLayout>
