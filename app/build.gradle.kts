@@ -37,6 +37,7 @@ android {
 
 
 dependencies {
+    //Tạo quảng cáo
     implementation("com.google.android.gms:play-services-ads:23.0.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
@@ -70,7 +71,8 @@ dependencies {
     //Vẽ biểu đồ
     implementation ("com.jjoe64:graphview:4.2.2")
 
-    //Tạo quảng cáo
+    //Slide
+    implementation("me.relex:circleindicator:2.1.6")
 
 
 }

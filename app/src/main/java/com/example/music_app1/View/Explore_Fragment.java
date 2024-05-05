@@ -2,6 +2,7 @@ package com.example.music_app1.View;
 
 import static com.example.music_app1.MainActivity.mViewPager2;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.music_app1.Model.Music;
+import com.example.music_app1.Model.Slide;
 import com.example.music_app1.R;
 import com.example.music_app1.adapter.MusicAdapter;
+import com.example.music_app1.adapter.SlideAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.relex.circleindicator.CircleIndicator;
 
 
 public class Explore_Fragment extends Fragment {
@@ -38,6 +44,11 @@ public class Explore_Fragment extends Fragment {
     private   MusicAdapter  mMusicAdapter;
     List<Music> mListMusic;
 
+    private ViewPager viewPagerSlide;
+    private CircleIndicator circleIndicator;
+    private SlideAdapter slideAdapter;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,6 +65,14 @@ public class Explore_Fragment extends Fragment {
         mMusicAdapter = new MusicAdapter(mListMusic, getContext());
         rcvMusic.setAdapter(mMusicAdapter);
         callApiGetMusics("");
+
+        viewPagerSlide = view.findViewById(R.id.view_pager_slide);
+        circleIndicator = view.findViewById(R.id.circle_indicator);
+        slideAdapter = new SlideAdapter(getContext(),getListSlide());
+        viewPagerSlide.setAdapter(slideAdapter);
+
+        circleIndicator.setViewPager(viewPagerSlide);
+        slideAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,5 +118,12 @@ public class Explore_Fragment extends Fragment {
                 Toast.makeText(getActivity(), "message", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private  List<Slide> getListSlide() {
+        List<Slide> slideList = new ArrayList<>();
+        slideList.add(new Slide(R.drawable.slide1));
+        slideList.add(new Slide(R.drawable.slide2));
+        slideList.add(new Slide(R.drawable.slide3));
+        return  slideList;
     }
 }

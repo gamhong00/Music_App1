@@ -376,6 +376,7 @@ public class PlayMusic_Fragment extends Fragment {
             }
 
         DataLocalManager.setListMusic(mMusicHistory);
+        historyAdapter.setMusicList(mMusicHistory);
         historyAdapter.notifyDataSetChanged();
 
     }

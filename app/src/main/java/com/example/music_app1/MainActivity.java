@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.music_app1.DataLocal.DataLocalManager;
+import com.example.music_app1.adapter.SlideAdapter;
 import com.example.music_app1.adapter.ViewPageMusicAdapter;
 
 import com.example.music_app1.View.User_Fragment;
@@ -33,6 +34,8 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+
+import me.relex.circleindicator.CircleIndicator;
 
 public class MainActivity extends AppCompatActivity {
 
