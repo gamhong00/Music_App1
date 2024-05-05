@@ -282,7 +282,6 @@ public class MusicDownloadAdapter extends RecyclerView.Adapter<MusicDownloadAdap
         return timeString;
     }
 
-    //Click view tăng
 
     // Phương thức để lấy hình từ file mp3
     private Bitmap getAlbumArt(String filePath) {

@@ -52,6 +52,14 @@ public class Music {
         this.listens = listens;
     }
 
+    public boolean isLike() {
+        return like;
+    }
+
+    public void setLike(boolean like) {
+        this.like = like;
+    }
+
     private int id;
     private String name;
     private String artist;
@@ -59,6 +67,9 @@ public class Music {
     private String link;
 
     private int listens;
+    private boolean like;
+
+
 
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();

@@ -9,8 +9,10 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.music_app1.DataLocal.DataLocalManager;
@@ -21,6 +23,14 @@ import com.example.music_app1.adapter.ViewPagerAdapter;
 import com.example.music_app1.View.favoritesong_Fragment;
 //import com.example.music_app1.adapter.PlaylistAdapter;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -30,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     public static ViewPager2 mViewPager2;
     public static ViewPager2 mViewPagerMusic;
     public static BottomNavigationView mBottomNavigationView;
-    
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -38,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         DataLocalManager.init(getApplicationContext());
-       
 
         mViewPager2 = findViewById(R.id.view_pager);
         mViewPagerMusic = findViewById(R.id.view_pager_music);
@@ -49,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle());
         mViewPager2.setAdapter(adapter);
-    
+
         mViewPager2.setUserInputEnabled(false);
 
         ViewPageMusicAdapter adapter1 = new ViewPageMusicAdapter(getSupportFragmentManager(), getLifecycle());
@@ -92,6 +99,35 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+                AdView mAdView = findViewById(R.id.adView);
+                AdRequest adRequest = new AdRequest.Builder().build();
+                mAdView.loadAd(adRequest);
+
+                InterstitialAd.load(MainActivity.this, "ca-app-pub-3940256099942544/1033173712", adRequest,
+                        new InterstitialAdLoadCallback() {
+                            @Override
+                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+
+                                // Hiển thị quảng cáo
+                                interstitialAd.show(MainActivity.this);
+                                // Ẩn AdView nếu tắt quảng cáo
+                                mAdView.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                // Handle the error
+                                Log.d("TAG", "Interstitial ad failed to load: " + loadAdError.getMessage());
+
+                            }
+                        });
+
+            }
+
+        });
     }
 
     public static int dpToPx(Context context, int dp) {
@@ -100,8 +136,4 @@ public class MainActivity extends AppCompatActivity {
                 dp,
                 context.getResources().getDisplayMetrics());
     }
-
-
-
-
 }

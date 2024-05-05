@@ -70,4 +70,7 @@ dependencies {
     //Vẽ biểu đồ
     implementation ("com.jjoe64:graphview:4.2.2")
 
+    //Tạo quảng cáo
+
+
 }

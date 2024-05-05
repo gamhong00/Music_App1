@@ -55,7 +55,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/playlist"
+                    android:id="@+id/favorite"
                     android:layout_width="130dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"

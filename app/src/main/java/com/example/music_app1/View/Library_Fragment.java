@@ -46,6 +46,7 @@ import com.example.music_app1.R;
 //import com.example.music_app1.adapter.MusicAdapter;
 //import com.example.music_app1.adapter.listMusicAdapter;
 import com.example.music_app1.adapter.HistoryAdapter;
+import com.example.music_app1.adapter.MusicAdapter;
 import com.example.music_app1.adapter.listPlaylistAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -60,7 +61,7 @@ import java.util.List;
 public class Library_Fragment extends Fragment{
 
     private ImageButton imgbtn_search, add_playlist;
-    private Button playlist;
+    private Button favorite;
     private RecyclerView recyclerviewPlaylist;
     List<Playlist> mListPlaylist;
     private listPlaylistAdapter mPlaylistAdapter;
@@ -69,6 +70,7 @@ public class Library_Fragment extends Fragment{
     private  RecyclerView recyclerView;
 
     public static HistoryAdapter historyAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -77,7 +79,7 @@ public class Library_Fragment extends Fragment{
 
         //
         recyclerviewPlaylist = view.findViewById(R.id.recyclerviewPlaylist1);
-        playlist = view.findViewById(R.id.playlist);
+        favorite = view.findViewById(R.id.favorite);
         add_playlist = view.findViewById(R.id.add_playlist);
 
         imgbtn_search = view.findViewById(R.id.search);
@@ -113,7 +115,7 @@ public class Library_Fragment extends Fragment{
 
             }
         });
-        playlist.setOnClickListener(new View.OnClickListener() {
+        favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mViewPager2.setCurrentItem(7, false);

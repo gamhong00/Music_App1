@@ -27,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,83 +40,100 @@ public class favoritesong_Fragment extends Fragment {
     private ImageButton imgbtnMore;
     private Button play;
     private RecyclerView rcvFavoritesong;
-    private MusicAdapter mMusicfavoriteAdapter;
-    List<Music> mListfavotiteMusic;
+    private static MusicAdapter mMusicfavoriteAdapter;
+    List<Music> mListfavotiteMusic = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favoritesong,container ,false);
+        View view = inflater.inflate(R.layout.fragment_favoritesong, container, false);
 
         rcvFavoritesong = view.findViewById(R.id.recyclerviewFavoritesong);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rcvFavoritesong.setLayoutManager(linearLayoutManager);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         rcvFavoritesong.addItemDecoration(itemDecoration);
-        mListfavotiteMusic = new ArrayList<>();
-        mMusicfavoriteAdapter = new MusicAdapter(mListfavotiteMusic,getContext());
+        mMusicfavoriteAdapter = new MusicAdapter(mListfavotiteMusic, getContext());
+
+
         rcvFavoritesong.setAdapter(mMusicfavoriteAdapter);
+        // Gọi phương thức để lấy danh sách các bài hát yêu thích từ Firebase
         callApiGetFavoritesong();
+
+
 
         imgbtnBack = view.findViewById(R.id.btn_back);
         imgbtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewPager2.setCurrentItem(temp,false);
+                mViewPager2.setCurrentItem(temp, false);
             }
         });
         imgbtnMore = view.findViewById(R.id.btn_more);
         imgbtnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // hiển thị dialog tùy biến, chưa làm dialog nên chưa bỏ dô
-
+                // Hiển thị dialog tùy biến, chưa làm dialog nên chưa bỏ dô
             }
         });
         imgbtnSearch = view.findViewById(R.id.image_Search);
         imgbtnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewPager2.setCurrentItem(5,false);
+                mViewPager2.setCurrentItem(5, false);
             }
         });
         imgbtnDown = view.findViewById(R.id.btn_down);
         imgbtnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // chưa làm gắn down
-                }
+                // Chưa làm gắn down
+            }
         });
 
         return view;
     }
-    public void callApiGetFavoritesong(){
+
+    // Xử lý sự kiện thích bài hát và thêm vào RecyclerView rcvFavoritesong
+    private void handleLikeMusic(Music music) {
+        // Kiểm tra xem bài hát đã tồn tại trong danh sách yêu thích chưa
+        if (!mListfavotiteMusic.contains(music)) {
+            // Nếu chưa tồn tại, thêm bài hát vào danh sách yêu thích
+            mListfavotiteMusic.add(music);
+            // Thông báo cho adapter đã thay đổi dữ liệu
+            mMusicfavoriteAdapter.notifyDataSetChanged();
+        } else {
+            // Nếu đã tồn tại, hiển thị thông báo cho người dùng
+            Toast.makeText(getContext(), "Bài hát đã có trong danh sách yêu thích", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Phương thức để lấy danh sách các bài hát yêu thích từ Firebase
+    public void callApiGetFavoritesong() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("music");
-        Log.d("tag",myRef.toString());
+        Query query = myRef.orderByChild("like");
+        Log.d("tag", myRef.toString());
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Music music = snapshot.getValue(Music.class);
-                if(music != null){
-                    mListfavotiteMusic.add(music);
-                    mMusicfavoriteAdapter.notifyDataSetChanged();
-
+                if (music != null && music.isLike()) { // Kiểm tra nếu thuộc tính "like" là true
+                    // Gọi phương thức xử lý sự kiện thích bài hát
+                    handleLikeMusic(music);
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
 
             @Override
@@ -124,4 +142,6 @@ public class favoritesong_Fragment extends Fragment {
             }
         });
     }
+
+
 }

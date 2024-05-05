@@ -2,6 +2,7 @@ package com.example.music_app1.adapter;
 
 
 import static com.example.music_app1.Nofication.CHANNEL_ID;
+import static com.example.music_app1.View.Library_Fragment.historyAdapter;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -24,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -36,6 +38,8 @@ import com.example.music_app1.R;
 import com.example.music_app1.DataLocal.MusicDownloader;
 
 import com.example.music_app1.View.PlayMusic_Fragment;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -194,9 +198,22 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         likeMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                // Kiểm tra xem music có tồn tại không
+                if (music != null) {
+                    // Truy cập vào đối tượng DatabaseReference tương ứng với bài hát được thích
+                    DatabaseReference musicRef = FirebaseDatabase.getInstance().getReference("music").child(String.valueOf(music.getId()));
+                    // Cập nhật trường like của bài hát thành true
+                    musicRef.child("like").setValue(true);
+                    // Đóng dialog
+                    dialog.dismiss();
+                    // Hiển thị thông báo cho người dùng
+                    Toast.makeText(v.getContext(), "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                }
+
             }
+
         });
+
         LinearLayout addPlaylist = dialog.findViewById(R.id.layoutAddplaylist);
         addPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,4 +227,5 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
+
 }

@@ -5,23 +5,24 @@
     android:id="@+id/dialog_addplaylist"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="#EACDCD"
     android:orientation="vertical"
     tools:context=".View.PlaylistDialogFragment">
 
     <ImageButton
         android:id="@+id/btn_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:backgroundTint="#0E0E0E"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
         app:srcCompat="@drawable/admob_close_button_white_cross"
-        app:tint="#756E6E" />
+        app:tint="#000000" />
     <TextView
         android:id="@+id/Name_playlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tên Playlist"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"/>
 
 
 

@@ -187,6 +187,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MusicVie
                 }
 
                 DataLocalManager.setListMusic(mMusicHistory);
+                historyAdapter.setMusicList(mMusicHistory);
                 Toast.makeText(context,"Xóa Nghe gần đây", Toast.LENGTH_SHORT).show();
                 historyAdapter.notifyDataSetChanged();
                 dialog.dismiss();
@@ -200,5 +201,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MusicVie
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+
+    public void setMusicList(List<Music> musicList){
+        this.mListMusic = musicList;
     }
 }
