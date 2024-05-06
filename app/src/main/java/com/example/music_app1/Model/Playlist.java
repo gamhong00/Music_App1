@@ -3,37 +3,46 @@ package com.example.music_app1.Model;
 import java.util.List;
 
 public class Playlist {
-    private int id;
-    private String idUser;
+    @Override
+    public String toString() {
+        return "Playlist{" +
+                "id=" + id +
+                ", uid='" + uid + '\'' +
+                ", music=" + music +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    private String id;
+    private String uid;
     private List<Music> music;
     private String name;
-    private String image;
 
     public Playlist() {
     }
 
-    public Playlist(int id, String idUser, List<Music> music, String name, String image) {
+    public Playlist(String id, String uid, List<Music> music, String name) {
         this.id = id;
-        this.idUser = idUser;
+        this.uid = uid;
         this.music = music;
         this.name = name;
-        this.image = image;
+
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getIdUser() {
-        return idUser;
+    public String getUid() {
+        return uid;
     }
 
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public List<Music> getMusic() {
@@ -52,11 +61,5 @@ public class Playlist {
         this.name = name;
     }
 
-    public String getImage() {
-        return image;
-    }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
 }

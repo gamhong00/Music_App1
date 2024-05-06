@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,13 +32,17 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_app1.Model.Music;
+import com.example.music_app1.Model.Playlist;
 import com.example.music_app1.R;
 import com.example.music_app1.DataLocal.MusicDownloader;
 
+import com.example.music_app1.View.Library_Fragment;
 import com.example.music_app1.View.PlayMusic_Fragment;
+import com.example.music_app1.View.Playlist_Fragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -53,11 +58,11 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         this.mListMusic = mListMusic;
         OldmListMusic = mListMusic;
     }
-
+    public static Music musicglobal;
     private List<Music> mListMusic;
     private List<Music> OldmListMusic;
     public static MediaPlayer mediaPlayer;
-    private Context context;
+    private  Context context;
 
     @NonNull
     @Override
@@ -110,13 +115,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                         .setMediaSession(mediaSessionCompat.getSessionToken())).build();
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         managerCompat.notify(1, notification);
@@ -219,6 +218,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                showDialogPlaylist(music,context);
+
             }
         });
         dialog.show();
@@ -226,6 +227,25 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+    public static void showDialogPlaylist(Music music, Context context) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottom_layout_playlist);
+        RecyclerView rcvplaylist = dialog.findViewById(R.id.recyclerviewPlaylist1);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        rcvplaylist.setLayoutManager(linearLayoutManager);
+        rcvplaylist.setAdapter(Library_Fragment.playListDialogAdapter);
+        musicglobal = music;
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+
+    public void setMusicList(List<Music> musicList){
+        this.mListMusic = musicList;
     }
 
 }

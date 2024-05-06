@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        android:id="@+id/pageplaylist"
+        tools:context=".View.Playlist_Fragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imagebntBack"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:background="#F6F2F2"
+                app:srcCompat="@drawable/ic_back1" />
+
+            <ImageButton
+                android:id="@+id/imagebntMore"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="300dp"
+                android:backgroundTint="#F8F5F5"
+                app:srcCompat="@drawable/ic_more" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/imageMusic"
+            android:layout_width="173dp"
+            android:layout_height="173dp"
+            android:layout_gravity="center"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textPlaylist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-black"
+            android:text="Tên Playlist" />
+
+        <TextView
+            android:id="@+id/textUser"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Tên user" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bntPhatngaunhien"
+                android:layout_width="170dp"
+                android:layout_height="40dp"
+                android:text="Phát Ngẫu Nhiên" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerviewPlaylist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"/>
+
+        <Button
+            android:layout_below="@+id/recyclerviewsuggestedsong"
+            android:id="@+id/btnThembai"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:textSize="8dp"
+            android:text="Thêm bài" />
+    </LinearLayout>
+</ScrollView>

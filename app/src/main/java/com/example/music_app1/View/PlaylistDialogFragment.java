@@ -2,7 +2,7 @@ package com.example.music_app1.View;
 
 import static com.example.music_app1.MainActivity.mViewPager2;
 import static com.example.music_app1.MainActivity.temp;
-import static com.example.music_app1.adapter.listPlaylistAdapter.p;
+
 
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +27,8 @@ import com.example.music_app1.R;
 import com.example.music_app1.adapter.MusicAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -69,20 +71,22 @@ public class PlaylistDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 // Lấy tên playlist từ EditText
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String playlistName = editNamePlaylist.getText().toString();
 
                 // Tạo một playlist mới
                 Playlist newPlaylist = new Playlist();// Có thể tự động tạo hoặc tăng tự động theo thứ tự
-                newPlaylist.setIdUser(""); // Lấy từ dữ liệu người dùng đăng nhập hoặc thông tin người dùng
+                newPlaylist.setUid(user.getUid()); // Lấy từ dữ liệu người dùng đăng nhập hoặc thông tin người dùng
                 newPlaylist.setName(playlistName);
-                newPlaylist.setImage(null); // Có thể để trống hoặc thêm sau khi tải ảnh lên
-
+                 // Có thể để trống hoặc thêm sau khi tải ảnh lên
+                List<Music> music = null;
                 // Tạo danh sách trống cho các bài hát (nếu cần)
-                newPlaylist.setMusic(new ArrayList <>()); // Hoặc null tùy thuộc vào yêu cầu của ứng dụng
+                newPlaylist.setMusic(music); // Hoặc null tùy thuộc vào yêu cầu của ứng dụng
 
                 // Lưu playlist lên Firebase Realtime Database
                 DatabaseReference playlistsRef = FirebaseDatabase.getInstance().getReference("playlist");
                 String playlistId = playlistsRef.push().getKey(); // Tạo một id mới cho playlist
+                newPlaylist.setId(playlistId);
                 playlistsRef.child(playlistId).setValue(newPlaylist)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

@@ -2,57 +2,41 @@ package com.example.music_app1.View;
 
 import static com.example.music_app1.MainActivity.mViewPager2;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.music_app1.MainActivity;
-import com.example.music_app1.Model.Music;
 import com.example.music_app1.Model.Playlist;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.music_app1.DataLocal.DataLocalManager;
-import com.example.music_app1.Model.Music;
 import com.example.music_app1.R;
 //import com.example.music_app1.adapter.MusicAdapter;
 //import com.example.music_app1.adapter.listMusicAdapter;
 import com.example.music_app1.adapter.HistoryAdapter;
-import com.example.music_app1.adapter.MusicAdapter;
-import com.example.music_app1.adapter.listPlaylistAdapter;
+import com.example.music_app1.adapter.PlayListAdapter;
+import com.example.music_app1.adapter.PlayListDialogAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 
 import java.util.ArrayList;
@@ -63,21 +47,21 @@ public class Library_Fragment extends Fragment{
     private ImageButton imgbtn_search, add_playlist;
     private Button favorite;
     private RecyclerView recyclerviewPlaylist;
-    List<Playlist> mListPlaylist;
-    private listPlaylistAdapter mPlaylistAdapter;
+    List<Playlist> mListPlaylist = new ArrayList<>();
+
 
     private Button taixuong;
     private  RecyclerView recyclerView;
 
     public static HistoryAdapter historyAdapter;
-
+    public static PlayListDialogAdapter playListDialogAdapter;
+    public static PlayListAdapter playListAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_library_, container, false);
 
-        //
         recyclerviewPlaylist = view.findViewById(R.id.recyclerviewPlaylist1);
         favorite = view.findViewById(R.id.favorite);
         add_playlist = view.findViewById(R.id.add_playlist);
@@ -86,16 +70,11 @@ public class Library_Fragment extends Fragment{
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerviewPlaylist.setLayoutManager(linearLayoutManager);
-        // hai dong duoi can thi dung, ko thif thoi
-        // DividerItemDecoration itemDecoration = new
-        // DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-        // recyclerviewPlaylist.addItemDecoration(itemDecoration);
-        mListPlaylist = new ArrayList<>();
-
-        mPlaylistAdapter = new listPlaylistAdapter(mListPlaylist);
-        recyclerviewPlaylist.setAdapter(mPlaylistAdapter);
+        playListAdapter = new PlayListAdapter(mListPlaylist,getContext());
+        playListDialogAdapter = new PlayListDialogAdapter(mListPlaylist, getContext());
+        recyclerviewPlaylist.setAdapter(playListAdapter);
         callApiGetPlaylists();
-        // callApiGetMusics();
+
         taixuong = view.findViewById(R.id.download);
 
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
@@ -145,15 +124,20 @@ public class Library_Fragment extends Fragment{
     public void callApiGetPlaylists() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("playlist");
-        Log.d("tagg", myRef.toString());
-        myRef.addChildEventListener(new ChildEventListener() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Query query = myRef.orderByChild("uid").equalTo(user.getUid());
+
+        query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Playlist playlist = snapshot.getValue(Playlist.class);
+
                 if (playlist != null) {
                     mListPlaylist.add(playlist);
-                    mPlaylistAdapter.notifyDataSetChanged();
+
                 }
+                playListAdapter.notifyDataSetChanged();
+                playListDialogAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -177,7 +161,6 @@ public class Library_Fragment extends Fragment{
             }
         });
     }
-
 
 
 
