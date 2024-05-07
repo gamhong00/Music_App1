@@ -31,11 +31,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:textColor="@color/white"/>
+        android:textColor="@color/black"/>
 
     <LinearLayout
         android:layout_width="410dp"
-        android:layout_height="750dp"
+        android:layout_height="600dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -53,7 +53,10 @@
             <Switch
                 android:id="@+id/sw_riengtu"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:ignore="UseSwitchCompatOrMaterialXml">
+
+            </Switch>
         </LinearLayout>
 
         <LinearLayout
@@ -71,7 +74,8 @@
             <Switch
                 android:id="@+id/sw_phattuantu"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
         </LinearLayout>
 
         <LinearLayout
@@ -89,7 +93,8 @@
             <Switch
                 android:id="@+id/sw_tudongtai"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
         </LinearLayout>
 
         <Button

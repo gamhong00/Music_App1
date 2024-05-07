@@ -1,6 +1,7 @@
 package com.example.music_app1.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.music_app1.Model.Slide;
@@ -20,9 +22,9 @@ public class SlideAdapter extends PagerAdapter {
     private Context mContext;
     private List<Slide> mListSlide;
 
-    public SlideAdapter(Context mContext, List<Slide> mLtSlide) {
+    public SlideAdapter(Context mContext, List<Slide> mListtSlide) {
         this.mContext = mContext;
-        this.mListSlide = mLtSlide;
+        this.mListSlide = mListtSlide;
     }
 
     @NonNull

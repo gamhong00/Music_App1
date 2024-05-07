@@ -55,10 +55,10 @@ public class favoritesong_Fragment extends Fragment {
         rcvFavoritesong.addItemDecoration(itemDecoration);
         mMusicfavoriteAdapter = new MusicAdapter(mListfavotiteMusic, getContext());
 
-
         rcvFavoritesong.setAdapter(mMusicfavoriteAdapter);
         // Gọi phương thức để lấy danh sách các bài hát yêu thích từ Firebase
         callApiGetFavoritesong();
+
 
 
 
@@ -103,9 +103,10 @@ public class favoritesong_Fragment extends Fragment {
             // Thông báo cho adapter đã thay đổi dữ liệu
             mMusicfavoriteAdapter.notifyDataSetChanged();
         } else {
-            // Nếu đã tồn tại, hiển thị thông báo cho người dùng
-            Toast.makeText(getContext(), "Bài hát đã có trong danh sách yêu thích", Toast.LENGTH_SHORT).show();
+            // Nếu đã tồn tại, xóa bài hát khỏi danh sách yêu thích
+            mListfavotiteMusic.remove(music);
         }
+
     }
 
     // Phương thức để lấy danh sách các bài hát yêu thích từ Firebase
@@ -120,8 +121,10 @@ public class favoritesong_Fragment extends Fragment {
                 Music music = snapshot.getValue(Music.class);
                 if (music != null && music.isLike()) { // Kiểm tra nếu thuộc tính "like" là true
                     // Gọi phương thức xử lý sự kiện thích bài hát
+
                     handleLikeMusic(music);
                 }
+
             }
 
             @Override

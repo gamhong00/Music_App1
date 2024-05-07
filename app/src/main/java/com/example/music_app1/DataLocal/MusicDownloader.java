@@ -28,6 +28,7 @@ public class MusicDownloader {
 
     public void downloadMusic(String url, String fileName, String artistName) {
 
+        //Tạo 1 thư mục trong bộ nhớ ngoài có tên Music
         final File songFolder = new File(Environment.getExternalStorageDirectory(), "Music");
 
         // Kiểm tra xem thư mục Music đã tồn tại hay không

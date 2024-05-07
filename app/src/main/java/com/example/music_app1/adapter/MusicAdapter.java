@@ -43,8 +43,11 @@ import com.example.music_app1.DataLocal.MusicDownloader;
 import com.example.music_app1.View.Library_Fragment;
 import com.example.music_app1.View.PlayMusic_Fragment;
 import com.example.music_app1.View.Playlist_Fragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -197,23 +200,46 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
             }
         });
         LinearLayout likeMusic = dialog.findViewById(R.id.layoutLike);
+
         likeMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Kiểm tra xem music có tồn tại không
+                // Kiểm tra music có tồn tại hay không
                 if (music != null) {
                     // Truy cập vào đối tượng DatabaseReference tương ứng với bài hát được thích
                     DatabaseReference musicRef = FirebaseDatabase.getInstance().getReference("music").child(String.valueOf(music.getId()));
-                    // Cập nhật trường like của bài hát thành true
-                    musicRef.child("like").setValue(true);
-                    // Đóng dialog
-                    dialog.dismiss();
-                    // Hiển thị thông báo cho người dùng
-                    Toast.makeText(v.getContext(), "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
+
+                    // Kiểm tra trạng thái like hiện tại của bài hát
+                    musicRef.child("like").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Boolean isLiked = dataSnapshot.getValue(Boolean.class);
+
+                            // Nếu bài hát chưa được yêu thích (null hoặc false)
+                            if (isLiked == null || !isLiked) {
+                                // Cập nhật trường like của bài hát thành true
+                                musicRef.child("like").setValue(true);
+                                // Hiển thị thông báo cho người dùng
+                                Toast.makeText(v.getContext(), "Bài hát đã được thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Nếu bài hát đã được yêu thích (true)
+                                // Cập nhật trường like của bài hát thành false
+                                musicRef.child("like").setValue(false);
+                                // Hiển thị thông báo cho người dùng
+                                Toast.makeText(v.getContext(), "Bài hát đã được xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                            }
+
+                            // Đóng dialog
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Xử lý khi có lỗi xảy ra
+                        }
+                    });
                 }
-
             }
-
         });
 
         LinearLayout addPlaylist = dialog.findViewById(R.id.layoutAddplaylist);

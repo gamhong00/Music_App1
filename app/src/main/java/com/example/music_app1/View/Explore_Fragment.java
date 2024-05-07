@@ -1,9 +1,11 @@
 package com.example.music_app1.View;
 
 import static com.example.music_app1.MainActivity.mViewPager2;
+import static com.example.music_app1.MainActivity.mViewPagerMusic;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +54,9 @@ public class Explore_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_explore_, container, false);
+
 
         imgbtn_search = view.findViewById(R.id.search);
         rcvMusic = view.findViewById(R.id.rcv_musics);
@@ -70,6 +74,8 @@ public class Explore_Fragment extends Fragment {
         circleIndicator = view.findViewById(R.id.circle_indicator);
         slideAdapter = new SlideAdapter(getContext(),getListSlide());
         viewPagerSlide.setAdapter(slideAdapter);
+        // Đặt thời gian delay ban đầu là 1 giây
+        slideHandler.postDelayed(slideRunnable, 1500);
 
         circleIndicator.setViewPager(viewPagerSlide);
         slideAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
@@ -80,7 +86,9 @@ public class Explore_Fragment extends Fragment {
             }
         });
         return view;
+
     }
+
     public void callApiGetMusics(String keyword){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -125,5 +133,31 @@ public class Explore_Fragment extends Fragment {
         slideList.add(new Slide(R.drawable.slide2));
         slideList.add(new Slide(R.drawable.slide3));
         return  slideList;
+    }
+
+    private Handler slideHandler = new Handler();
+    private Runnable slideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            int currentItem = viewPagerSlide.getCurrentItem();
+            int totalItems = slideAdapter.getCount();
+
+            // Kiểm tra nếu đang ở slide cuối cùng thì chuyển về slide đầu tiên
+            if (currentItem == totalItems - 1 ) {
+                viewPagerSlide.setCurrentItem(0,false);
+
+            } else {
+                viewPagerSlide.setCurrentItem(currentItem + 1);
+            }
+
+            // Lặp lại việc chuyển slide sau 1 giây
+            slideHandler.postDelayed(this, 1500);
+        }
+    };
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        slideHandler.removeCallbacks(slideRunnable);
     }
 }
