@@ -89,6 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
                         progress.dismiss();
                         if (task.isSuccessful()) {
                             String uidUser= task.getResult().getUser().getUid();
+                            createUserPremium(uidUser);
                             task.getResult().getUser().getIdToken(true);
                             // Sign in success, update UI with the signed-in user's information
                             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
@@ -101,5 +102,14 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    private void createUserPremium(String UID){
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+        User user = new User(UID, "",false);
+
+        usersRef.push().setValue(user);
+
+        Helper.saveUser(this, user.uid, "", user.isPremium);
     }
 }

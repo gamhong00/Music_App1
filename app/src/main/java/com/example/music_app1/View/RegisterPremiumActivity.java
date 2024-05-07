@@ -12,6 +12,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -47,11 +48,17 @@ public class RegisterPremiumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_premium);
         context = this;
 
-        ImageView imageZalo = findViewById(R.id.imageZalo);
+        LinearLayout buttonPay1 = findViewById(R.id.buttonPay1);
 
-        ImageView icon_checked = findViewById(R.id.icon_checked);
+        LinearLayout buttonPay2 = findViewById(R.id.buttonPay2);
 
-        Button buttonPay = findViewById(R.id.buttonPay);
+        LinearLayout buttonPay3 = findViewById(R.id.buttonPay3);
+
+//        ImageView imageZalo = findViewById(R.id.imageZalo);
+
+//        ImageView icon_checked = findViewById(R.id.icon_checked);
+//
+//        Button buttonPay = findViewById(R.id.buttonPay);
 
         ImageView backPaymentPremium= findViewById(R.id.backPaymentPremium);
 
@@ -61,16 +68,29 @@ public class RegisterPremiumActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        imageZalo.setOnClickListener(new View.OnClickListener() {
+//        imageZalo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(icon_checked.getVisibility()==View.GONE){
+//                    icon_checked.setVisibility(View.VISIBLE);
+//                    buttonPay.setEnabled(true);
+//                }else if(icon_checked.getVisibility()==View.VISIBLE){
+//                    icon_checked.setVisibility(View.GONE);
+//                    buttonPay.setEnabled(false);
+//                }
+//            }
+//        });
+
+        buttonPay2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(icon_checked.getVisibility()==View.GONE){
-                    icon_checked.setVisibility(View.VISIBLE);
-                    buttonPay.setEnabled(true);
-                }else if(icon_checked.getVisibility()==View.VISIBLE){
-                    icon_checked.setVisibility(View.GONE);
-                    buttonPay.setEnabled(false);
-                }
+                notification();
+            }
+        });
+        buttonPay3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                notification();
             }
         });
 
@@ -81,14 +101,13 @@ public class RegisterPremiumActivity extends AppCompatActivity {
         ZaloPaySDK.init(2553, Environment.SANDBOX);
         // handle CreateOrder
 
-        buttonPay.setOnClickListener(new View.OnClickListener() {
+        buttonPay1.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
-                isLoading(true);
                 CreateOrder orderApi = new CreateOrder();
-
+                isLoading(true);
                 try {
                     JSONObject data = orderApi.createOrder("50000");
                     String code = data.getString("return_code");
@@ -108,6 +127,9 @@ public class RegisterPremiumActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void notification(){
+        Toast.makeText(context, "Phương thức thanh toán chưa được hỗ trợ", Toast.LENGTH_LONG).show();
     }
     private void payWithZaloPay(String token) {
         ZaloPaySDK.getInstance().payOrder(this, token, "demozpdk://app", new PayOrderListener() {
