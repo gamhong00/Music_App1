@@ -98,6 +98,7 @@ public class MyProfile_Fragment extends Fragment {
 
     private void initListener() {
         img_avatar.setOnClickListener(v -> openGallery());
+        btn_update_profile.setOnClickListener(v -> onClickUpdateProfile());
     }
 
     private void openGallery() {
@@ -107,4 +108,8 @@ public class MyProfile_Fragment extends Fragment {
     public void setBitmapImageView(Bitmap bitmapImageView){
         img_avatar.setImageBitmap(bitmapImageView);
     }
+
+    private void onClickUpdateProfile() {
+    }
+
 }
