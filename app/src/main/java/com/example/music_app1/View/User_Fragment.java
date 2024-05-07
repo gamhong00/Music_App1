@@ -6,7 +6,6 @@ import static com.example.music_app1.MainActivity.mViewPager2;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.music_app1.Helper;
-import com.example.music_app1.MainActivity;
 import com.example.music_app1.R;
-import com.example.music_app1.UpdateInfomationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -134,7 +131,6 @@ public class User_Fragment extends Fragment {
 
             } else {
                 String name= Helper.getKeyName(getContext());
-                Log.e("check", name);
                 String email = user.getEmail();
                 Uri photoUrl = user.getPhotoUrl();
 
