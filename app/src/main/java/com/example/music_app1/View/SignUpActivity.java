@@ -29,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private TextInputEditText edt_email, edt_password, edt_confirm_password, edt_name;
+    private TextInputEditText edt_email, edt_password, edt_confirm_password;
     private Button btn_sign_up;
     private ProgressDialog progress;
     private AlertDialog.Builder alertDialog;
@@ -43,7 +43,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void initUI(){
-        edt_name= findViewById(R.id.edt_name);
         edt_email = findViewById(R.id.edt_email);
         edt_password = findViewById(R.id.edt_password);
         edt_confirm_password = findViewById(R.id.edt_confirm_password);
@@ -64,13 +63,12 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void onClickSignUp() {
-        String strName = edt_name.getText().toString().trim();
         String strEmail = edt_email.getText().toString().trim();
         String strPassword = edt_password.getText().toString().trim();
         String strConfirmPassword = edt_confirm_password.getText().toString().trim(); // Lấy mật khẩu xác nhận
 
         // Kiểm tra xem người dùng đã nhập đủ thông tin chưa
-        if (strName.isEmpty() || strEmail.isEmpty() || strPassword.isEmpty() || strConfirmPassword.isEmpty()) {
+        if (strEmail.isEmpty() || strPassword.isEmpty() || strConfirmPassword.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -92,7 +90,6 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             String uidUser= task.getResult().getUser().getUid();
                             task.getResult().getUser().getIdToken(true);
-                            createUserPremium(uidUser, edt_name.getText().toString());
                             // Sign in success, update UI with the signed-in user's information
                             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                             startActivity(intent);
@@ -104,14 +101,5 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     }
                 });
-    }
-    private void createUserPremium(String UID, String name){
-        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
-
-        User user = new User(UID, name,false);
-
-        usersRef.push().setValue(user);
-
-        Helper.saveUser(this, user.uid, name, user.isPremium);
     }
 }

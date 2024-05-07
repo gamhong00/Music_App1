@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.music_app1.Helper;
 import com.example.music_app1.MainActivity;
 import com.example.music_app1.R;
+import com.example.music_app1.UpdateInfomationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -83,7 +84,9 @@ public class User_Fragment extends Fragment {
         btn_edit_myprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager2.setCurrentItem(7,false);
+//                mViewPager2.setCurrentItem(7,false);
+                Intent intent = new Intent(view.getContext(), UpdateInfomationActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -131,6 +134,7 @@ public class User_Fragment extends Fragment {
 
             } else {
                 String name= Helper.getKeyName(getContext());
+                Log.e("check", name);
                 String email = user.getEmail();
                 Uri photoUrl = user.getPhotoUrl();
 
@@ -162,4 +166,6 @@ public class User_Fragment extends Fragment {
             }
         });
     }
+
+
 }
