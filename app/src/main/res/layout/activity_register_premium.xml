@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.RegisterPremiumActivity"
-    android:background="@color/white"
+    android:background="@drawable/custom_user"
     android:orientation="vertical"
     android:paddingHorizontal="8dp">
 
@@ -33,12 +33,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/zaloimg"
             android:scaleType="centerCrop"
-            android:id="@+id/imageZalo"/>
+            android:id="@+id/imageZalo"
+            app:riv_corner_radius="8dp"/>
 
         <ImageView
             android:id="@+id/icon_checked"

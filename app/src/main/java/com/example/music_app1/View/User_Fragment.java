@@ -108,7 +108,7 @@ public class User_Fragment extends Fragment {
         if (user != null) {
             // Xác định cách đăng nhập của người dùng (số điện thoại hoặc email)
             String loginMethod;
-            if (user.getPhoneNumber().trim().length()>0) {
+            if (user.getPhoneNumber().toString().trim().length()>0) {
                 loginMethod = "phone"; // Đăng nhập bằng số điện thoại
             } else {
                 loginMethod = "email"; // Đăng nhập bằng email/password
