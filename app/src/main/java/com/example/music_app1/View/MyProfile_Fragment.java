@@ -1,6 +1,9 @@
 package com.example.music_app1.View;
 
+import static com.example.music_app1.MainActivity.mViewPager2;
+
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -20,12 +23,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.music_app1.Helper;
 import com.example.music_app1.MainActivity;
+import com.example.music_app1.Model.User;
 import com.example.music_app1.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 
@@ -74,6 +86,7 @@ public class MyProfile_Fragment extends Fragment {
 
     private void setUserInformation() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String name = Helper.getKeyName(getContext());
         if (user != null) {
             String email = user.getEmail();
             String phoneNumber = user.getPhoneNumber();
@@ -82,7 +95,7 @@ public class MyProfile_Fragment extends Fragment {
             } else if (phoneNumber != null) {
                 edt_infor_user.setText(phoneNumber);
             }
-            edt_fullname.setText(user.getDisplayName());
+            edt_fullname.setText(name);
             Uri photoUrl = user.getPhotoUrl();
             if (photoUrl != null) {
                 Glide.with(requireActivity()).load(photoUrl).error(R.drawable.avatar_default).into(img_avatar);
@@ -110,6 +123,36 @@ public class MyProfile_Fragment extends Fragment {
     }
 
     private void onClickUpdateProfile() {
+        String uidUser = Helper.getKeyUidUser(getContext());
+        updateUserPremium(getContext(), uidUser, edt_fullname.getText().toString());
+        mViewPager2.setCurrentItem(4, false);
+    }
+
+    private void updateUserPremium(Context context,String valueUID, String name){
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+        Query query = usersRef.orderByChild("uid").equalTo(valueUID);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    String userID = userSnapshot.getKey();
+                    DatabaseReference userRef = usersRef.child(userID);
+
+                    // Cập nhật tên mới
+                    userRef.child("name").setValue(name);
+                    Boolean isPremium= Helper.getKeyIsPremium(context);
+                    Helper.saveUser(context, valueUID, name, isPremium);
+                    Toast.makeText(context, "Cập nhật Thông tin thành công", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(context, "Lỗi cập nhật premium", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }
