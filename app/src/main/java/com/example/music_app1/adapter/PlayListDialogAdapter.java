@@ -1,6 +1,8 @@
 package com.example.music_app1.adapter;
 
 import static com.example.music_app1.MainActivity.mViewPager2;
+import static com.example.music_app1.View.Library_Fragment.historyAdapter;
+
 
 import android.content.Context;
 import android.os.Bundle;
@@ -22,10 +24,12 @@ import com.example.music_app1.Model.Playlist;
 import com.example.music_app1.R;
 import com.example.music_app1.View.Playlist_Fragment;
 import com.google.firebase.Firebase;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -40,6 +44,7 @@ public class PlayListDialogAdapter extends RecyclerView.Adapter<PlayListDialogAd
 
     private List<Playlist> mListPlaylist;
     private Context context;
+
 
     @NonNull
     @Override
@@ -64,18 +69,42 @@ public class PlayListDialogAdapter extends RecyclerView.Adapter<PlayListDialogAd
             @Override
             public void onClick(View v) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("playlist").child(playlist.getId()).child("music");
-                String path = myRef.push().getKey();
-                myRef.child(path).setValue(MusicAdapter.musicglobal, new DatabaseReference.CompletionListener() {
+                DatabaseReference playlistRef = database.getReference("playlist").child(playlist.getId());
+                DatabaseReference musicRef = playlistRef.child("music");
+
+                // Lấy số lượng bài hát hiện có trong danh sách
+                musicRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                        Toast.makeText(context,"add dô ròi nè", Toast.LENGTH_SHORT).show();
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        long numberOfSongs = snapshot.getChildrenCount();
+
+                        // Tạo một bài hát mới với số thứ tự tiếp theo
+                        String musicId = String.valueOf(numberOfSongs); // Sử dụng số thứ tự làm khóa
+                        DatabaseReference newSongRef = musicRef.child(musicId);
+
+                        // Thiết lập dữ liệu cho bài hát mới
+                        newSongRef.setValue(MusicAdapter.musicglobal, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                if (error != null) {
+                                    // Xử lý khi có lỗi xảy ra
+                                } else {
+                                    Playlist_Fragment.musicAdapter.addMusic(MusicAdapter.musicglobal);
+                                    Playlist_Fragment.musicAdapter.notifyDataSetChanged();
+                                    Toast.makeText(context, "Add zô rồi nè ", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Xử lý khi có lỗi xảy ra
                     }
                 });
-
             }
-
         });
+
     }
 
     @Override

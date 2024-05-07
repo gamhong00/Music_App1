@@ -129,6 +129,9 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         return 0;
     }
 
+    public void addMusic(Music music) {
+        mListMusic.add(music);
+    }
 
 
     public static class MusicViewHolder extends RecyclerView.ViewHolder {

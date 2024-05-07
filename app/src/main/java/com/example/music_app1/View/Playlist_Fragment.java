@@ -18,6 +18,7 @@ import com.example.music_app1.Model.Playlist;
 import com.example.music_app1.R;
 import com.example.music_app1.adapter.MusicAdapter;
 import com.example.music_app1.adapter.PlayListAdapter;
+import com.example.music_app1.adapter.PlayListDialogAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +27,12 @@ import java.util.List;
 public class Playlist_Fragment extends Fragment  {
     public static MusicAdapter musicAdapter;
     public static List<Music> musicListPlaylist;
+
     RecyclerView recyclerviewPlaylist;
     public Playlist_Fragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +44,7 @@ public class Playlist_Fragment extends Fragment  {
         musicAdapter = new MusicAdapter(musicListPlaylist, getContext());
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         recyclerviewPlaylist.addItemDecoration(itemDecoration);
+
 
         // Inflate the layout for this fragment
         recyclerviewPlaylist.setAdapter(musicAdapter);
