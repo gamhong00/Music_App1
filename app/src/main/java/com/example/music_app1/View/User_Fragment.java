@@ -37,7 +37,7 @@ public class User_Fragment extends Fragment {
 
     private String phoneNumber;
 
-    private Button btn_sign_out;
+    private Button btn_edit_myprofile, btn_sign_out;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,6 +80,12 @@ public class User_Fragment extends Fragment {
             btn_layoutUpdatePremium.setVisibility(View.GONE);
         }
 
+        btn_edit_myprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPager2.setCurrentItem(7,false);
+            }
+        });
 
         setSignOutClickListener();
         return view;
@@ -90,6 +96,7 @@ public class User_Fragment extends Fragment {
         name_user = view.findViewById(R.id.name_user);
         infor_user = view.findViewById(R.id.infor_user);
 
+        btn_edit_myprofile=view.findViewById(R.id.btn_edit_myprofile);
         btn_sign_out=view.findViewById(R.id.btn_sign_out);
     }
 
