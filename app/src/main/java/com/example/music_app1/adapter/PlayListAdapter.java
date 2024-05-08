@@ -62,6 +62,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.Playli
                 if(Playlist_Fragment.musicAdapter != null){
                     Playlist_Fragment.musicAdapter.setMusicList(playlist.getMusic());
                     Playlist_Fragment.musicAdapter.notifyDataSetChanged();
+                    Picasso.get().load(playlist.getMusic().get(0).getImage()).into(Playlist_Fragment.imgMusic);
                 }
                 mViewPager2.setCurrentItem(6, false);
             }

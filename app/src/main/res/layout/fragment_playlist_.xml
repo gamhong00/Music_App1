@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="@color/white">
 
 
 
@@ -41,24 +42,7 @@
             android:layout_width="173dp"
             android:layout_height="173dp"
             android:layout_gravity="center"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/textPlaylist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:fontFamily="sans-serif-black"
-            android:text="Tên Playlist" />
-
-        <TextView
-            android:id="@+id/textUser"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Tên user" />
+            android:src="@drawable/custom_button"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

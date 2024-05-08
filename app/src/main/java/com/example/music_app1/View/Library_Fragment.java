@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.music_app1.Model.Music;
 import com.example.music_app1.Model.Playlist;
 
 import com.example.music_app1.DataLocal.DataLocalManager;
@@ -142,12 +143,34 @@ public class Library_Fragment extends Fragment{
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Playlist playlist = snapshot.getValue(Playlist.class);
 
+                if(mListPlaylist == null || mListPlaylist.isEmpty()){
+                    return;
+                }
+                for (int i = 0; i< mListPlaylist.size(); i++){
+                    if(playlist.getId() == mListPlaylist.get(i).getId()){
+                        mListPlaylist.set(i, playlist);
+                    }
+                }
+                playListAdapter.notifyDataSetChanged();
+                playListDialogAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                Playlist playlist = snapshot.getValue(Playlist.class);
 
+                if(mListPlaylist == null || mListPlaylist.isEmpty()){
+                    return;
+                }
+                for (int i = 0; i< mListPlaylist.size(); i++){
+                    if(playlist.getId() == mListPlaylist.get(i).getId()){
+                        mListPlaylist.remove(i);
+                    }
+                }
+                playListAdapter.notifyDataSetChanged();
+                playListDialogAdapter.notifyDataSetChanged();
             }
 
             @Override
