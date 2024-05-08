@@ -1,8 +1,11 @@
 package com.example.music_app1.Model;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 public class Playlist {
+    @NonNull
     @Override
     public String toString() {
         return "Playlist{" +

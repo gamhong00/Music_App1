@@ -2,7 +2,6 @@ package com.example.music_app1.adapter;
 
 
 import static com.example.music_app1.Nofication.CHANNEL_ID;
-import static com.example.music_app1.View.Library_Fragment.historyAdapter;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -14,7 +13,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,13 +35,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_app1.Helper;
 import com.example.music_app1.Model.Music;
-import com.example.music_app1.Model.Playlist;
 import com.example.music_app1.R;
 import com.example.music_app1.DataLocal.MusicDownloader;
 
 import com.example.music_app1.View.Library_Fragment;
 import com.example.music_app1.View.PlayMusic_Fragment;
-import com.example.music_app1.View.Playlist_Fragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

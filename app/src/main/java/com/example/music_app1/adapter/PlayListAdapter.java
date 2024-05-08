@@ -3,7 +3,6 @@ package com.example.music_app1.adapter;
 import static com.example.music_app1.MainActivity.mViewPager2;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.music_app1.Model.Music;
 import com.example.music_app1.Model.Playlist;
 import com.example.music_app1.R;
 import com.example.music_app1.View.Playlist_Fragment;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlaylistViewHolder> {

@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +18,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.music_app1.Model.Music;
-import com.example.music_app1.Model.Playlist;
-
 import com.example.music_app1.DataLocal.DataLocalManager;
+import com.example.music_app1.Model.Playlist;
 import com.example.music_app1.R;
 //import com.example.music_app1.adapter.MusicAdapter;
 //import com.example.music_app1.adapter.listMusicAdapter;

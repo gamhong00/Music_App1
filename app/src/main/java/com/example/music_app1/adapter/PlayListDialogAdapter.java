@@ -1,11 +1,7 @@
 package com.example.music_app1.adapter;
 
-import static com.example.music_app1.MainActivity.mViewPager2;
-import static com.example.music_app1.View.Library_Fragment.historyAdapter;
-
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,23 +12,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.music_app1.Model.Music;
 import com.example.music_app1.Model.Playlist;
 import com.example.music_app1.R;
 import com.example.music_app1.View.Playlist_Fragment;
-import com.google.firebase.Firebase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class PlayListDialogAdapter extends RecyclerView.Adapter<PlayListDialogAdapter.PlaylistViewHolder> {

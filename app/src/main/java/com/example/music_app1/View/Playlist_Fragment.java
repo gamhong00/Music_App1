@@ -26,8 +26,6 @@ import com.example.music_app1.Model.Music;
 import com.example.music_app1.Model.Playlist;
 import com.example.music_app1.R;
 import com.example.music_app1.adapter.MusicAdapter;
-import com.example.music_app1.adapter.PlayListAdapter;
-import com.example.music_app1.adapter.PlayListDialogAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -38,7 +36,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
