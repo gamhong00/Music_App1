@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
+import com.example.music_app1.Helper;
 import com.example.music_app1.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,8 +33,7 @@ public class User_Fragment extends Fragment {
 
     private String phoneNumber;
 
-    private Button btn_sign_out;
-
+    private Button btn_edit_myprofile, btn_sign_out;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -56,7 +56,31 @@ public class User_Fragment extends Fragment {
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager2.setCurrentItem(5, false);
+                mViewPager2.setCurrentItem(5,false);
+            }
+        });
+
+        LinearLayout btn_layoutUpdatePremium= view.findViewById((R.id.layoutUpdatePremium));
+
+        Boolean isPremium= Helper.getKeyIsPremium(getContext());
+        if(!isPremium){
+            btn_layoutUpdatePremium.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), RegisterPremiumActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }else{
+            btn_layoutUpdatePremium.setVisibility(View.GONE);
+        }
+
+        btn_edit_myprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                mViewPager2.setCurrentItem(7,false);
+                Intent intent = new Intent(view.getContext(), UpdateInfomationActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -69,7 +93,8 @@ public class User_Fragment extends Fragment {
         name_user = view.findViewById(R.id.name_user);
         infor_user = view.findViewById(R.id.infor_user);
 
-        btn_sign_out = view.findViewById(R.id.btn_sign_out);
+        btn_edit_myprofile=view.findViewById(R.id.btn_edit_myprofile);
+        btn_sign_out=view.findViewById(R.id.btn_sign_out);
     }
 
     // Hàm để lấy dữ liệu từ Bundle và trả về số điện thoại
@@ -87,10 +112,10 @@ public class User_Fragment extends Fragment {
         if (user != null) {
             // Xác định cách đăng nhập của người dùng (số điện thoại hoặc email)
             String loginMethod;
-            if (user.getPhoneNumber() != null) {
-                loginMethod = "phone"; // Đăng nhập bằng số điện thoại
+            if (user.getEmail()!= null) {
+                loginMethod = "email"; // Đăng nhập bằng số điện thoại
             } else {
-                loginMethod = "email"; // Đăng nhập bằng email/password
+                loginMethod = "phone"; // Đăng nhập bằng email/password
             }
 
             // Hiển thị thông tin người dùng dựa trên cách đăng nhập
@@ -102,7 +127,7 @@ public class User_Fragment extends Fragment {
                 infor_user.setText(phoneNumber);
 
             } else {
-                String name = user.getDisplayName();
+                String name= Helper.getKeyName(getContext());
                 String email = user.getEmail();
                 Uri photoUrl = user.getPhotoUrl();
 
@@ -125,6 +150,7 @@ public class User_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                Helper.clearUser(getContext());
                 Intent intent = new Intent(getActivity(), SignInActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -132,4 +158,6 @@ public class User_Fragment extends Fragment {
             }
         });
     }
+
+
 }

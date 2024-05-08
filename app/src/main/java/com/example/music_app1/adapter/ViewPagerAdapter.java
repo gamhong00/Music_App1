@@ -9,6 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.music_app1.View.Download_Fragment;
 import com.example.music_app1.View.Explore_Fragment;
 import com.example.music_app1.View.Library_Fragment;
+import com.example.music_app1.View.MyProfile_Fragment;
 import com.example.music_app1.View.Notification_fragment;
 import com.example.music_app1.View.Playlist_Fragment;
 import com.example.music_app1.View.Search_Fragment;
@@ -45,6 +46,9 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new favoritesong_Fragment();
             case 8:
                 return new Download_Fragment();
+            case 9:
+            return new MyProfile_Fragment();
+
             default:
                 return new Library_Fragment();
         }
@@ -52,6 +56,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 9;
+        return 10;
     }
 }

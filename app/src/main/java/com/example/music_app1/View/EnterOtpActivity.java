@@ -1,5 +1,6 @@
 package com.example.music_app1.View;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.music_app1.Helper;
 import com.example.music_app1.MainActivity;
+import com.example.music_app1.Model.User;
 import com.example.music_app1.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +27,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,12 +46,13 @@ public class EnterOtpActivity extends AppCompatActivity {
     private String phoneNumber, otpId;
     private PhoneAuthProvider.ForceResendingToken mForceResendingToken;
 
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_otp);
-
+        context = this;
 //        getDataIntent();
         phoneNumber = getIntent().getStringExtra("mobile").toString();
         initUI();
@@ -115,6 +125,8 @@ public class EnterOtpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            String valueUID = task.getResult().getUser().getUid();
+                            findUserPremium(valueUID);
                             Intent intent = new Intent(EnterOtpActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
@@ -151,6 +163,27 @@ public class EnterOtpActivity extends AppCompatActivity {
                         .setForceResendingToken(token)
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
+    }
+
+    private void findUserPremium(String valueUID){
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+        Query query = usersRef.orderByChild("uid").equalTo(valueUID);
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    User user = userSnapshot.getValue(User.class);
+                    Helper.saveUser(context, user.uid, user.name, user.isPremium);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(context, "Lỗi không tìm thấy người dùng", Toast.LENGTH_LONG);
+            }
+        });
     }
 
 }

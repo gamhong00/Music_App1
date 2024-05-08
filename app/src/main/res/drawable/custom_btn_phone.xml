@@ -1,8 +1,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="#000000" /> <!-- Màu nền của EditText -->
+    <solid android:color="@color/coler_btn_phone" /> <!-- Màu nền của EditText -->
     <stroke
         android:width="2dp"
-        android:color="#000000" />
+        android:color="@color/coler_border_phone" />
     <corners android:radius="16dp" /> <!-- Độ cong của góc -->
 </shape>

@@ -35,6 +35,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.music_app1.Helper;
 import com.example.music_app1.Model.Music;
 import com.example.music_app1.Model.Playlist;
 import com.example.music_app1.R;
@@ -81,6 +82,9 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         if (music == null) {
             return;
         }
+        if(music.getIsPremium()){
+            holder.icon_premium.setVisibility(View.VISIBLE);
+        }
         holder.tvname.setText(music.getName());
         holder.tvartist.setText(String.valueOf(music.getArtist()));
         Picasso.get().load(music.getImage()).into(holder.imgMusic);
@@ -99,6 +103,25 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
                 PlayMusic_Fragment.position = position;
                 PlayMusic_Fragment.playMusic(music);
                 sendNotificationMedia(music);
+            }
+        });
+        holder.btnplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(music.getIsPremium()){ // nhạc premium
+                    Boolean isPremiumUser=  Helper.getKeyIsPremium(v.getContext());
+                    if(isPremiumUser){ // người dùng premium
+                        PlayMusic_Fragment.mListMusic = mListMusic;
+                        PlayMusic_Fragment.position = position;
+                        PlayMusic_Fragment.playMusic(music);
+                    }else{ // người dùng không phải premium
+                        Toast.makeText(context, "Hãy nâng cấp lên premium", Toast.LENGTH_SHORT).show();
+                    }
+                }else{ //nhạc không premium
+                    PlayMusic_Fragment.mListMusic = mListMusic;
+                    PlayMusic_Fragment.position = position;
+                    PlayMusic_Fragment.playMusic(music);
+                }
             }
         });
     }
@@ -140,6 +163,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
     public static class MusicViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvname, tvartist;
         private final ImageView imgMusic;
+        private final  ImageView icon_premium;
 
         private final LinearLayout btnplay;
         private final ImageButton  btnellipsis ;
@@ -147,6 +171,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         public MusicViewHolder(@NonNull View itemView){
             super(itemView);
             tvname = itemView.findViewById(R.id.tv_name);
+            icon_premium = itemView.findViewById(R.id.icon_premium);
             tvartist = itemView.findViewById(R.id.tv_artist);
             imgMusic = itemView.findViewById(R.id.img_music);
             btnplay = itemView.findViewById(R.id.play);

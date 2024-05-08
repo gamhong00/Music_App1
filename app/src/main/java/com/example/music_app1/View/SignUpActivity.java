@@ -4,20 +4,28 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.music_app1.Helper;
 import com.example.music_app1.MainActivity;
+import com.example.music_app1.Model.User;
 import com.example.music_app1.R;
+import com.example.music_app1.ZaloPay.Helper.Helpers;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -71,6 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         progress = ProgressDialog.show(this, "", "Please wait...", true);
         auth.createUserWithEmailAndPassword(strEmail, strPassword)
@@ -79,6 +88,9 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progress.dismiss();
                         if (task.isSuccessful()) {
+                            String uidUser= task.getResult().getUser().getUid();
+                            createUserPremium(uidUser);
+                            task.getResult().getUser().getIdToken(true);
                             // Sign in success, update UI with the signed-in user's information
                             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                             startActivity(intent);
@@ -90,5 +102,14 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    private void createUserPremium(String UID){
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+        User user = new User(UID, "",false);
+
+        usersRef.push().setValue(user);
+
+        Helper.saveUser(this, user.uid, "", user.isPremium);
     }
 }
