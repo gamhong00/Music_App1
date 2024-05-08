@@ -3,7 +3,7 @@ package com.example.music_app1;
 public class Song {
     private String name;
     private String artist;
-    private String link;
+    private String audioUrl;
     private String image;
     private int listens;
     private int id;
@@ -12,10 +12,10 @@ public class Song {
         // Empty constructor needed for Firebase
     }
 
-    public Song(String name, String artist, String link, String image, int listens, int id) {
+    public Song(String name, String artist, String audioUrl, String image, int listens, int id) {
         this.name = name;
         this.artist = artist;
-        this.link = link;
+        this.audioUrl = audioUrl;
         this.image = image;
         this.listens = listens;
         this.id = id;
@@ -37,12 +37,8 @@ public class Song {
         this.artist = artist;
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
+    public String getAudioUrl() {
+        return audioUrl;
     }
 
     public String getImage() {

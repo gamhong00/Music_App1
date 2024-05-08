@@ -30,7 +30,7 @@ public class Explore_Fragment extends Fragment {
     private SongAdapter newAdapter;
     private static final int MAX_SONGS = 6; // Số lượng bài hát tối đa
 
-
+    private SnapHelper snapHelper;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explore_, container, false);
@@ -112,8 +112,8 @@ public class Explore_Fragment extends Fragment {
                 RecyclerView recyclerView = view.findViewById(R.id.banner_recyclerview);
                 recyclerView.setLayoutManager(layoutManager);
 
-                // Gắn SnapHelper vào RecyclerView
-                SnapHelper snapHelper = new LinearSnapHelper();
+                // Gắn SnapHelper vào RecyclerView chỉ một lần trong onCreateView
+                snapHelper = new LinearSnapHelper();
                 snapHelper.attachToRecyclerView(recyclerView);
 
                 // Hiển thị 5 hình ảnh trong banner
