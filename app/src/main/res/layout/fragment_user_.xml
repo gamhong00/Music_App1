@@ -108,6 +108,7 @@
                 android:layout_marginStart="20dp"
                 android:text="hong gam"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <TextView
@@ -115,6 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:textColor="@color/black"
                 android:text="email" />
 
         </LinearLayout>
@@ -153,7 +155,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="50,000đ/month"
+            android:text="50,000đ/tháng"
             android:textSize="22sp"
             android:textColor="@color/white"
             android:textStyle="bold"
