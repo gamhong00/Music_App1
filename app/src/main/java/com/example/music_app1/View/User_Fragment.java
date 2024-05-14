@@ -2,6 +2,7 @@ package com.example.music_app1.View;
 
 import static com.example.music_app1.MainActivity.mViewPager2;
 
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,8 +21,9 @@ import com.example.music_app1.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class User_Fragment extends Fragment {
 
+public class User_Fragment extends Fragment {
+    private ImageButton phongtoButton;
     int currentItem = mViewPager2.getCurrentItem();
     private ImageButton btn_notification;
 
@@ -36,7 +38,7 @@ public class User_Fragment extends Fragment {
     private Button btn_edit_myprofile, btn_sign_out;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_, container, false);
         // Inflate the layout for this fragment
 
@@ -51,6 +53,7 @@ public class User_Fragment extends Fragment {
                 mViewPager2.setCurrentItem(4, false);
             }
         });
+
 
         imgbtn_search = view.findViewById(R.id.search);
         imgbtn_search.setOnClickListener(new View.OnClickListener() {
@@ -99,13 +102,13 @@ public class User_Fragment extends Fragment {
 
     // Hàm để lấy dữ liệu từ Bundle và trả về số điện thoại
     // Hàm để lấy dữ liệu từ Bundle
-    // private void getDataFromBundle() {
-    // Bundle bundle = getArguments();
-    // if (bundle != null) {
-    // // Lấy số điện thoại từ Bundle
-    // phoneNumber = bundle.getString("phone_number");
-    // }
-    // }
+//    private void getDataFromBundle() {
+//        Bundle bundle = getArguments();
+//        if (bundle != null) {
+//            // Lấy số điện thoại từ Bundle
+//            phoneNumber = bundle.getString("phone_number");
+//        }
+//    }
 
     private void displayUserInfo() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -119,16 +122,10 @@ public class User_Fragment extends Fragment {
             if (phoneNumber != null && phoneNumber.trim().length() > 0) {
                 // Đăng nhập bằng số điện thoại
                 infor_user.setText(phoneNumber);
-
-            } else {
-                String name= Helper.getKeyName(getContext());
-                String email = user.getEmail();
-                Uri photoUrl = user.getPhotoUrl();
-
                 if (name == null) {
-                    name_user.setVisibility(getView().GONE);
+                    name_user.setVisibility(View.GONE); // Ẩn tên nếu không có tên
                 } else {
-                    name_user.setVisibility(getView().VISIBLE);
+                    name_user.setVisibility(View.VISIBLE);
                     name_user.setText(name);
                 }
             } else {
