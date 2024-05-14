@@ -51,9 +51,17 @@ public class VerifyPhoneNumberActivity extends AppCompatActivity {
         btn_verify_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VerifyPhoneNumberActivity.this, EnterOtpActivity.class);
-                intent.putExtra("mobile", ccp.getFullNumberWithPlus().replace(" ", ""));
-                startActivity(intent);
+                // Kiểm tra xem trường số điện thoại có trống không
+                String phoneNumber = edt_phoneNumber.getText().toString().replace(" ", "");
+                if (phoneNumber.isEmpty()) {
+                    // Hiển thị thông báo nếu trường số điện thoại trống
+                    Toast.makeText(VerifyPhoneNumberActivity.this, "Vui lòng nhập số điện thoại", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Chuyển hướng đến màn hình nhập OTP nếu trường số điện thoại không trống
+                    Intent intent = new Intent(VerifyPhoneNumberActivity.this, EnterOtpActivity.class);
+                    intent.putExtra("mobile", ccp.getFullNumberWithPlus().replace(" ", ""));
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -66,6 +74,7 @@ public class VerifyPhoneNumberActivity extends AppCompatActivity {
 
         //Attach CarrierNumber editText to CCP.
         ccp.registerCarrierNumberEditText(edt_phoneNumber);
+
 
     }
 

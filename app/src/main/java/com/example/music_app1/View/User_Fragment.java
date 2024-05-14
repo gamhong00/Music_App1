@@ -110,20 +110,14 @@ public class User_Fragment extends Fragment {
     private void displayUserInfo() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            // Xác định cách đăng nhập của người dùng (số điện thoại hoặc email)
-            String loginMethod;
-            if (user.getEmail()!= null) {
-                loginMethod = "email"; // Đăng nhập bằng số điện thoại
-            } else {
-                loginMethod = "phone"; // Đăng nhập bằng email/password
-            }
+            String phoneNumber = user.getPhoneNumber();
+            String name = Helper.getKeyName(getContext());
+            String email = user.getEmail();
+            Uri photoUrl = user.getPhotoUrl();
 
-            // Hiển thị thông tin người dùng dựa trên cách đăng nhập
-            if (loginMethod.equals("phone")) {
-                String phoneNumber = user.getPhoneNumber();
-
-                name_user.setVisibility(getView().GONE);
-                // Hiển thị số điện thoại trên giao diện
+            // Kiểm tra cách đăng nhập
+            if (phoneNumber != null && phoneNumber.trim().length() > 0) {
+                // Đăng nhập bằng số điện thoại
                 infor_user.setText(phoneNumber);
 
             } else {
@@ -137,13 +131,28 @@ public class User_Fragment extends Fragment {
                     name_user.setVisibility(getView().VISIBLE);
                     name_user.setText(name);
                 }
-                // Hiển thị email trên giao diện
+            } else {
+                // Đăng nhập bằng email/password
                 infor_user.setText(email);
-                Glide.with(this).load(photoUrl).error(R.drawable.avatar_default).into(avatar_user);
+                if (name == null) {
+                    name_user.setVisibility(View.GONE); // Ẩn tên nếu không có tên
+                } else {
+                    name_user.setVisibility(View.VISIBLE);
+                    name_user.setText(name);
+                }
+            }
 
+            // Kiểm tra và hiển thị ảnh đại diện
+            if (photoUrl != null) {
+                // Nếu có ảnh đại diện
+                Glide.with(this).load(photoUrl).error(R.drawable.avatar_default).into(avatar_user);
+            } else {
+                // Sử dụng ảnh mặc định khi không có ảnh đại diện
+                Glide.with(this).load(R.drawable.avatar_default).into(avatar_user);
             }
         }
     }
+
 
     private void setSignOutClickListener() {
         btn_sign_out.setOnClickListener(new View.OnClickListener() {

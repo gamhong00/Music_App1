@@ -35,7 +35,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class SignInActivity extends AppCompatActivity {
-    private LinearLayout layout_sign_up;
+    private LinearLayout layout_sign_up, layout_forgot_password;
     private TextInputEditText edt_email, edt_password;
     private Button btn_sign_in, btn_phone;
     private ProgressDialog progress;
@@ -54,6 +54,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void initUI() {
         layout_sign_up = findViewById(R.id.layout_sign_up);
+        layout_forgot_password = findViewById(R.id.layout_forgot_password);
         edt_email = findViewById(R.id.edt_email);
         edt_password = findViewById(R.id.edt_password);
         btn_sign_in = findViewById(R.id.btn_sign_in);
@@ -81,6 +82,12 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
+        layout_forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickForgotPassword();
+            }
+        });
         btn_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +95,7 @@ public class SignInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
     private void onClickSignIn() {
@@ -101,7 +109,7 @@ public class SignInActivity extends AppCompatActivity {
         }
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        progress = ProgressDialog.show(this, "", "Please wait...", true);
+        progress = ProgressDialog.show(this, "", "Vui lòng đợi...", true);
         auth.signInWithEmailAndPassword(strEmail, strPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -141,4 +149,31 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void onClickForgotPassword() {
+        String emailAddress = edt_email.getText().toString().trim();
+        if (emailAddress.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập địa chỉ email", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        progress = ProgressDialog.show(this, "", "Vui lòng đợi...", true);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progress.dismiss();
+                        if (task.isSuccessful()) {
+                            Toast.makeText(SignInActivity.this, "Đã gửi vào email", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(SignInActivity.this, "Gửi email thất bại. Vui lòng thử lại sau", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+
 }

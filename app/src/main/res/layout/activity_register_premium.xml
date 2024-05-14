@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.RegisterPremiumActivity"
-    android:background="@drawable/custom_user"
+    android:background="@drawable/custom_bg_fragment"
     android:orientation="vertical"
     android:paddingHorizontal="8dp">
 
@@ -44,54 +44,54 @@
             android:textAlignment="center"
             android:textStyle="bold"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:id="@+id/buttonPay2"
-            android:layout_marginBottom="24dp">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:id="@+id/buttonPay2"-->
+<!--            android:layout_marginBottom="24dp">-->
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/momo_img"
-                android:scaleType="centerCrop"
-                android:id="@+id/imageMoMo"
-                app:riv_corner_radius="8dp"
-                android:layout_marginRight="16dp"/>
+<!--            <com.makeramen.roundedimageview.RoundedImageView-->
+<!--                android:layout_width="48dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:src="@drawable/momo_img"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:id="@+id/imageMoMo"-->
+<!--                app:riv_corner_radius="8dp"-->
+<!--                android:layout_marginRight="16dp"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thanh toán bằng MoMo"
-                android:textSize="18dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:id="@+id/buttonPay3"
-            android:layout_marginBottom="24dp">
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Thanh toán bằng MoMo"-->
+<!--                android:textSize="18dp"-->
+<!--                />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:id="@+id/buttonPay3"-->
+<!--            android:layout_marginBottom="24dp">-->
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/vnpay_img"
-                android:scaleType="centerCrop"
-                android:id="@+id/imageVNPay"
-                app:riv_corner_radius="8dp"
-                android:layout_marginRight="16dp"/>
+<!--            <com.makeramen.roundedimageview.RoundedImageView-->
+<!--                android:layout_width="48dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:src="@drawable/vnpay_img"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:id="@+id/imageVNPay"-->
+<!--                app:riv_corner_radius="8dp"-->
+<!--                android:layout_marginRight="16dp"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thanh toán bằng Vn Pay"
-                android:textSize="18dp"
-                />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Thanh toán bằng Vn Pay"-->
+<!--                android:textSize="18dp"-->
+<!--                />-->
+<!--        </LinearLayout>-->
         <!--    <RelativeLayout-->
         <!--        android:layout_marginTop="180dp"-->
         <!--        android:layout_width="match_parent"-->
@@ -101,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:id="@+id/buttonPay1">
 
             <com.makeramen.roundedimageview.RoundedImageView
