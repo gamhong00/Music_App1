@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".View.PlayMusic_Fragment"
-    android:background="@drawable/custom_user">
+    android:background="@drawable/custom_bg_fragment">
     <LinearLayout
         android:id="@+id/thanh_nhac"
         android:layout_width="match_parent"

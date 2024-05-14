@@ -50,9 +50,6 @@ public class RegisterPremiumActivity extends AppCompatActivity {
 
         LinearLayout buttonPay1 = findViewById(R.id.buttonPay1);
 
-        LinearLayout buttonPay2 = findViewById(R.id.buttonPay2);
-
-        LinearLayout buttonPay3 = findViewById(R.id.buttonPay3);
 
 //        ImageView imageZalo = findViewById(R.id.imageZalo);
 
@@ -81,18 +78,7 @@ public class RegisterPremiumActivity extends AppCompatActivity {
 //            }
 //        });
 
-        buttonPay2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                notification();
-            }
-        });
-        buttonPay3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                notification();
-            }
-        });
+
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

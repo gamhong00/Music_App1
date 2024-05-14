@@ -173,9 +173,15 @@ public class EnterOtpActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Boolean isExist = false;
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     User user = userSnapshot.getValue(User.class);
+                    isExist= true;
                     Helper.saveUser(context, user.uid, user.name, user.isPremium);
+                }
+                if(!isExist){
+                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    createUserPremium(uid);
                 }
             }
 
@@ -184,6 +190,15 @@ public class EnterOtpActivity extends AppCompatActivity {
                 Toast.makeText(context, "Lỗi không tìm thấy người dùng", Toast.LENGTH_LONG);
             }
         });
+    }
+    private void createUserPremium(String UID){
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+        User user = new User(UID, "",false);
+
+        usersRef.push().setValue(user);
+
+        Helper.saveUser(this, user.uid, "", user.isPremium);
     }
 
 }
