@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/custom_user"
+    android:background="@drawable/custom_bg_fragment"
     android:orientation="vertical"
     tools:context=".View.Library_Fragment">
 
@@ -49,13 +49,13 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <Button
             android:id="@+id/btn_edit_myprofile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@drawable/custom_button"
@@ -82,7 +82,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:padding="20dp"
+        android:orientation="horizontal"
+        android:background="@color/coler_gray_light">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar_user"
@@ -139,7 +143,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zing MP3 PREMIUM"
+            android:text="MP3 BEAR PREMIUM"
             android:textColor="#E3B324"
             android:textSize="26sp"
             android:textStyle="bold"
@@ -149,7 +153,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="50,000đ"
+            android:text="50,000đ/month"
             android:textSize="22sp"
             android:textColor="@color/white"
             android:textStyle="bold"

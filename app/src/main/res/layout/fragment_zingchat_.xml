@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/custom_user"
+    android:background="@drawable/custom_bg_fragment"
     android:orientation="vertical"
     tools:context=".View.Library_Fragment">
 

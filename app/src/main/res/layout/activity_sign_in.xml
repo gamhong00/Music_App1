@@ -63,10 +63,32 @@
         android:id="@+id/btn_sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/custom_btn_login"
         app:backgroundTint="@null"
         android:text="Đăng nhập"/>
+
+    <LinearLayout
+        android:id="@+id/layout_forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginTop="5dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quên mật khẩu?"
+            android:textSize="14sp"
+            android:textColor="@color/light_blue"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_blue"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_sign_up"
@@ -74,7 +96,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -136,23 +158,10 @@
             android:id="@+id/btn_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:background="@drawable/custom_btn_phone"
-            android:drawableLeft="@drawable/ic_phone"
             android:text="Đăng nhập bằng số điện thoại"
+            android:textColor="@color/white"
             app:backgroundTint="@null" />
-
-        <Button
-            android:id="@+id/btn_google"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/custom_btn_google"
-            android:drawableLeft="@drawable/ic_google"
-            android:text="Đăng nhập bằng Google"
-            android:textColor="@color/black"
-            app:backgroundTint="@null" />
-
 
     </LinearLayout>
 

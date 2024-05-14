@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".View.Download_Fragment"
-    android:background="@drawable/custom_user">
+    android:background="@drawable/custom_bg_fragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_down"

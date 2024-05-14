@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="20dp"
     tools:context=".View.MyProfile_Fragment">
@@ -51,14 +52,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:hint="Email or phone"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:inputType="none"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <Button
             android:id="@+id/btn_update_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:background="@drawable/custom_btn_login"
+            app:backgroundTint="@null"
             android:text="Cập nhật"/>
+
     </LinearLayout>
 
 
