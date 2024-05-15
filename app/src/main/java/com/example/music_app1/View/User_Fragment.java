@@ -6,6 +6,7 @@ import static com.example.music_app1.MainActivity.mViewPager2;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.music_app1.Helper;
 import com.example.music_app1.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -115,37 +117,33 @@ public class User_Fragment extends Fragment {
         if (user != null) {
             // Xác định cách đăng nhập của người dùng (số điện thoại hoặc email)
             String loginMethod;
-            if (user.getEmail()!= null) {
+            String isEmail =user.getEmail();
+            if (isEmail != "") {
                 loginMethod = "email"; // Đăng nhập bằng số điện thoại
             } else {
                 loginMethod = "phone"; // Đăng nhập bằng email/password
             }
 
+            String name= Helper.getKeyName(getContext());
+            Uri photoUrl = user.getPhotoUrl();
+            String infor_user_value = "";
             // Hiển thị thông tin người dùng dựa trên cách đăng nhập
-            if (loginMethod.equals("phone")) {
-                String phoneNumber = user.getPhoneNumber();
 
-                name_user.setVisibility(getView().GONE);
-                // Hiển thị số điện thoại trên giao diện
-                infor_user.setText(phoneNumber);
-
+            if (loginMethod.equals("email")) {
+                infor_user_value = user.getEmail();
             } else {
-                String name= Helper.getKeyName(getContext());
-                String email = user.getEmail();
-                Uri photoUrl = user.getPhotoUrl();
-
-                if(name == null) {
-                    name_user.setVisibility(getView().GONE);
-                }
-                else{
-                    name_user.setVisibility(getView().VISIBLE);
-                    name_user.setText(name);
-                }
-                // Hiển thị email trên giao diện
-                infor_user.setText(email);
-                Glide.with(this).load(photoUrl).error(R.drawable.avatar_default).into(avatar_user);
-
+                infor_user_value = user.getPhoneNumber();
             }
+
+            infor_user.setText(infor_user_value);
+            if(name == null) {
+                name_user.setVisibility(getView().GONE);
+            }
+            else{
+                name_user.setVisibility(getView().VISIBLE);
+                name_user.setText(name);
+            }
+            Glide.with(this).load(photoUrl).error(R.drawable.avatar_default).into(avatar_user);
         }
     }
 
